@@ -43,6 +43,11 @@ router.use(async (req: Request, res: Response, next: NextFunction) => {
       });
     }
   }
+  else{
+    return res.status(UNAUTHORIZED).json({
+      error: unauthorizedError,
+    });
+  }
   next();
 });
 
