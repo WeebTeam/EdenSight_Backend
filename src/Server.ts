@@ -4,6 +4,7 @@ import path from 'path';
 import helmet from 'helmet';
 
 import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 import { BAD_REQUEST } from 'http-status-codes';
 import 'express-async-errors';
 
@@ -18,7 +19,7 @@ const app = express();
 /************************************************************************************
  *                              Set basic express settings
  ***********************************************************************************/
-
+app.use(cors()); //yes we accept all CORS requests
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
