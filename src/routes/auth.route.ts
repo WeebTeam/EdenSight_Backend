@@ -1,7 +1,8 @@
 import bcrypt from 'bcrypt';
 import { Request, Response, Router } from 'express';
 import { BAD_REQUEST, OK, UNAUTHORIZED } from 'http-status-codes';
-import { paramMissingError, loginFailedErr } from '@shared/constants';
+import { noCredentialsError, paramMissingError, loginFailedErr } from '@shared/constants';
+import { Bearer, Basic } from 'permit';
 
 import UserDao from '@daos/user/user.dao';
 
@@ -9,48 +10,58 @@ const router = Router();
 const userDao = new UserDao();
 
 /******************************************************************************
- *                      Login User - "POST /auth/login"
- ******************************************************************************/
+*                      Login User - "POST /auth/login"
+******************************************************************************/
 
 router.post('/login', async (req: Request, res: Response) => {
-    // Check uname and password present
-    const { uname, password } = req.body;
-    console.log(req.body);
-    if (!(uname && password)) {
-        return res.status(BAD_REQUEST).json({
-            error: paramMissingError,
-        });
-    }
+
+  //permit check for basic credentials
+  const permit = new Basic({});
+  const credentials = permit.check(req);
+
+  if (credentials) {
+    //get user, password from credentials
+    const [ username, password ] = credentials;
+
     // Fetch user
-    const user = await userDao.getOne(uname);
+    const user = await userDao.getOne(username);
     if (!user) {
-        return res.status(UNAUTHORIZED).json({
-            error: loginFailedErr,
-        });
+      return res.status(UNAUTHORIZED).json({
+        error: loginFailedErr + "user not found",
+      });
     }
     // Check password
-    const pwdPassed = await bcrypt.compare(password, user.pwdHash);
+    const pwdPassed = bcrypt.compareSync(password, user.pwdHash);
     if (!pwdPassed) {
-        return res.status(UNAUTHORIZED).json({
-            error: loginFailedErr,
-        });
+      return res.status(UNAUTHORIZED).json({
+        error: loginFailedErr + "password is incorrect",
+      });
     }
+
+    //user authenticated, create and return bearer token
+
     return res.status(OK).end();
+  }
+  else {
+    return res.status(BAD_REQUEST).json({
+      error: noCredentialsError,
+    });
+  }
 });
 
 
 /******************************************************************************
- *                      Logout - "GET /api/auth/logout"
- ******************************************************************************/
+*                      Logout - "GET /api/auth/logout"
+******************************************************************************/
 
 router.get('/logout', async (req: Request, res: Response) => {
 
-    return res.status(OK).end();
+  return res.status(OK).end();
 });
 
 
 /******************************************************************************
- *                                 Export Router
- ******************************************************************************/
+*                                 Export Router
+******************************************************************************/
 
 export default router;
