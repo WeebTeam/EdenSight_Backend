@@ -9,7 +9,7 @@ Generated with [express-generator-typescript](https://github.com/seanpmaxwell/ex
 
 ## Available commands for the server.
 
-* Run the server in development mode: npm run start:dev.
+* Run the server in development mode: `npm run start:dev`
 * Run all unit-tests: `npm test`
 * Run a single unit-test: `npm test --testFile="name of test file"` (i.e. --testFile=Users).
 * Check for linting errors: `npm run lint`
