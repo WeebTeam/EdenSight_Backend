@@ -7,7 +7,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import { BAD_REQUEST } from 'http-status-codes';
 import 'express-async-errors';
 
-import BaseRouter from './routes';
+import BaseRouter from './routes/routes';
 import logger from '@shared/Logger';
 
 import { dbConnect } from "@database";

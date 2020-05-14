@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { Request, Response, Router } from 'express';
 import { BAD_REQUEST, OK, UNAUTHORIZED } from 'http-status-codes';
-import { noCredentialsError, paramMissingError, loginFailedErr } from '@shared/constants';
+import { noCredentialsError, paramMissingError, loginFailedError } from '@shared/constants';
 import { Bearer, Basic } from 'permit';
 
 import UserDao from '@daos/user/user.dao';
@@ -27,14 +27,14 @@ router.post('/login', async (req: Request, res: Response) => {
     const user = await userDao.getOne(username);
     if (!user) {
       return res.status(UNAUTHORIZED).json({
-        error: loginFailedErr + "user not found",
+        error: loginFailedError + "user not found",
       });
     }
     // Check password
     const pwdPassed = bcrypt.compareSync(password, user.pwdHash);
     if (!pwdPassed) {
       return res.status(UNAUTHORIZED).json({
-        error: loginFailedErr + "password is incorrect",
+        error: loginFailedError + "password is incorrect",
       });
     }
 
