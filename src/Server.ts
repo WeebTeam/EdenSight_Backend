@@ -10,11 +10,10 @@ import 'express-async-errors';
 import BaseRouter from './routes';
 import logger from '@shared/Logger';
 
+import { dbConnect } from "@database";
 
 // Init express
 const app = express();
-
-
 
 /************************************************************************************
  *                              Set basic express settings
@@ -33,6 +32,10 @@ if (process.env.NODE_ENV === 'development') {
 if (process.env.NODE_ENV === 'production') {
     app.use(helmet());
 }
+
+// connect to mongodb
+// todo: change db based on run env (dev, test, prod)
+dbConnect("dev");
 
 // Add APIs
 app.use('/', BaseRouter);

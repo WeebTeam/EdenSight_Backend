@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import { BAD_REQUEST, CREATED, OK } from 'http-status-codes';
 import { ParamsDictionary } from 'express-serve-static-core';
 
-import UserDao from '@daos/User/UserDao.mock';
+import UserDao from '@daos/user/user.dao';
 import { paramMissingError } from '@shared/constants';
 
 // Init shared
@@ -54,12 +54,12 @@ router.put('/update', async (req: Request, res: Response) => {
 
 
 /******************************************************************************
- *                    Delete - "DELETE /api/users/delete/:id"
+ *                    Delete - "DELETE /api/users/delete/:uname"
  ******************************************************************************/
 
-router.delete('/delete/:id', async (req: Request, res: Response) => {
-    const { id } = req.params as ParamsDictionary;
-    await userDao.delete(Number(id));
+router.delete('/delete/:uname', async (req: Request, res: Response) => {
+    const { uname } = req.params as ParamsDictionary;
+    await userDao.delete(uname);
     return res.status(OK).end();
 });
 
