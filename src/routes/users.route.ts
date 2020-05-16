@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { UNAUTHORIZED, BAD_REQUEST, CREATED, OK } from 'http-status-codes';
 import { ParamsDictionary } from 'express-serve-static-core';
 
-import UserDao from '@daos/user/user.dao';
+import UserDao from '@daos/user.dao';
 import { paramMissingError, loginFailedError, unauthorizedError } from '@shared/constants';
 
 import bcrypt from 'bcrypt';

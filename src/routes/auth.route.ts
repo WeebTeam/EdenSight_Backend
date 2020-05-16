@@ -4,7 +4,7 @@ import { BAD_REQUEST, OK, UNAUTHORIZED } from 'http-status-codes';
 import { noCredentialsError, paramMissingError, loginFailedError } from '@shared/constants';
 import { Bearer, Basic } from 'permit';
 
-import UserDao from '@daos/user/user.dao';
+import UserDao from '@daos/user.dao';
 
 const router = Router();
 const userDao = new UserDao();

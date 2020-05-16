@@ -1,13 +1,17 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import UserRouter from './users.route';
-import AuthRouter from './auth.route';
 
+// import subroutes
+import AuthRouter from './auth.route';
+import UsersRouter from './users.route';
+import ResidentsRouter from './residents.route';
+
+// imports for user auth
 import bcrypt from 'bcrypt';
 import { Bearer, Basic } from 'permit';
 import { BAD_REQUEST, OK, UNAUTHORIZED } from 'http-status-codes';
 import { paramMissingError, loginFailedError, unauthorizedError } from '@shared/constants';
+import UserDao from '@daos/user.dao';
 
-import UserDao from '@daos/user/user.dao';
 const userDao = new UserDao();
 
 // Init router and path
@@ -80,7 +84,8 @@ router.use(async (req: Request, res: Response, next: NextFunction) => {
 });
 
 // routes that require admin (assumes user has already logged in)
-router.use('/users', UserRouter);
+router.use('/residents', ResidentsRouter);
+router.use('/users', UsersRouter);
 
 // Export the base-router
 export default router;
