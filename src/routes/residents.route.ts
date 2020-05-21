@@ -37,21 +37,27 @@ router.post('/add', async (req: Request, res: Response) => {
       error: paramMissingError,
     });
   }
-  await residentDao.add(resident);
-  return res.status(CREATED).end();
+  //create the resident
+  const createdResident = await residentDao.add(resident);
+
+  //return created resident
+  return res.status(CREATED).json(createdResident);
 });
 
 // residents/update
-router.put('/update', async (req: Request, res: Response) => {
+router.put('/update/:id', async (req: Request, res: Response) => {
+  const { id } = req.params as ParamsDictionary;
   const { resident } = req.body;
-  if (!resident) {
+  if (!resident || !id) {
     return res.status(BAD_REQUEST).json({
       error: paramMissingError,
     });
   }
-  resident.id = Number(resident.id);
-  await residentDao.update(resident);
-  return res.status(OK).end();
+
+  //update the resident and get the updated resident
+  const updatedResident =  await residentDao.update(Number(id), resident);
+  //return the updated resident
+  return res.status(OK).json(updatedResident);
 });
 
 // residents/delete/:id
