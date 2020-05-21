@@ -17,7 +17,7 @@ const residentDao = new ResidentDao();
 router.get('/all', async (req: Request, res: Response) => {
   const residents = await residentDao.getAll();
 
-  return res.status(OK).json({residents});
+  return res.status(OK).json({ residents: residents });
 });
 
 // get one
@@ -26,7 +26,7 @@ router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params as ParamsDictionary;
   const resident = await residentDao.getOne(Number(id));
 
-  return res.status(OK).json(resident);
+  return res.status(OK).json({ resident: resident });
 });
 
 // residents/add
@@ -41,7 +41,7 @@ router.post('/add', async (req: Request, res: Response) => {
   const createdResident = await residentDao.add(resident);
 
   //return created resident
-  return res.status(CREATED).json(createdResident);
+  return res.status(CREATED).json({ resident: createdResident });
 });
 
 // residents/update/:id
@@ -57,7 +57,7 @@ router.put('/update/:id', async (req: Request, res: Response) => {
   //update the resident and get the updated resident
   const updatedResident =  await residentDao.update(Number(id), resident);
   //return the updated resident
-  return res.status(OK).json(updatedResident);
+  return res.status(OK).json({ resident: updatedResident });
 });
 
 // residents/delete/:id
