@@ -2,66 +2,46 @@ import User, { UserModel } from '@models/user.model';
 
 class UserDao {
 
-  /**
-  * @param uname
-  */
   public async getOne(uname: string): Promise<User | null> {
     try {
-        return UserModel.findOne({ uname: uname });
+        return await UserModel.findOne({ uname: uname });
       } catch (err) {
         throw err;
     }
   }
 
-
-  /**
-  *
-  */
   public async getAll(): Promise<User[]> {
     try {
-        return UserModel.find();
+        return await UserModel.find();
     } catch (err) {
         throw err;
     }
   }
 
-
-  /**
-  *
-  * @param user
-  */
-  public async add(user: User): Promise<void> {
+  public async add(user: User): Promise<User | null> {
       try {
-          await UserModel.create(user);
+          return await UserModel.create(user);
       } catch (err) {
           throw err;
       }
   }
 
-
-  /**
-  *
-  * @param user
-  */
-  public async update(user: User): Promise<void> {
+  public async update(uname: string, updateParams: any): Promise<User | null> {
     try {
-      UserModel.updateOne(
-        { uname: user.uname },
-        { name: user.name, pwdHash: user.pwdHash, admin: user.admin }
-      )
+      await UserModel.updateOne(
+        { uname: uname },
+        updateParams
+      );
+
+      return await UserModel.findOne({ uname :uname });
     } catch (err) {
         throw err;
     }
   }
 
-
-  /**
-  *
-  * @param uname
-  */
   public async delete(uname: string): Promise<void> {
     try {
-        await UserModel.deleteOne({uname: uname});
+        await UserModel.deleteOne({ uname: uname });
     } catch (err) {
         throw err;
     }

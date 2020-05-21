@@ -12,21 +12,25 @@ import { Bearer, Basic } from 'permit';
 const router = Router();
 const userDao = new UserDao();
 
-/******************************************************************************
-*                      Get All Users - "GET /api/users/all"
-******************************************************************************/
-
+// get all
+// residents/all
 router.get('/all', async (req: Request, res: Response) => {
   const users = await userDao.getAll();
 
-  return res.status(OK).json({users});
+  return res.status(OK).json({ user: users });
 });
 
+// get one
+// users/:uname
+router.get('/:uname', async (req: Request, res: Response) => {
+  const { uname } = req.params as ParamsDictionary;
+  const user = await userDao.getOne(uname);
 
-/******************************************************************************
-*                       Add One - "POST /api/users/add"
-******************************************************************************/
+  return res.status(OK).json({ user: user });
+});
 
+//add user
+// residents/add
 router.post('/add', async (req: Request, res: Response) => {
   const { user } = req.body;
   if (!user) {
@@ -35,31 +39,24 @@ router.post('/add', async (req: Request, res: Response) => {
     });
   }
   await userDao.add(user);
-  return res.status(CREATED).end();
+  return res.status(CREATED).json({ user: user });
 });
 
-
-/******************************************************************************
-*                       Update - "PUT /api/users/update"
-******************************************************************************/
-
-router.put('/update', async (req: Request, res: Response) => {
+//update user
+// residents/update/:uname
+router.put('/update/:uname', async (req: Request, res: Response) => {
+  const { uname } = req.params as ParamsDictionary;
   const { user } = req.body;
-  if (!user) {
+  if (!user || !uname) {
     return res.status(BAD_REQUEST).json({
       error: paramMissingError,
     });
   }
-  user.id = Number(user.id);
-  await userDao.update(user);
-  return res.status(OK).end();
+  const updatedUser = await userDao.update(uname, user);
+  return res.status(OK).json({ user: updatedUser });
 });
 
-
-/******************************************************************************
-*                    Delete - "DELETE /api/users/delete/:uname"
-******************************************************************************/
-
+// residents/delete/:uname
 router.delete('/delete/:uname', async (req: Request, res: Response) => {
   const { uname } = req.params as ParamsDictionary;
   await userDao.delete(uname);
