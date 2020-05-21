@@ -44,7 +44,7 @@ router.post('/add', async (req: Request, res: Response) => {
   return res.status(CREATED).json(createdResident);
 });
 
-// residents/update
+// residents/update/:id
 router.put('/update/:id', async (req: Request, res: Response) => {
   const { id } = req.params as ParamsDictionary;
   const { resident } = req.body;
