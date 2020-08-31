@@ -13,11 +13,11 @@ const router = Router();
 const userDao = new UserDao();
 
 // get all
-// residents/all
+// users/all
 router.get('/all', async (req: Request, res: Response) => {
   const users = await userDao.getAll();
 
-  return res.status(OK).json({ user: users });
+  return res.status(OK).json(users);
 });
 
 // get one
@@ -26,11 +26,11 @@ router.get('/:uname', async (req: Request, res: Response) => {
   const { uname } = req.params as ParamsDictionary;
   const user = await userDao.getOne(uname);
 
-  return res.status(OK).json({ user: user });
+  return res.status(OK).json(user);
 });
 
 //add user
-// residents/add
+// users/add
 router.post('/add', async (req: Request, res: Response) => {
   const { user } = req.body;
   if (!user) {
@@ -39,11 +39,11 @@ router.post('/add', async (req: Request, res: Response) => {
     });
   }
   await userDao.add(user);
-  return res.status(CREATED).json({ user: user });
+  return res.status(CREATED).json(user);
 });
 
 //update user
-// residents/update/:uname
+// users/update/:uname
 router.put('/update/:uname', async (req: Request, res: Response) => {
   const { uname } = req.params as ParamsDictionary;
   const { user } = req.body;
@@ -53,10 +53,10 @@ router.put('/update/:uname', async (req: Request, res: Response) => {
     });
   }
   const updatedUser = await userDao.update(uname, user);
-  return res.status(OK).json({ user: updatedUser });
+  return res.status(OK).json(updatedUser);
 });
 
-// residents/delete/:uname
+// users/delete/:uname
 router.delete('/delete/:uname', async (req: Request, res: Response) => {
   const { uname } = req.params as ParamsDictionary;
   await userDao.delete(uname);
