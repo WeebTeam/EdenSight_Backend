@@ -39,7 +39,8 @@ if (process.env.NODE_ENV === 'production') {
 dbConnect("dev");
 
 // Add APIs
-app.use('/', BaseRouter);
+app.use('/api', BaseRouter);
+app.use(express.static(path.join(__dirname, 'web')));
 
 // Print API errors
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
