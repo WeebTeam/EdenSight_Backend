@@ -38,9 +38,9 @@ router.post('/login', async (req: Request, res: Response) => {
       });
     }
 
-    //user authenticated, create and return bearer token
+    //user authenticated, todo: (maybe)create and return bearer token
 
-    return res.status(OK).end();
+    return res.status(OK).json({ login: "login is successful!" });
   }
   else {
     return res.status(BAD_REQUEST).json({
