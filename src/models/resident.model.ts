@@ -1,36 +1,37 @@
-import { prop, getModelForClass } from '@typegoose/typegoose';
+import { plugin, prop, getModelForClass } from '@typegoose/typegoose';
+import { AutoIncrementID } from '@typegoose/auto-increment';
 import * as mongoose from 'mongoose';
 
 export interface IResident {
-  id: number;
+  _id: number;
   status: string;
   caretaker: string;
   name: string;
   room: string;
   enrollDate: Date;
 }
-
+@plugin(AutoIncrementID, {} )
 class Resident implements IResident {
-  @prop({ required: true, unique:true })
-  public id: number;
+  @prop({ unique:true })
+  public _id: number;
 
   @prop({ required: true })
   public name: string;
 
-  @prop()
+  @prop({ default: 'Unknown' })
   public status: string;
 
-  @prop()
+  @prop({ default: '-' })
   public caretaker: string;
 
-  @prop()
+  @prop({ default: '-' })
   public room: string;
 
   @prop({ default: Date.now() })
   enrollDate: Date;
 
   constructor(id: number, name: string, status?: string, caretaker?: string, room?: string, enrollDate?: Date) {
-    this.id = id;
+    this._id = id;
     this.name = name;
     this.status = status || '';
     this.caretaker = caretaker || '';
