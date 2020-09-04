@@ -27,7 +27,10 @@ Tenki dashboard, built with adminlte starter page
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" onclick="getSensorData(historyRange);" class="nav-link">Refresh Sensor Data</a>
+          <a href="#" onclick="getAllResidents()" class="nav-link">Refresh List</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link" data-toggle="modal" data-target="#newResidentModal">New Resident</a>
         </li>
       </ul>
     </nav>
@@ -144,13 +147,108 @@ Tenki dashboard, built with adminlte starter page
     <footer class="main-footer">
       <!-- To the right -->
       <div class="float-right d-none d-sm-inline">
-        Anything you want
+        created by WeebTeam :)
       </div>
       <!-- Default to the left -->
       <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
     </footer>
   </div>
   <!-- ./wrapper -->
+
+  <!-- Modals -->
+  <div class="modal fade" id="newResidentModal" tabindex="-1" aria-labelledby="NewResidentModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add New Resident</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id='new_resident_form'>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="newResidentName">Resident Name</label>
+              <input type="text" class="form-control" id="newResidentName" required="">
+            </div>
+            <div class="form-group">
+              <label for="newResidentCaretaker">Caretaker</label>
+              <input type="text" class="form-control" id="newResidentCaretaker" required="">
+            </div>
+            <div class="form-group">
+              <label for="newResidentRoom">Room Number</label>
+              <input type="text" class="form-control" id="newResidentRoom" required="">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="reset" class="btn btn-danger" onclick="return confirm('Are you sure? This will clear the form!')">Clear</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="residentModal" tabindex="-1" aria-labelledby="ResidentModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="residentModalTitle" >Resident Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id='update_resident_form'>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="residentID">Resident ID</label>
+              <input type="text" class="form-control" id="residentID" required="" disabled="">
+            </div>
+            <div class="form-group">
+              <label for="residentName">Resident Name</label>
+              <input type="text" class="form-control" id="residentName" required="" disabled="">
+            </div>
+            <div class="form-group">
+              <label for="residentCaretaker">Caretaker</label>
+              <input type="text" class="form-control" id="residentCaretaker" required="" disabled="">
+            </div>
+            <div class="form-group">
+              <label for="residentRoom">Room Number</label>
+              <input type="text" class="form-control" id="residentRoom" required="" disabled="">
+            </div>
+          </div>
+          <div class="modal-footer" id="updateResidentFooter" style="display:none;">
+            <button type="button" class="btn btn-secondary" onclick="cancelUpdateResident()">Cancel</button>
+            <button type="submit" class="btn btn-info" onclick="updateResident()">Update Resident</button>
+          </div>
+        </form>
+        <div class="modal-footer" id="residentModalFooter">
+          <button type="button" class="btn btn-primary" onclick="enableUpdateResident()">Modify Resident</button>
+          <button type="button" class="btn btn-danger" onclick="deleteResident()">Delete Resident</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" tabindex="-1" aria-labelledby="UnauthorizedModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Unauthorized</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>You are not authorized to perform this operation.</p>
+        <p>Please click the button below to log in.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" href="login.html">Log in</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!-- REQUIRED SCRIPTS -->
 
@@ -169,7 +267,128 @@ Tenki dashboard, built with adminlte starter page
 
   <!-- page script -->
   <script>
-  $(function () {
+  $(function () { //stuff here runs on page load
+
+    //init residents table
+    residents_table = $('#residents_table').DataTable({
+      "paging": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "columns": [
+        { "data": "_id" },
+        { "data": "name" },
+        { "data": "status" },
+        { "data": "caretaker" },
+        { "data": "room" }
+      ]
+    });
+
+    //init resident (blank for now)
+    resident = ""
+
+    //fetch any data that we need on page load
+    getAllResidents();
+  });
+
+  /********** event listeners **********/
+
+  //submit new resident form
+  $('#new_resident_form').submit(function (){
+    //no validate, we are blindly trusting our users
+    //instead we ask them to self validate :)
+    var userValidation = confirm("Please make sure all information is correct!");
+    if (userValidation){
+      //send to server
+      $.ajax({
+        type: "POST",
+        url: "api/residents/add/",
+        contentType : 'application/json',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+          //include credentials
+          xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
+        },
+        data: JSON.stringify({
+          name: $("#newResidentName").val(),
+          caretaker:  $("#newResidentCaretaker").val(),
+          room:  $("#newResidentRoom").val()
+        }),
+        success: function (resident){
+          //on success, clear form, modal and update list
+          console.log("resident created: "+ resident);
+          $("#new_resident_form").trigger("reset");
+          $("#newResidentModal").modal('toggle');
+          getAllResidents();
+        }
+        //todo: handle error, 401
+        //display alert
+      });
+    }
+
+  });
+
+  //table: handle when clicking rows
+  $('#residents_table tbody').on("click", "tr", function() {
+    resident = residents_table.row( this ).data();
+
+    //populate the form
+    $("#residentID").val(resident._id);
+    $("#residentName").val(resident.name);
+    $("#residentCaretaker").val(resident.caretaker);
+    $("#residentRoom").val(resident.room);
+
+    $("#residentModal").modal('toggle');
+  });
+
+  //residentModal: handle modal hide
+  //reset the modal state
+  $('#residentModal').on('hide.bs.modal', function (e) {
+    cancelUpdateResident();
+  })
+
+  //update resident
+  $('#update_resident_form').submit(function (){
+    //no validate, we are blindly trusting our users
+    //instead we ask them to self validate :)
+    var userValidation = confirm("Please make sure all information is correct!");
+    if (userValidation){
+      //send to server
+      $.ajax({
+        type: "POST",
+        url: "api/residents/update/",
+        contentType : 'application/json',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+          //include credentials
+          xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
+        },
+        data: JSON.stringify({
+          name: $("#residentName").val(),
+          caretaker:  $("#residentCaretaker").val(),
+          room:  $("#residentRoom").val()
+        }),
+        success: function (resident){
+          //on success, clear form, modal and update list
+          console.log("resident updated: "+ resident);
+          $("#residentModal").modal('toggle');
+          getAllResidents();
+        }
+        //todo: handle error, 401
+        //display alert
+      });
+    }
+
+  });
+
+  /********** functions **********/
+
+  function handleUnauthorized(){
+
+  }
+
+  function getAllResidents() {
     $.ajax({
       type: "GET",
       url: "api/residents/all/",
@@ -179,24 +398,75 @@ Tenki dashboard, built with adminlte starter page
         xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
       },
       success: function (residents){
-        $('#residents_table').DataTable({
-          "paging": true,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false,
-          "responsive": true,
-          "data": residents,
-          "columns": [
-            { "data": "id" },
-            { "data": "name" },
-            { "data": "status" },
-            { "data": "caretaker" },
-            { "data": "room" }
-          ]
-        });
+        //on success, update table
+        residents_table.clear();
+        residents_table.rows.add(residents);
+        residents_table.draw();
+      },
+      error: function (xhr){
+        var code = xhr.status;
+
+        //handle 401
+        if (code == 401){
+          handleUnauthorized();
+        }
       }
     });
-  });
+  }
+
+  function getResidentById() {
+    $.ajax({
+      type: "GET",
+      url: "api/residents/",
+      dataType: 'json',
+      beforeSend: function (xhr) {
+        //include credentials
+        xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
+      },
+      success: function (resident){
+        //on success, display resident details
+
+      }
+      //todo: handle error, 401
+      //display alert
+    });
+  }
+
+  function enableUpdateResident(){
+    //change title
+    $("#residentModalTitle").text("Modify Resident");
+
+    //change buttons
+    $("#residentModalFooter").hide();
+    $("#updateResidentFooter").show();
+
+    //allow editing
+    $("#residentName").prop("disabled", false);
+    $("#residentCaretaker").prop("disabled", false);
+    $("#residentRoom").prop("disabled", false);
+  }
+
+  function cancelUpdateResident(){
+    //change buttons
+    $("#residentModalFooter").show();
+    $("#updateResidentFooter").hide();
+
+    //disallow editing
+    $("#residentName").prop("disabled", true);
+    $("#residentCaretaker").prop("disabled", true);
+    $("#residentRoom").prop("disabled", true);
+
+    //reset the data
+    $("#residentName").val(resident.name);
+    $("#residentCaretaker").val(resident.caretaker);
+    $("#residentRoom").val(resident.room);
+  }
+
+  function deleteResident(){
+    var confirmDeletion = confirm('Are you sure? This will remove this resident!');
+  }
+
+
 </script>
 
 </body>

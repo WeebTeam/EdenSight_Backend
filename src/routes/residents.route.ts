@@ -12,7 +12,7 @@ import { Bearer, Basic } from 'permit';
 const router = Router();
 const residentDao = new ResidentDao();
 
-// get all
+// get all (brief)
 // residents/all
 router.get('/all', async (req: Request, res: Response) => {
   const residents = await residentDao.getAll();
@@ -20,7 +20,7 @@ router.get('/all', async (req: Request, res: Response) => {
   return res.status(OK).json(residents);
 });
 
-// get one
+// get one (detailed)
 // residents/:id
 router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params as ParamsDictionary;
@@ -31,7 +31,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 
 // residents/add
 router.post('/add', async (req: Request, res: Response) => {
-  const { resident } = req.body;
+  const resident = req.body;
   if (!resident) {
     return res.status(BAD_REQUEST).json({
       error: paramMissingError,
