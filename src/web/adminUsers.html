@@ -7,7 +7,7 @@ Tenki dashboard, built with adminlte starter page
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <title>Residents | Edensight</title>
+  <title>Admin | Edensight</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -28,6 +28,9 @@ Tenki dashboard, built with adminlte starter page
         </li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" onclick="getAllResidents()" class="nav-link">Refresh List</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link" data-toggle="modal" data-target="#newUserModal">New User</a>
         </li>
       </ul>
     </nav>
@@ -50,7 +53,7 @@ Tenki dashboard, built with adminlte starter page
             <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="residents.html" class="nav-link active">
+              <a href="adminResidents.html" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Residents
@@ -59,7 +62,7 @@ Tenki dashboard, built with adminlte starter page
 
             </li>
             <li class="nav-item">
-              <a href="users.html" class="nav-link">
+              <a href="adminUsers.html" class="nav-link active">
                 <i class="nav-icon fas fa-calendar"></i>
                 <p>
                   Users
@@ -94,7 +97,7 @@ Tenki dashboard, built with adminlte starter page
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <table id="residents_table" class="table table-bordered table-hover">
+                  <table id="users_table" class="table table-bordered table-hover">
                     <thead>
                       <tr>
                         <th>ID</th>
@@ -161,129 +164,75 @@ Tenki dashboard, built with adminlte starter page
   <!-- ./wrapper -->
 
   <!-- Modals -->
-  <div class="modal fade" id="residentModal" tabindex="-1" aria-labelledby="ResidentModal" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+  <div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModal" aria-hidden="true">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="residentModalTitle" >Resident Details</h5>
+          <h5 class="modal-title">Add New User</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-
-        <!-- Widgets for Vital Signs -->
-        <div class="modal-body">
-        <div class="row">
-          <div class="col-lg-6 col-6">
-            <!-- small card -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                <p>BPM</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-heartbeat"></i>
-              </div>
+        <form id='new_resident_form'>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="newResidentName">Resident Name</label>
+              <input type="text" class="form-control" id="newResidentName" required="">
+            </div>
+            <div class="form-group">
+              <label for="newResidentCaretaker">Caretaker</label>
+              <input type="text" class="form-control" id="newResidentCaretaker" required="">
+            </div>
+            <div class="form-group">
+              <label for="newResidentRoom">Room Number</label>
+              <input type="text" class="form-control" id="newResidentRoom" required="">
             </div>
           </div>
-          <div class="col-lg-6 col-6">
-            <!-- small card -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>98<sup style="font-size: 20px">%</sup></h3>
-
-                <p>SpO2</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-tint"></i>
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button type="reset" class="btn btn-danger" onclick="return confirm('Are you sure? This will clear the form!')">Clear</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-          <!-- ./col -->
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="residentModal" tabindex="-1" aria-labelledby="ResidentModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="residentModalTitle" >User Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <!-- /.row -->
-
-        <div class="row">
-          <div class="col-md-12">
-            <!-- Line chart -->
-            <div class="card card-primary card-outline">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="far fa-chart-bar"></i>
-                  Line Chart
-                </h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-body">
-                <div id="line-chart" style="height: 300px;"></div>
-              </div>
-              <!-- /.card-body-->
+        <form id='update_resident_form'>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="residentID">Resident ID</label>
+              <input type="text" class="form-control" id="residentID" required="" disabled="">
             </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-
-        <div class="row">
-          <div class="col-12">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-history"></i>
-                    History
-                  </h3>
-
-                  <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                </div>
-                </div>
-                <div class="card-body">
-                  <table id="resident_history_table" class="table table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Caretaker</th>
-                        <th>Room</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- Test -->
-                      <tr>
-                        <td>101</td>
-                        <td>101</td>
-                        <td>101</td>
-                        <td>101</td>
-                        <td>101</td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Caretaker</th>
-                        <th>Room</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
+            <div class="form-group">
+              <label for="residentName">Resident Name</label>
+              <input type="text" class="form-control" id="residentName" required="" disabled="">
             </div>
-            <!-- /.col -->
+            <div class="form-group">
+              <label for="residentCaretaker">Caretaker</label>
+              <input type="text" class="form-control" id="residentCaretaker" required="" disabled="">
+            </div>
+            <div class="form-group">
+              <label for="residentRoom">Room Number</label>
+              <input type="text" class="form-control" id="residentRoom" required="" disabled="">
+            </div>
           </div>
-          <!-- /.row -->
+          <div class="modal-footer" id="updateResidentFooter" style="display:none;">
+            <button type="button" class="btn btn-secondary" onclick="cancelUpdateResident()">Cancel</button>
+            <button type="submit" class="btn btn-info" onclick="updateResident()">Update Resident</button>
+          </div>
+        </form>
+        <div class="modal-footer" id="residentModalFooter">
+          <button type="button" class="btn btn-primary" onclick="enableUpdateResident()">Modify Resident</button>
+          <button type="button" class="btn btn-danger" onclick="deleteResident()">Delete Resident</button>
         </div>
       </div>
     </div>
@@ -324,17 +273,12 @@ Tenki dashboard, built with adminlte starter page
   <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
   <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
-  <!-- Flot Charts -->
-  <script src="plugins/flot/jquery.flot.js"></script>
-  <!-- Flot resize plugin - allows the chart to redraw when the window is resized -->
-  <script src="plugins/flot/plugins/jquery.flot.resize.js"></script>
-
   <!-- page script -->
   <script>
   $(function () { //stuff here runs on page load
 
     //init residents table
-    residents_table = $('#residents_table').DataTable({
+    users_table = $('#users_table').DataTable({
       "paging": true,
       "ordering": true,
       "info": true,
@@ -356,33 +300,46 @@ Tenki dashboard, built with adminlte starter page
     getAllResidents();
   });
 
-  $(function () { //stuff here runs on page load
-
-    //init residents table
-    resident_history_table = $('#resident_history_table').DataTable({
-      "paging": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-      "columns": [
-        { "data": "_id" },
-        { "data": "name" },
-        { "data": "status" },
-        { "data": "caretaker" },
-        { "data": "room" }
-      ]
-    });
-
-    //init resident (blank for now)
-    resident = ""
-  });
-
   /********** event listeners **********/
 
+  //submit new user form
+  $('#new_resident_form').submit(function (){
+    //no validate, we are blindly trusting our users
+    //instead we ask them to self validate :)
+    var userValidation = confirm("Please make sure all information is correct!");
+    if (userValidation){
+      //send to server
+      $.ajax({
+        type: "POST",
+        url: "api/residents/add/",
+        contentType : 'application/json',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+          //include credentials
+          xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
+        },
+        data: JSON.stringify({
+          name: $("#newResidentName").val(),
+          caretaker:  $("#newResidentCaretaker").val(),
+          room:  $("#newResidentRoom").val()
+        }),
+        success: function (resident){
+          //on success, clear form, modal and update list
+          console.log("resident created: "+ resident);
+          $("#new_resident_form").trigger("reset");
+          $("#newUserModal").modal('toggle');
+          getAllResidents();
+        }
+        //todo: handle error, 401
+        //display alert
+      });
+    }
+
+  });
+
   //table: handle when clicking rows
-  $('#residents_table tbody').on("click", "tr", function() {
-    resident = residents_table.row( this ).data();
+  $('#users_table tbody').on("click", "tr", function() {
+    resident = users_table.row( this ).data();
 
     //populate the form
     $("#residentID").val(resident._id);
@@ -396,8 +353,42 @@ Tenki dashboard, built with adminlte starter page
   //residentModal: handle modal hide
   //reset the modal state
   $('#residentModal').on('hide.bs.modal', function (e) {
-    cancelResidentView();
+    cancelUpdateResident();
   })
+
+  //update resident
+  $('#update_resident_form').submit(function (){
+    //no validate, we are blindly trusting our users
+    //instead we ask them to self validate :)
+    var userValidation = confirm("Please make sure all information is correct!");
+    if (userValidation){
+      //send to server
+      $.ajax({
+        type: "POST",
+        url: "api/residents/update/",
+        contentType : 'application/json',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+          //include credentials
+          xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
+        },
+        data: JSON.stringify({
+          name: $("#residentName").val(),
+          caretaker:  $("#residentCaretaker").val(),
+          room:  $("#residentRoom").val()
+        }),
+        success: function (resident){
+          //on success, clear form, modal and update list
+          console.log("resident updated: "+ resident);
+          $("#residentModal").modal('toggle');
+          getAllResidents();
+        }
+        //todo: handle error, 401
+        //display alert
+      });
+    }
+
+  });
 
   /********** functions **********/
 
@@ -416,9 +407,9 @@ Tenki dashboard, built with adminlte starter page
       },
       success: function (residents){
         //on success, update table
-        residents_table.clear();
-        residents_table.rows.add(residents);
-        residents_table.draw();
+        users_table.clear();
+        users_table.rows.add(residents);
+        users_table.draw();
       },
       error: function (xhr){
         var code = xhr.status;
@@ -449,12 +440,13 @@ Tenki dashboard, built with adminlte starter page
     });
   }
 
-  function enableResidentView(){
+  function enableUpdateResident(){
     //change title
-    $("#residentModalTitle").text("Modify Resident");
+    $("#residentModalTitle").text("Modify User");
 
     //change buttons
     $("#residentModalFooter").hide();
+    $("#updateResidentFooter").show();
 
     //allow editing
     $("#residentName").prop("disabled", false);
@@ -462,9 +454,12 @@ Tenki dashboard, built with adminlte starter page
     $("#residentRoom").prop("disabled", false);
   }
 
-  function cancelResidentView(){
+  function cancelUpdateResident(){
+    $("#residentModalTitle").text("User Details");
+
     //change buttons
     $("#residentModalFooter").show();
+    $("#updateResidentFooter").hide();
 
     //disallow editing
     $("#residentName").prop("disabled", true);
@@ -477,79 +472,10 @@ Tenki dashboard, built with adminlte starter page
     $("#residentRoom").val(resident.room);
   }
 
-
-  /*
-   * LINE CHART
-   * ----------
-   */
-  //LINE randomly generated data
-
-  var sin = [],
-      cos = []
-  for (var i = 0; i < 14; i += 0.5) {
-    sin.push([i, Math.sin(i)])
-    cos.push([i, Math.cos(i)])
+  function deleteResident(){
+    var confirmDeletion = confirm('Are you sure? This will remove this user!');
   }
-  var line_data1 = {
-    data : sin,
-    color: '#3c8dbc'
-  }
-  var line_data2 = {
-    data : cos,
-    color: '#00c0ef'
-  }
-  $.plot('#line-chart', [line_data1, line_data2], {
-    grid  : {
-      hoverable  : true,
-      borderColor: '#f3f3f3',
-      borderWidth: 1,
-      tickColor  : '#f3f3f3'
-    },
-    series: {
-      shadowSize: 0,
-      lines     : {
-        show: true
-      },
-      points    : {
-        show: true
-      }
-    },
-    lines : {
-      fill : false,
-      color: ['#3c8dbc', '#f56954']
-    },
-    yaxis : {
-      show: true
-    },
-    xaxis : {
-      show: true
-    }
-  })
-  //Initialize tooltip on hover
-  $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
-    position: 'absolute',
-    display : 'none',
-    opacity : 0.8,
-    zIndex : 9999
-  }).appendTo('body')
-  $('#line-chart').bind('plothover', function (event, pos, item) {
 
-    if (item) {
-      var x = item.datapoint[0].toFixed(2),
-          y = item.datapoint[1].toFixed(2)
-
-      $('#line-chart-tooltip').html(item.series.label + ' of ' + x + ' = ' + y)
-        .css({
-          top : item.pageY + 5,
-          left: item.pageX + 5
-        })
-        .fadeIn(200)
-    } else {
-      $('#line-chart-tooltip').hide()
-    }
-
-  })
-  /* END LINE CHART */
 
 </script>
 
