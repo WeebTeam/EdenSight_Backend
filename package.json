@@ -10,9 +10,12 @@
   },
   "_moduleAliases": {
     "@daos": "dist/daos",
+    "@models": "dist/models",
+    "@routes": "dist/routes",
     "@entities": "dist/entities",
     "@shared": "dist/shared",
-    "@server": "dist/Server"
+    "@server": "dist/Server",
+    "@database": "dist/database"
   },
   "dependencies": {
     "@typegoose/auto-increment": "^0.5.0",

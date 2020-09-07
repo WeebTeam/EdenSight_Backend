@@ -19,6 +19,9 @@
       "@models/*": [
         "src/models/*"
       ],
+      "@routes/*": [
+        "src/routes/*"
+      ],
       "@shared/*": [
         "src/shared/*"
       ],
