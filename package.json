@@ -23,7 +23,7 @@
     "@types/bcrypt": "^3.0.0",
     "@types/mongoose": "^5.7.19",
     "@types/permit": "^0.2.1",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "command-line-args": "^5.1.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
