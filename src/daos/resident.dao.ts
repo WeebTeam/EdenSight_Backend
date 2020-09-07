@@ -30,11 +30,11 @@ class ResidentDao {
   public async update(id: number, updateParams: any): Promise<Resident | null> {
     try {
       await ResidentModel.updateOne(
-        { id: id },
+        { _id: id },
         updateParams
       );
 
-      return await ResidentModel.findOne({ id :id });
+      return await ResidentModel.findOne({ _id :id });
     } catch (err) {
         throw err;
     }
@@ -43,7 +43,7 @@ class ResidentDao {
 
   public async delete(id: number): Promise<void> {
     try {
-        await ResidentModel.deleteOne({ id: id });
+        await ResidentModel.deleteOne({ _id: id });
     } catch (err) {
         throw err;
     }

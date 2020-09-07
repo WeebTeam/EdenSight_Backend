@@ -127,14 +127,6 @@ Tenki dashboard, built with adminlte starter page
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- Test -->
-                      <tr>
-                        <td>101</td>
-                        <td>101</td>
-                        <td>101</td>
-                        <td>101</td>
-                        <td>101</td>
-                      </tr>
                     </tbody>
                     <tfoot>
                       <tr>
@@ -246,7 +238,7 @@ Tenki dashboard, built with adminlte starter page
           </div>
           <div class="modal-footer" id="updateResidentFooter" style="display:none;">
             <button type="button" class="btn btn-secondary" onclick="cancelUpdateResident()">Cancel</button>
-            <button type="submit" class="btn btn-info" onclick="updateResident()">Update Resident</button>
+            <button type="submit" class="btn btn-info">Update Resident</button>
           </div>
         </form>
         <div class="modal-footer" id="residentModalFooter">
@@ -258,24 +250,24 @@ Tenki dashboard, built with adminlte starter page
   </div>
 
   <div class="modal fade" tabindex="-1" aria-labelledby="UnauthorizedModal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Unauthorized</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>You are not authorized to perform this operation.</p>
-        <p>Please click the button below to log in.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" href="login.html">Log in</button>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Unauthorized</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>You are not authorized to perform this operation.</p>
+          <p>Please click the button below to log in.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" href="login.html">Log in</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
   <!-- REQUIRED SCRIPTS -->
 
@@ -322,9 +314,10 @@ Tenki dashboard, built with adminlte starter page
   /********** event listeners **********/
 
   //submit new resident form
-  $('#new_resident_form').submit(function (){
+  $('#new_resident_form').submit(function (e){
     //no validate, we are blindly trusting our users
     //instead we ask them to self validate :)
+    e.preventDefault(); //prevent form submit default behaviour
     var userValidation = confirm("Please make sure all information is correct!");
     if (userValidation){
       //send to server
@@ -376,15 +369,16 @@ Tenki dashboard, built with adminlte starter page
   })
 
   //update resident
-  $('#update_resident_form').submit(function (){
+  $('#update_resident_form').submit(function (e){
     //no validate, we are blindly trusting our users
     //instead we ask them to self validate :)
+    e.preventDefault(); //prevent form submit default behaviour
     var userValidation = confirm("Please make sure all information is correct!");
     if (userValidation){
       //send to server
       $.ajax({
-        type: "POST",
-        url: "api/residents/update/",
+        type: "PUT",
+        url: "api/residents/update/" + $("#residentID").val(),
         contentType : 'application/json',
         dataType: 'json',
         beforeSend: function (xhr) {

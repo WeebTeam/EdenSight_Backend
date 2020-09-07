@@ -47,15 +47,15 @@ router.post('/add', async (req: Request, res: Response) => {
 // residents/update/:id
 router.put('/update/:id', async (req: Request, res: Response) => {
   const { id } = req.params as ParamsDictionary;
-  const { resident } = req.body;
+  const resident = req.body;
   if (!resident || !id) {
     return res.status(BAD_REQUEST).json({
       error: paramMissingError,
     });
   }
-
+  
   //update the resident and get the updated resident
-  const updatedResident =  await residentDao.update(Number(id), resident);
+  const updatedResident = await residentDao.update(Number(id), resident);
   //return the updated resident
   return res.status(OK).json(updatedResident);
 });
