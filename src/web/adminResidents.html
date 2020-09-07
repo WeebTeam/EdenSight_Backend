@@ -246,21 +246,18 @@
     </div>
   </div>
 
-  <div class="modal fade" tabindex="-1" aria-labelledby="UnauthorizedModal" aria-hidden="true">
+  <div class="modal fade" id="unauthorized_modal" tabindex="-1" aria-labelledby="UnauthorizedModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Unauthorized</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
         </div>
         <div class="modal-body">
-          <p>You are not authorized to perform this operation.</p>
-          <p>Please click the button below to log in.</p>
+          <p>You are not authorized to access this page or perform this operation.</p>
+          <p>Please click the button below to log in, or log out and log in again as an authorized user.</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" href="login.html">Log in</button>
+          <a class="btn btn-primary" href="login.html">Log in</a>
         </div>
       </div>
     </div>
@@ -336,11 +333,18 @@
           //on success, clear form, modal and update list
           console.log("resident created: "+ resident);
           $("#new_resident_form").trigger("reset");
-          $("#newResidentModal").modal('toggle');
+          $("#newResidentModal").modal('hide');
           getAllResidents();
+        },
+        error: function (xhr){
+          var code = xhr.status;
+
+          //handle 401
+          if (code == 401){
+            $("#newResidentModal").modal('hide');
+            handleUnauthorized();
+          }
         }
-        //todo: handle error, 401
-        //display alert
       });
     }
 
@@ -390,11 +394,18 @@
         success: function (resident){
           //on success, clear form, modal and update list
           console.log("resident updated: "+ resident);
-          $("#residentModal").modal('toggle');
+          $("#residentModal").modal('hide');
           getAllResidents();
+        },
+        error: function (xhr){
+          var code = xhr.status;
+
+          //handle 401
+          if (code == 401){
+            $("#residentModal").modal('hide');
+            handleUnauthorized();
+          }
         }
-        //todo: handle error, 401
-        //display alert
       });
     }
 
@@ -403,7 +414,7 @@
   /********** functions **********/
 
   function handleUnauthorized(){
-
+    $("#unauthorized_modal").modal("show");
   }
 
   function getAllResidents() {
@@ -444,9 +455,15 @@
       success: function (resident){
         //on success, display resident details
 
+      },
+      error: function (xhr){
+        var code = xhr.status;
+
+        //handle 401
+        if (code == 401){
+          handleUnauthorized();
+        }
       }
-      //todo: handle error, 401
-      //display alert
     });
   }
 
@@ -485,7 +502,6 @@
   function deleteResident(){
     var confirmDeletion = confirm('Are you sure? This will remove this resident!');
   }
-
 
 </script>
 
