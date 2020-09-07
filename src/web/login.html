@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+  <title>Login | Edensight</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- page css -->
+  <style>.logo, .login{
+    height: 350px;
+  }
+
+  .logo{
+    background-image: url(assets/eden-logo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .login h1, .form{
+    margin: 20px 0;
+  }
+
+  .backside{
+    padding: 10%;
+    background-color: white;
+    border-radius: 10px;
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .styling{
+    margin: 0 auto;
+  }
+
+  .container{
+    height: 100vh;
+  }
+
+  body{
+    background-image: url(assets/bg.gif);
+  }
+</style>
+</head>
+<body class="container">
+  <div class="row h-100">
+    <div class="row col-md-12 my-auto backside">
+      <div class="col-md-6 logo">
+      </div>
+      <div class="col-md-6 login">
+        <h1>Login</h1>
+        <div class="form">
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="loginUsername">Username</label>
+              <input type="text" class="form-control" id="loginUsername" [(ngModel)]="username" name="username" placeholder="Your username">
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" class="form-control" id="loginPassword" [(ngModel)]="password" name="password" placeholder="Your password">
+            </div>
+            <p id="loginFailed" style="display:none;">Your username or password is invalid.</p>
+            <div class="text-center">
+              <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+  $(function () { //stuff here runs on page load
+
+    //check if localstorage credentials is populated (user is logged in)
+    if (localStorage.getItem("credentials") != null){
+      //redirect based on user type
+      if (localStorage.getItem("admin") == true){
+        window.location.replace("adminResidents.html");
+      }
+      else{
+        window.location.replace("residents.html");
+      }
+    }
+  });
+
+  /********** event listeners **********/
+
+  //submit login form
+  $('#loginForm').submit(function (e){
+    //no validate, we are blindly trusting our users
+    //instead we ask them to self validate :)
+    e.preventDefault(); //prevent form submit default behaviour
+
+    var credentials = btoa($('#loginUsername').val() + ':' + $('#loginPassword').val());
+    //send to server
+    $.ajax({
+      type: "GET",
+      url: "api/auth/login/",
+      dataType: 'json',
+      beforeSend: function (xhr) {
+        //include credentials
+        xhr.setRequestHeader ("Authorization", "Basic " + credentials);
+      },
+      success: function (data){
+        //on success, check user type and redirect acordingly
+        localStorage.setItem("credentials", credentials);
+        if (data.admin){
+          localStorage.setItem("admin", true);
+          window.location.replace("adminResidents.html");
+        }
+        else{
+          window.location.replace("residents.html");
+        }
+      },
+      error: function (){
+        //show error
+        $("#loginFailed").show();
+      }
+    });
+  });
+  </script>
+</body>
+</html>

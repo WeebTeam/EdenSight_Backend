@@ -13,7 +13,7 @@ const userDao = new UserDao();
 *                      Login User - "POST /auth/login"
 ******************************************************************************/
 
-router.post('/login', async (req: Request, res: Response) => {
+router.get('/login', async (req: Request, res: Response) => {
 
   //permit check for basic credentials
   const permit = new Basic({});
@@ -40,7 +40,7 @@ router.post('/login', async (req: Request, res: Response) => {
 
     //user authenticated, todo: (maybe)create and return bearer token
 
-    return res.status(OK).json({ login: "login is successful!" });
+    return res.status(OK).json({ admin: user.admin });
   }
   else {
     return res.status(BAD_REQUEST).json({
