@@ -12,7 +12,7 @@ export interface IResident {
 }
 @plugin(AutoIncrementID, {} )
 class Resident implements IResident {
-  @prop({ unique:true })
+  @prop()
   public _id: number;
 
   @prop({ required: true })
