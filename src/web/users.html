@@ -15,6 +15,8 @@ Tenki dashboard, built with adminlte starter page
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- Extra stylesheet -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -30,6 +32,9 @@ Tenki dashboard, built with adminlte starter page
           <a href="#" onclick="getAllResidents()" class="nav-link">Refresh List</a>
         </li>
       </ul>
+
+      <p class="lead welcomeMsg col">Welcome back Traveler!</p>
+
     </nav>
     <!-- /.navbar -->
 
@@ -184,53 +189,6 @@ Tenki dashboard, built with adminlte starter page
   <!-- ./wrapper -->
 
   <!-- Modals -->
-  <div class="modal fade" id="residentModal" tabindex="-1" aria-labelledby="ResidentModal" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="residentModalTitle" >Resident Details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-        <!-- Widgets for Vital Signs -->
-        <div class="modal-body">
-        <div class="row">
-          <div class="col-lg-6 col-6">
-            <!-- small card -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                <p>BPM</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-heartbeat"></i>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 col-6">
-            <!-- small card -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>98<sup style="font-size: 20px">%</sup></h3>
-
-                <p>SpO2</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-tint"></i>
-              </div>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
-        <!-- /.row -->
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="modal fade" tabindex="-1" aria-labelledby="UnauthorizedModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -367,21 +325,6 @@ Tenki dashboard, built with adminlte starter page
       //todo: handle error, 401
       //display alert
     });
-  }
-
-  function cancelResidentView(){
-    //change buttons
-    $("#residentModalFooter").show();
-
-    //disallow editing
-    $("#residentName").prop("disabled", true);
-    $("#residentCaretaker").prop("disabled", true);
-    $("#residentRoom").prop("disabled", true);
-
-    //reset the data
-    $("#residentName").val(resident.name);
-    $("#residentCaretaker").val(resident.caretaker);
-    $("#residentRoom").val(resident.room);
   }
 
 </script>

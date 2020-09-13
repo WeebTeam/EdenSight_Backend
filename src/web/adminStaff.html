@@ -7,7 +7,7 @@ Tenki dashboard, built with adminlte starter page
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
-  <title>Manage Users | Edensight</title>
+  <title>Manage Staff | Edensight</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -15,6 +15,8 @@ Tenki dashboard, built with adminlte starter page
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- Extra stylesheet -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -27,12 +29,15 @@ Tenki dashboard, built with adminlte starter page
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" onclick="getAllResidents()" class="nav-link">Refresh List</a>
+          <a href="#" onclick="getAllStaff()" class="nav-link">Refresh List</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link" data-toggle="modal" data-target="#newUserModal">New User</a>
+          <a href="#" class="nav-link" data-toggle="modal" data-target="#newStaffModal">New Staff</a>
         </li>
       </ul>
+
+      <p class="lead welcomeMsg col">Welcome back Traveler!</p>
+
     </nav>
     <!-- /.navbar -->
 
@@ -40,7 +45,7 @@ Tenki dashboard, built with adminlte starter page
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="assets/eden-logo-white+grey.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Edensight</span>
       </a>
 
@@ -62,7 +67,7 @@ Tenki dashboard, built with adminlte starter page
             <li class="nav-header">ADMIN</li>
             <li class="nav-item">
               <a href="adminResidents.html" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <i class="nav-icon fas fa-users"></i>
                 <p>
                   Residents
                 </p>
@@ -70,30 +75,22 @@ Tenki dashboard, built with adminlte starter page
 
             </li>
             <li class="nav-item">
-              <a href="adminUsers.html" class="nav-link admin">
-                <i class="nav-icon fas fa-calendar"></i>
+              <a href="adminStaff.html" class="nav-link active">
+                <i class="nav-icon fas fa-user-tie"></i>
                 <p>
-                  Users
+                  Staff
                 </p>
               </a>
             </li>
             <li class="nav-header">STAFF</li>
             <li class="nav-item">
               <a href="residents.html" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <i class="nav-icon fas fa-users"></i>
                 <p>
                   Residents
                 </p>
               </a>
 
-            </li>
-            <li class="nav-item">
-              <a href="users.html" class="nav-link">
-                <i class="nav-icon fas fa-calendar"></i>
-                <p>
-                  Users
-                </p>
-              </a>
             </li>
           </ul>
         </nav>
@@ -109,7 +106,7 @@ Tenki dashboard, built with adminlte starter page
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0 text-dark">Residents</h1>
+              <h1 class="m-0 text-dark">Manage Staff</h1>
             </div><!-- /.col -->
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -123,33 +120,30 @@ Tenki dashboard, built with adminlte starter page
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <table id="users_table" class="table table-bordered table-hover">
+                  <table id="staff_table" class="table table-bordered table-hover">
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Caretaker</th>
-                        <th>Room</th>
+                        <th>Staff Name</th>
+                        <th>Staff Username</th>
+                        <th>Phone Number</th>
+                        <th>Admin</th>
                       </tr>
                     </thead>
                     <tbody>
                       <!-- Test -->
                       <tr>
-                        <td>101</td>
-                        <td>101</td>
-                        <td>101</td>
-                        <td>101</td>
-                        <td>101</td>
+                        <td>LLS</td>
+                        <td>loli</td>
+                        <td>10101010101</td>
+                        <td>Yes</td>
                       </tr>
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Caretaker</th>
-                        <th>Room</th>
+                        <th>Staff Name</th>
+                        <th>Staff Username</th>
+                        <th>Phone Number</th>
+                        <th>Admin</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -190,28 +184,36 @@ Tenki dashboard, built with adminlte starter page
   <!-- ./wrapper -->
 
   <!-- Modals -->
-  <div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModal" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade" id="newStaffModal" tabindex="-1" aria-labelledby="newStaffModal" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Add New User</h5>
+          <h5 class="modal-title">Add New Staff</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id='new_resident_form'>
+        <form id='new_staff_form'>
           <div class="modal-body">
             <div class="form-group">
-              <label for="newResidentName">Resident Name</label>
-              <input type="text" class="form-control" id="newResidentName" required="">
+              <label for="newStaffName">Staff Name</label>
+              <input type="text" class="form-control" id="newStaffName" required="">
             </div>
             <div class="form-group">
-              <label for="newResidentCaretaker">Caretaker</label>
-              <input type="text" class="form-control" id="newResidentCaretaker" required="">
+              <label for="newStaffUsername">Staff Username</label>
+              <input type="text" class="form-control" id="newStaffUsername" required="">
             </div>
             <div class="form-group">
-              <label for="newResidentRoom">Room Number</label>
-              <input type="text" class="form-control" id="newResidentRoom" required="">
+              <label for="newStaffPassword">Password</label>
+              <input type="Password" class="form-control" id="newStaffPassword" required="">
+            </div>
+            <div class="form-group">
+              <label for="newStaffPhoneNum">Phone Number</label>
+              <input type="text" class="form-control" id="newStaffPhoneNum" required="">
+            </div>
+            <div class="custom-control custom-switch custom-switch-md">
+              <input type="checkbox" class="custom-control-input" id="newIsStaffAdmin" onclick="if($('#newIsStaffAdmin').prop('disabled') == false && $('#newIsStaffAdmin').prop('checked') == true) return confirm('Are you sure you want to give administration rights to this user?')">
+              <label class="custom-control-label" for="newIsStaffAdmin">Is Admin</label>
             </div>
           </div>
           <div class="modal-footer">
@@ -223,42 +225,46 @@ Tenki dashboard, built with adminlte starter page
     </div>
   </div>
 
-  <div class="modal fade" id="residentModal" tabindex="-1" aria-labelledby="ResidentModal" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade" id="staffModal" tabindex="-1" aria-labelledby="staffModal" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="residentModalTitle" >User Details</h5>
+          <h5 class="modal-title" id="staffModalTitle" >Staff Details</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id='update_resident_form'>
+        <form id='update_staff_form'>
           <div class="modal-body">
             <div class="form-group">
-              <label for="residentID">Resident ID</label>
-              <input type="text" class="form-control" id="residentID" required="" disabled="">
+              <label for="staffName">Staff Name</label>
+              <input type="text" class="form-control" id="staffName" required="" disabled="">
             </div>
             <div class="form-group">
-              <label for="residentName">Resident Name</label>
-              <input type="text" class="form-control" id="residentName" required="" disabled="">
+              <label for="staffUsername">Staff Username</label>
+              <input type="text" class="form-control" id="staffUsername" required="" disabled="">
             </div>
             <div class="form-group">
-              <label for="residentCaretaker">Caretaker</label>
-              <input type="text" class="form-control" id="residentCaretaker" required="" disabled="">
+              <label for="staffPassword">Password</label>
+              <input type="Password" class="form-control" id="staffPassword" required="" disabled="">
             </div>
             <div class="form-group">
-              <label for="residentRoom">Room Number</label>
-              <input type="text" class="form-control" id="residentRoom" required="" disabled="">
+              <label for="staffPhoneNum">Phone Number</label>
+              <input type="text" class="form-control" id="staffPhoneNum" required="" disabled="">
+            </div>
+            <div class="custom-control custom-switch custom-switch-md">
+              <input type="checkbox" class="custom-control-input" id="isStaffAdmin" onclick="if($('#isStaffAdmin').prop('disabled') == false && $('#isStaffAdmin').prop('checked') == true) return confirm('Are you sure you want to give administration rights to this user?')" disabled="">
+              <label class="custom-control-label" for="isStaffAdmin">Is Admin</label>
             </div>
           </div>
-          <div class="modal-footer" id="updateResidentFooter" style="display:none;">
-            <button type="button" class="btn btn-secondary" onclick="cancelUpdateResident()">Cancel</button>
-            <button type="submit" class="btn btn-info" onclick="updateResident()">Update Resident</button>
+          <div class="modal-footer" id="updateStaffFooter" style="display:none;">
+            <button type="button" class="btn btn-secondary" onclick="cancelUpdateStaff()">Cancel</button>
+            <button type="submit" class="btn btn-info" onclick="updateStaff()">Update Staff</button>
           </div>
         </form>
-        <div class="modal-footer" id="residentModalFooter">
-          <button type="button" class="btn btn-primary" onclick="enableUpdateResident()">Modify Resident</button>
-          <button type="button" class="btn btn-danger" onclick="deleteResident()">Delete Resident</button>
+        <div class="modal-footer" id="staffModalFooter">
+          <button type="button" class="btn btn-primary" onclick="enableUpdateStaff()">Modify Staff</button>
+          <button type="button" class="btn btn-danger" onclick="deleteStaff()">Delete Staff</button>
         </div>
       </div>
     </div>
@@ -303,37 +309,36 @@ Tenki dashboard, built with adminlte starter page
   <script>
   $(function () { //stuff here runs on page load
 
-    //init residents table
-    users_table = $('#users_table').DataTable({
+    //init staff table
+    staff_table = $('#staff_table').DataTable({
       "paging": true,
       "ordering": true,
       "info": true,
       "autoWidth": false,
       "responsive": true,
       "columns": [
-        { "data": "_id" },
         { "data": "name" },
-        { "data": "status" },
-        { "data": "caretaker" },
-        { "data": "room" }
+        { "data": "username" },
+        { "data": "phoneNum" },
+        { "data": "admin" }
       ]
     });
 
-    //init resident (blank for now)
-    resident = ""
+    //init staff (blank for now)
+    staff = ""
 
     //fetch any data that we need on page load
-    getAllResidents();
+    getAllStaff();
   });
 
   /********** event listeners **********/
 
-  //submit new user form
-  $('#new_resident_form').submit(function (){
-    //no validate, we are blindly trusting our users
+  //submit new staff form
+  $('#new_staff_form').submit(function (){
+    //no validate, we are blindly trusting our staff
     //instead we ask them to self validate :)
-    var userValidation = confirm("Please make sure all information is correct!");
-    if (userValidation){
+    var staffValidation = confirm("Please make sure all information is correct!");
+    if (staffValidation){
       //send to server
       $.ajax({
         type: "POST",
@@ -352,9 +357,9 @@ Tenki dashboard, built with adminlte starter page
         success: function (resident){
           //on success, clear form, modal and update list
           console.log("resident created: "+ resident);
-          $("#new_resident_form").trigger("reset");
-          $("#newUserModal").modal('toggle');
-          getAllResidents();
+          $("#new_staff_form").trigger("reset");
+          $("#newStaffModal").modal('toggle');
+          getAllStaff();
         }
         //todo: handle error, 401
         //display alert
@@ -364,30 +369,31 @@ Tenki dashboard, built with adminlte starter page
   });
 
   //table: handle when clicking rows
-  $('#users_table tbody').on("click", "tr", function() {
-    resident = users_table.row( this ).data();
+  $('#staff_table tbody').on("click", "tr", function() {
+    staff = staff_table.row( this ).data();
 
     //populate the form
-    $("#residentID").val(resident._id);
-    $("#residentName").val(resident.name);
-    $("#residentCaretaker").val(resident.caretaker);
-    $("#residentRoom").val(resident.room);
+    $("#staffName").val(staff.name);
+    $("#staffUsername").val(staff.username);
+    $("#staffPassword").val(staff.password);
+    $("#staffPhoneNum").val(staff.phoneNum);
+    $("#isStaffAdmin").val(staff.admin);
 
-    $("#residentModal").modal('toggle');
+    $("#staffModal").modal('toggle');
   });
 
-  //residentModal: handle modal hide
+  //staffModal: handle modal hide
   //reset the modal state
-  $('#residentModal').on('hide.bs.modal', function (e) {
-    cancelUpdateResident();
+  $('#staffModal').on('hide.bs.modal', function (e) {
+    cancelUpdateStaff();
   })
 
-  //update resident
-  $('#update_resident_form').submit(function (){
-    //no validate, we are blindly trusting our users
+  //update staff
+  $('#update_staff_form').submit(function (){
+    //no validate, we are blindly trusting our staff
     //instead we ask them to self validate :)
-    var userValidation = confirm("Please make sure all information is correct!");
-    if (userValidation){
+    var staffValidation = confirm("Please make sure all information is correct!");
+    if (staffValidation){
       //send to server
       $.ajax({
         type: "POST",
@@ -406,8 +412,8 @@ Tenki dashboard, built with adminlte starter page
         success: function (resident){
           //on success, clear form, modal and update list
           console.log("resident updated: "+ resident);
-          $("#residentModal").modal('toggle');
-          getAllResidents();
+          $("#staffModal").modal('toggle');
+          getAllStaff();
         }
         //todo: handle error, 401
         //display alert
@@ -422,7 +428,7 @@ Tenki dashboard, built with adminlte starter page
 
   }
 
-  function getAllResidents() {
+  function getAllStaff() {
     $.ajax({
       type: "GET",
       url: "api/residents/all/",
@@ -431,11 +437,11 @@ Tenki dashboard, built with adminlte starter page
         //include credentials
         xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
       },
-      success: function (residents){
+      success: function (staff){
         //on success, update table
-        users_table.clear();
-        users_table.rows.add(residents);
-        users_table.draw();
+        staff_table.clear();
+        staff_table.rows.add(staff);
+        staff_table.draw();
       },
       error: function (xhr){
         var code = xhr.status;
@@ -448,7 +454,7 @@ Tenki dashboard, built with adminlte starter page
     });
   }
 
-  function getResidentById() {
+  function getStaffById() {
     $.ajax({
       type: "GET",
       url: "api/residents/",
@@ -466,40 +472,46 @@ Tenki dashboard, built with adminlte starter page
     });
   }
 
-  function enableUpdateResident(){
+  function enableUpdateStaff(){
     //change title
-    $("#residentModalTitle").text("Modify User");
+    $("#staffModalTitle").text("Modify Staff");
 
     //change buttons
-    $("#residentModalFooter").hide();
-    $("#updateResidentFooter").show();
+    $("#staffModalFooter").hide();
+    $("#updateStaffFooter").show();
 
     //allow editing
-    $("#residentName").prop("disabled", false);
-    $("#residentCaretaker").prop("disabled", false);
-    $("#residentRoom").prop("disabled", false);
+    $("#staffName").prop("disabled", false);
+    $("#staffUsername").prop("disabled", false);
+    $("#staffPassword").prop("disabled", false);
+    $("#staffPhoneNum").prop("disabled", false);
+    $("#isStaffAdmin").prop("disabled", false);
   }
 
-  function cancelUpdateResident(){
-    $("#residentModalTitle").text("User Details");
+  function cancelUpdateStaff(){
+    $("#staffModalTitle").text("Staff Details");
 
     //change buttons
-    $("#residentModalFooter").show();
-    $("#updateResidentFooter").hide();
+    $("#staffModalFooter").show();
+    $("#updateStaffFooter").hide();
 
     //disallow editing
-    $("#residentName").prop("disabled", true);
-    $("#residentCaretaker").prop("disabled", true);
-    $("#residentRoom").prop("disabled", true);
+    $("#staffName").prop("disabled", true);
+    $("#staffUsername").prop("disabled", true);
+    $("#staffPassword").prop("disabled", true);
+    $("#staffPhoneNum").prop("disabled", true);
+    $("#isStaffAdmin").prop("disabled", true);
 
     //reset the data
-    $("#residentName").val(resident.name);
-    $("#residentCaretaker").val(resident.caretaker);
-    $("#residentRoom").val(resident.room);
+    $("#staffName").val(staff.name);
+    $("#staffUsername").val(staff.username);
+    $("#staffPassword").val(staff.password);
+    $("#staffPhoneNum").val(staff.phoneNum);
+    $("#isStaffAdmin").val(staff.isStaffAdmin);
   }
 
-  function deleteResident(){
-    var confirmDeletion = confirm('Are you sure? This will remove this user!');
+  function deleteStaff(){
+    var confirmDeletion = confirm('Are you sure? This will remove this staff!');
   }
 
 

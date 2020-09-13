@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- Extra stylesheet -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -30,6 +32,8 @@
           <a href="#" class="nav-link" data-toggle="modal" data-target="#newResidentModal">New Resident</a>
         </li>
       </ul>
+
+      <p class="lead welcomeMsg col">Welcome back Traveler!</p>
     </nav>
     <!-- /.navbar -->
 
@@ -37,7 +41,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="assets/eden-logo-white+grey.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Edensight</span>
       </a>
 
@@ -59,7 +63,7 @@
             <li class="nav-header">ADMIN</li>
             <li class="nav-item">
               <a href="adminResidents.html" class="nav-link active">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <i class="nav-icon fas fa-users"></i>
                 <p>
                   Residents
                 </p>
@@ -67,30 +71,22 @@
 
             </li>
             <li class="nav-item">
-              <a href="adminUsers.html" class="nav-link">
-                <i class="nav-icon fas fa-calendar"></i>
+              <a href="adminStaff.html" class="nav-link">
+                <i class="nav-icon fas fa-user-tie"></i>
                 <p>
-                  Users
+                  Staff
                 </p>
               </a>
             </li>
             <li class="nav-header">STAFF</li>
             <li class="nav-item">
               <a href="residents.html" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <i class="nav-icon fas fa-users"></i>
                 <p>
                   Residents
                 </p>
               </a>
 
-            </li>
-            <li class="nav-item">
-              <a href="users.html" class="nav-link">
-                <i class="nav-icon fas fa-calendar"></i>
-                <p>
-                  Users
-                </p>
-              </a>
             </li>
           </ul>
         </nav>
@@ -187,7 +183,7 @@
 
   <!-- Modals -->
   <div class="modal fade" id="newResidentModal" tabindex="-1" aria-labelledby="NewResidentModal" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Add New Resident</h5>
@@ -195,6 +191,197 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <div class="row">
+          <div class="col-12 col-sm-12">
+            <div class="card card-primary card-tabs">
+              <div class="card-header p-0 pt-1">
+                <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="custom-tabs-one-newGeneral-tab" data-toggle="pill" href="#custom-tabs-one-newGeneral" role="tab" aria-controls="custom-tabs-one-newGeneral" aria-selected="true">General</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-one-newDetailed-tab" data-toggle="pill" href="#custom-tabs-one-newDetailed" role="tab" aria-controls="custom-tabs-one-newDetailed" aria-selected="false">Detailed</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-one-newHealth-tab" data-toggle="pill" href="#custom-tabs-one-newHealth" role="tab" aria-controls="custom-tabs-one-newHealth" aria-selected="false">Health</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-one-newContact-tab" data-toggle="pill" href="#custom-tabs-one-newContact" role="tab" aria-controls="custom-tabs-one-newContact" aria-selected="false">Contact</a>
+                  </li>
+                </ul>
+              </div>
+              <form id='new_resident_form'>
+              <div class="card-body">
+                <div class="tab-content" id="custom-tabs-one-tabContent">
+                  <div class="tab-pane fade show active" id="custom-tabs-one-newGeneral" role="tabpanel" aria-labelledby="custom-tabs-one-newGeneral-tab">
+			          <div class="modal-body">
+			            <div class="form-group">
+			              <label for="newResidentID">Resident ID</label>
+			              <input type="text" class="form-control" id="newResidentID" required="">
+			            </div>
+			            <div class="form-group">
+			              <label for="newResidentName">Resident Name</label>
+			              <input type="text" class="form-control" id="newResidentName" required="">
+			            </div>
+			            <div class="form-group">
+			              <label for="newResidentCaretaker">Caretaker</label>
+			              <input type="text" class="form-control" id="newResidentCaretaker" required="">
+			            </div>
+			            <div class="form-group">
+			              <label for="newResidentRoom">Room Number</label>
+			              <input type="text" class="form-control" id="newResidentRoom" required="">
+			            </div>
+			          </div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-one-newDetailed" role="tabpanel" aria-labelledby="custom-tabs-one-newDetailed-tab">
+			          <div class="modal-body">
+			            <div class="form-group">
+			              <label for="newResidentGender">Gender</label>
+			              <select class="form-control" id="newResidentGender" required="">
+	                        <option>Male</option>
+	                        <option>Female</option>
+	                        <option>Other</option>
+	                      </select>
+			            </div>
+			            <div class="form-group">
+			              <label for="newResidentDOB">Date of birth</label>
+			              <input type="date" class="form-control" id="newResidentDOB" required="">
+			            </div>
+			            <div class="form-group">
+			              <label for="newResidentIC">IC No.</label>
+			              <input type="text" class="form-control" id="newResidentIC" required="">
+			            </div>
+			            <div class="form-group">
+			              <label for="newResidentNationality">Nationality</label>
+			              <input type="text" class="form-control" id="newResidentNationality" required="">
+			            </div>
+			          </div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-one-newHealth" role="tabpanel" aria-labelledby="custom-tabs-one-newHealth-tab">
+			          <div class="modal-body">
+			            <div class="form-group">
+			              <label for="newResidentWeight">Weight (kg)</label>
+			              <input type="text" class="form-control" id="newResidentWeight" required="">
+			            </div>
+			            <div class="form-group">
+			              <label for="newResidentHeight">Height (cm)</label>
+			              <input type="text" class="form-control" id="newResidentHeight" required="">
+			            </div>
+			            <div class="form-group">
+			              <label for="newResidentBloodType">Blood Type</label>
+	                      <select class="form-control" id="newResidentBloodType" required="">
+	                        <option>A</option>
+	                        <option>B</option>
+	                        <option>AB</option>
+	                        <option>O</option>
+	                      </select>
+			            </div>
+			            <div class="form-group">
+			              <label>Health Conditions</label><br>
+			              
+			              <div id="healthConditions-new">
+			              	<div class="card-body">
+			                  <div class="input-group">
+			                    <input id="new-condition-new" type="text" class="form-control" placeholder="Health Conditions (Diabetes, Stroke, etc)">
+
+			                    <div class="input-group-append">
+			                      <button id="add-new-condition-new" type="button" class="btn btn-primary">Add</button>
+			                    </div>
+			                    <!-- /btn-group -->
+			                  </div>
+			                  <!-- /input-group -->
+			                </div>
+			              </div>
+			            </div>
+			        	
+			            <div class="form-group">
+			              <label>Allergies</label><br>
+
+			              <div id="allergies-new">
+			              	<div class="card-body">
+			                  <div class="input-group">
+			                    <input id="new-allergies-new" type="text" class="form-control" placeholder="Allergies (Drugs, etc)">
+
+			                    <div class="input-group-append">
+			                      <button id="add-new-allergies-new" type="button" class="btn btn-primary">Add</button>
+			                    </div>
+			                    <!-- /btn-group -->
+			                  </div>
+			                  <!-- /input-group -->
+			                </div>
+			              </div>
+			            </div>
+			            <div class="form-group">
+			              <label>Medication</label><br>
+
+			              <div id="medication-new">
+			              	<div class="card-body">
+			                  <div class="input-group">
+			                    <input id="new-medication-new" type="text" class="form-control" placeholder="Medication">
+
+			                    <div class="input-group-append">
+			                      <button id="add-new-medication-new" type="button" class="btn btn-primary">Add</button>
+			                    </div>
+			                    <!-- /btn-group -->
+			                  </div>
+			                  <!-- /input-group -->
+			                </div>
+			              </div>
+			            </div>
+			          </div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-one-newContact" role="tabpanel" aria-labelledby="custom-tabs-one-newContact-tab">
+			          <div class="modal-body">
+			          	<div class="form-group">
+			              <label for="newResidentPhoneNum">Resident's Phone Number</label>
+			              <input type="text" class="form-control" id="newResidentPhoneNum" required="">
+			            </div>
+			            <div class="form-group">
+			              <label for="newResidentGuardianName">Guardian's Name</label>
+			              <input type="text" class="form-control" id="newResidentGuardianName" required="">
+			            </div>
+			            <div class="form-group">
+			              <label for="newResidentEmergencyNum">Emergency Phone Number</label>
+			              <input type="text" class="form-control" id="newResidentEmergencyNum" required="">
+			            </div>
+			            <div class="form-group">
+			              <label for="newResidentStreetAddress">Street Address</label>
+				          <input type="text" class="form-control" id="newResidentStreetAddress" required="">
+				        </div>
+				        <div class="form-group">
+				          <label for="newResidentStreetAddress2">Street Address 2</label>
+				          <input type="text" class="form-control" id="newResidentStreetAddress2" required="">
+				        </div>
+			            <div class="form-row">
+			              <div class="form-group col-md-5">
+			              	<label for="newResidentCity">City</label>
+			                <input type="text" class="form-control" id="newResidentCity" required="">
+			              </div>
+			              <div class="form-group col-md-4">
+			              	<label for="newResidentState">State</label>
+			                <input type="text" class="form-control" id="newResidentState" required="">
+			              </div>
+			              <div class="form-group col-md-3"> 
+			              	<label for="newResidentPostal">Postal</label>
+			                <input type="text" class="form-control" id="newResidentPostal" required="">
+			              </div>
+			        	</div>
+			          </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card -->
+              <div class="modal-footer">
+            	<button type="reset" class="btn btn-danger" onclick="return confirm_reset();">Clear</button>
+            	<button type="submit" class="btn btn-primary">Submit</button>
+          	  </div>
+          	  </form>
+          	  <!-- /.END OF FORM -->
+            </div>
+          </div>
+      	</div>
+
+    <!--
         <form id='new_resident_form'>
           <div class="modal-body">
             <div class="form-group">
@@ -215,12 +402,13 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
+    -->
       </div>
     </div>
   </div>
 
   <div class="modal fade" id="residentModal" tabindex="-1" aria-labelledby="ResidentModal" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="residentModalTitle" >Resident Details</h5>
@@ -247,10 +435,10 @@
                   </li>
                 </ul>
               </div>
+              <form id='update_resident_form'>
               <div class="card-body">
                 <div class="tab-content" id="custom-tabs-one-tabContent">
                   <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
-                    <form id='update_resident_form'>
 			          <div class="modal-body">
 			            <div class="form-group">
 			              <label for="residentID">Resident ID</label>
@@ -295,10 +483,8 @@
 			              <input type="text" class="form-control" id="residentNationality" required="" disabled="">
 			            </div>
 			          </div>
-			        </form>
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-one-health" role="tabpanel" aria-labelledby="custom-tabs-one-health-tab">
-                    <form id='update_resident_form_3'>
 			          <div class="modal-body">
 			            <div class="form-group">
 			              <label for="residentWeight">Weight (kg)</label>
@@ -319,53 +505,59 @@
 			            </div>
 			            <div class="form-group">
 			              <label>Health Conditions</label><br>
-			              <input type="checkbox" class="residentHealth" id="asthma" required="" disabled="">
-			              <label for="asthma" class="form-check-label">Asthma</label><br>
-			              <input type="checkbox" class="residentHealth" id="anaphylaxis" required="" disabled="">
-			              <label for="anaphylaxis" class="form-check-label">Anaphylaxis</label><br>
-			              <input type="checkbox" class="residentHealth" id="diabetes" required="" disabled="">
-			              <label for="diabetes" class="form-check-label">Diabetes</label><br>
-			              <input type="checkbox" class="residentHealth" id="dizzySpell" required="" disabled="">
-			              <label for="dizzySpell" class="form-check-label">Dizzy spells</label><br>
-			              <input type="checkbox" class="residentHealth" id="migraine" required="" disabled="">
-			              <label for="migraine" class="form-check-label">Migraine</label><br>
-			              <input type="checkbox" class="residentHealth" id="heartCondition" required="" disabled="">
-			              <label for="heartCondition" class="form-check-label">Heart condition</label><br>
-			              <input type="checkbox" class="residentHealth" id="backProblems" required="" disabled="">
-			              <label for="backProblems" class="form-check-label">Back Problems</label><br>
-			              <input type="checkbox" class="residentHealth" id="respiratoryDisease" required="" disabled="">
-			              <label for="respiratoryDisease" class="form-check-label">Respiratory Disease</label><br>
-			              <input type="checkbox" class="residentHealth" id="stroke" required="" disabled="">
-			              <label for="stroke" class="form-check-label">Stroke</label><br>
-			              <input type="checkbox" class="residentHealth" id="residentOtherHealthChkbox" required="" disabled="">
-			              <label for="residentOtherHealthChkbox" class="form-check-label">Others: </label>
-			              <input type="text" id="residentOtherHealth" required="" disabled="">
+			              
+			              <div id="healthConditions">
+			              	<div class="card-body">
+			                  <div class="input-group">
+			                    <input id="new-condition" type="text" class="form-control" placeholder="Health Conditions (Diabetes, Stroke, etc)">
+
+			                    <div class="input-group-append">
+			                      <button id="add-new-condition" type="button" class="btn btn-primary" disabled="">Add</button>
+			                    </div>
+			                    <!-- /btn-group -->
+			                  </div>
+			                  <!-- /input-group -->
+			                </div>
+			              </div>
 			            </div>
+			        	
 			            <div class="form-group">
 			              <label>Allergies</label><br>
-			              <input type="checkbox" class="residentAllergies" id="penicillin" required="" disabled="">
-			              <label for="penicillin" class="form-check-label">Penicillin</label><br>
-			              <input type="checkbox" class="residentAllergies" id="aspirin" required="" disabled="">
-			              <label for="aspirin" class="form-check-label">Aspirin</label><br>
-			              <input type="checkbox" class="residentAllergies" id="residentOtherDrugAllergiesChkbox" required="" disabled="">
-			              <label for="residentOtherDrugAllergiesChkbox" class="form-check-label">Other Drugs: </label>
-			              <input type="text" id="residentOtherDrugAllergies" required="" disabled=""><br>
-			              <input type="checkbox" class="residentAllergies" id="residentFoodAllergiesChkbox" required="" disabled="">
-			              <label for="residentFoodAllergiesChkbox" class="form-check-label">Foods: </label>
-			              <input type="text" id="residentFoodAllergies" required="" disabled=""><br>
-			              <input type="checkbox" class="residentAllergies" id="residentOtherAllergiesChkbox" required="" disabled="">
-			              <label for="residentOtherAllergiesChkbox" class="form-check-label">Other allergies: </label>
-			              <input type="text" id="residentOtherAllergies" required="" disabled="">
+
+			              <div id="allergies">
+			              	<div class="card-body">
+			                  <div class="input-group">
+			                    <input id="new-allergies" type="text" class="form-control" placeholder="Allergies (Drugs, etc)">
+
+			                    <div class="input-group-append">
+			                      <button id="add-new-allergies" type="button" class="btn btn-primary" disabled="">Add</button>
+			                    </div>
+			                    <!-- /btn-group -->
+			                  </div>
+			                  <!-- /input-group -->
+			                </div>
+			              </div>
 			            </div>
 			            <div class="form-group">
-			              <label for="residentMedication">Medication</label><br>
-			              <textarea class="form-control" id="residentMedication" rows="3" disabled=""></textarea>
+			              <label>Medication</label><br>
+
+			              <div id="medication">
+			              	<div class="card-body">
+			                  <div class="input-group">
+			                    <input id="new-medication" type="text" class="form-control" placeholder="Medication">
+
+			                    <div class="input-group-append">
+			                      <button id="add-new-medication" type="button" class="btn btn-primary" disabled="">Add</button>
+			                    </div>
+			                    <!-- /btn-group -->
+			                  </div>
+			                  <!-- /input-group -->
+			                </div>
+			              </div>
 			            </div>
 			          </div>
-			        </form>
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-one-contact" role="tabpanel" aria-labelledby="custom-tabs-one-contact-tab">
-                    <form id='update_resident_form_4'>
 			          <div class="modal-body">
 			          	<div class="form-group">
 			              <label for="residentPhoneNum">Resident's Phone Number</label>
@@ -402,20 +594,21 @@
 			              </div>
 			        	</div>
 			          </div>
-			        </form>
                   </div>
                 </div>
               </div>
               <!-- /.card -->
+              </form>
+          	  <!-- /.END OF FORM -->
+              <div class="modal-footer" id="residentModalFooter">
+	            <button type="button" class="btn btn-primary" onclick="enableUpdateResident()">Modify Resident</button>
+	            <button type="button" class="btn btn-danger" onclick="deleteResident()">Delete Resident</button>
+	          </div>
+	          <div class="modal-footer" id="updateResidentFooter" style="display:none;">
+	            <button type="button" class="btn btn-secondary" onclick="cancelUpdateResident()">Cancel</button>
+	            <button type="submit" class="btn btn-info">Update Resident</button>
+	          </div>
             </div>
-	        <div class="modal-footer" id="residentModalFooter">
-	          <button type="button" class="btn btn-primary" onclick="enableUpdateResident()">Modify Resident</button>
-	          <button type="button" class="btn btn-danger" onclick="deleteResident()">Delete Resident</button>
-	        </div>
-	        <div class="modal-footer" id="updateResidentFooter" style="display:none;">
-	          <button type="button" class="btn btn-secondary" onclick="cancelUpdateResident()">Cancel</button>
-	          <button type="submit" class="btn btn-info">Update Resident</button>
-	        </div>
           </div>
       	</div>
       </div>
@@ -586,6 +779,266 @@
 
   });
 
+
+
+  // NEW RESIDENT SIDE
+  // When add btn clicked, it will add in a div with the value given by user with selected random colors
+  $('#add-new-condition-new').click(function (e) {
+    e.preventDefault()
+    // Get value and make sure it is not null
+    var val = $('#new-condition-new').val()
+    if (val.length == 0) {
+      return
+    }
+
+    // Create events
+    var condition = $('<div />')
+    condition.css({
+      'background-color': getRandomColor(),
+      'border-color'    : getRandomColor(),
+      'color'           : '#fff',
+      'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+      'border-radius'   : '.25rem',
+      'font-weight'     : '700',
+      'margin-bottom'	  : '4px',
+      'margin-right'  : '4px',
+      'padding'		  : '5px 10px',
+      'width'		  : 'auto',
+      'display'		  : 'inline-block'
+    }).addClass('healthConditions-new')
+    condition.text(val)
+
+    condition.addClass('alert')
+
+    condition.addClass('col')
+
+    $("#healthConditions-new").prepend(condition)
+
+    // Remove event from text input
+    $('#new-condition-new').val('')
+
+    var x = condition.html();
+    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+    // Add button to condition div
+    condition.html(x+y);
+
+  })
+
+
+  $('#add-new-allergies-new').click(function (e) {
+    e.preventDefault()
+    // Get value and make sure it is not null
+    var val = $('#new-allergies-new').val()
+    if (val.length == 0) {
+      return
+    }
+
+    // Create events
+    var allergies = $('<div />')
+    allergies.css({
+      'background-color': getRandomColor(),
+      'border-color'    : getRandomColor(),
+      'color'           : '#fff',
+      'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+      'border-radius'   : '.25rem',
+      'font-weight'     : '700',
+      'margin-bottom'	  : '4px',
+      'margin-right'  : '4px',
+      'padding'		  : '5px 10px',
+      'width'		  : 'auto',
+      'display'		  : 'inline-block'
+    }).addClass('allergies-new')
+    allergies.text(val)
+
+    allergies.addClass('alert')
+
+    $("#allergies-new").prepend(allergies)
+
+    // Remove event from text input
+    $('#new-allergies-new').val('')
+
+    // Add button to each div
+    var x = allergies.html();
+    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+    // Add button to condition div
+    allergies.html(x+y);
+
+  })
+
+
+  $('#add-new-medication-new').click(function (e) {
+    e.preventDefault()
+    // Get value and make sure it is not null
+    var val = $('#new-medication-new').val()
+    if (val.length == 0) {
+      return
+    }
+
+    // Create events
+    var medication = $('<div />')
+    medication.css({
+      'background-color': getRandomColor(),
+      'border-color'    : getRandomColor(),
+      'color'           : '#fff',
+      'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+      'border-radius'   : '.25rem',
+      'font-weight'     : '700',
+      'margin-bottom'	  : '4px',
+      'margin-right'  : '4px',
+      'padding'		  : '5px 10px',
+      'width'		  : 'auto',
+      'display'		  : 'inline-block'
+    }).addClass('medication-new')
+    medication.text(val)
+
+    medication.addClass('alert')
+      
+    $("#medication-new").prepend(medication)
+
+    // Remove event from text input
+    $('#new-medication-new').val('')
+
+    // Add button to each div
+    var x = medication.html();
+    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+    // Add button to condition div
+    medication.html(x+y);
+
+  })
+  // END
+
+
+
+
+  // EDIT RESIDENT SIDE
+  $('#add-new-condition').click(function (e) {
+    e.preventDefault()
+    // Get value and make sure it is not null
+    var val = $('#new-condition').val()
+    if (val.length == 0) {
+      return
+    }
+
+    // Create events
+    var condition = $('<div />')
+    condition.css({
+      'background-color': getRandomColor(),
+      'border-color'    : getRandomColor(),
+      'color'           : '#fff',
+      'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+      'border-radius'   : '.25rem',
+      'font-weight'     : '700',
+      'margin-bottom'	  : '4px',
+      'margin-right'  : '4px',
+      'padding'		  : '5px 10px',
+      'width'		  : 'auto',
+      'display'		  : 'inline-block'
+    }).addClass('healthConditions')
+    condition.text(val)
+
+    condition.addClass('alert')
+
+    $("#healthConditions").prepend(condition)
+
+    // Remove event from text input
+    $('#new-condition').val('')
+
+    var x = condition.html();
+    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+    // Add button to condition div
+    condition.html(x+y);
+
+  })
+
+  $('#add-new-allergies').click(function (e) {
+    e.preventDefault()
+    // Get value and make sure it is not null
+    var val = $('#new-allergies').val()
+    if (val.length == 0) {
+      return
+    }
+
+    // Create events
+    var allergies = $('<div />')
+    allergies.css({
+      'background-color': getRandomColor(),
+      'border-color'    : getRandomColor(),
+      'color'           : '#fff',
+      'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+      'border-radius'   : '.25rem',
+      'font-weight'     : '700',
+      'margin-bottom'	  : '4px',
+      'margin-right'  : '4px',
+      'padding'		  : '5px 10px',
+      'width'		  : 'auto',
+      'display'		  : 'inline-block'
+    }).addClass('allergies')
+    allergies.text(val)
+
+    allergies.addClass('alert')
+
+    $("#allergies").prepend(allergies)
+
+    // Remove event from text input
+    $('#new-allergies').val('')
+
+    // Add button to each div
+    var x = allergies.html();
+    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+    // Add button to condition div
+    allergies.html(x+y);
+
+  })
+
+  $('#add-new-medication').click(function (e) {
+    e.preventDefault()
+    // Get value and make sure it is not null
+    var val = $('#new-medication').val()
+    if (val.length == 0) {
+      return
+    }
+
+    // Create events
+    var medication = $('<div />')
+    medication.css({
+      'background-color': getRandomColor(),
+      'border-color'    : getRandomColor(),
+      'color'           : '#fff',
+      'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+      'border-radius'   : '.25rem',
+      'font-weight'     : '700',
+      'margin-bottom'	  : '4px',
+      'margin-right'  : '4px',
+      'padding'		  : '5px 10px',
+      'width'		  : 'auto',
+      'display'		  : 'inline-block'
+    }).addClass('medication')
+    medication.text(val)
+
+    medication.addClass('alert')
+      
+    $("#medication").prepend(medication)
+
+    // Remove event from text input
+    $('#new-medication').val('')
+
+    // Add button to each div
+    var x = medication.html();
+    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+    // Add button to condition div
+    medication.html(x+y);
+
+  })
+
+  //END
+
+
   /********** functions **********/
 
   function handleUnauthorized(){
@@ -642,6 +1095,19 @@
     });
   }
 
+  //reset the form with confirmation and extra elements deleted
+  function confirm_reset(){
+  	r = confirm('Are you sure? This will clear the form!');
+
+  	if(r==true){
+  		$('.healthConditions-new').remove();
+  		$('.allergies-new').remove();
+  		$('.medication-new').remove();
+  	}
+
+  	return r;
+  }
+
   function enableUpdateResident(){
     //change title
     $("#residentModalTitle").text("Modify Resident");
@@ -661,10 +1127,9 @@
     $("#residentWeight").prop("disabled", false);
     $("#residentHeight").prop("disabled", false);
     $("#residentBloodType").prop("disabled", false);
-    $(".residentHealth").prop("disabled", false);
-    $(".residentAllergies").prop("disabled", false);
-    $("#residentMedication").prop("disabled", false);
-    $("#residentCaretaker").prop("disabled", false);
+    $("#add-new-condition").prop("disabled", false);
+    $("#add-new-allergies").prop("disabled", false);
+    $("#add-new-medication").prop("disabled", false);
     $("#residentPhoneNum").prop("disabled", false);
     $("#residentGuardianName").prop("disabled", false);
     $("#residentEmergencyNum").prop("disabled", false);
@@ -673,46 +1138,22 @@
     $("#residentCity").prop("disabled", false);
     $("#residentState").prop("disabled", false);
 	$("#residentPostal").prop("disabled", false);
+
+	$(".closeDiv").prop("disabled", false);
+
   }
 
-  //Enables textboxes when checkbox is clicked and vise versa
-  $(function () {
-        $("#residentOtherDrugAllergiesChkbox").click(function () {
-            if ($(this).is(":checked")) {
-                $("#residentOtherDrugAllergies").removeAttr("disabled");
-                $("#residentOtherDrugAllergies").focus();
-            } else {
-                $("#residentOtherDrugAllergies").attr("disabled", "disabled");
-            }
-        });
-
-        $("#residentOtherHealthChkbox").click(function () {
-            if ($(this).is(":checked")) {
-                $("#residentOtherHealth").removeAttr("disabled");
-                $("#residentOtherHealth").focus();
-            } else {
-                $("#residentOtherHealth").attr("disabled", "disabled");
-            }
-        });
-
-        $("#residentFoodAllergiesChkbox").click(function () {
-            if ($(this).is(":checked")) {
-                $("#residentFoodAllergies").removeAttr("disabled");
-                $("#residentFoodAllergies").focus();
-            } else {
-                $("#residentFoodAllergies").attr("disabled", "disabled");
-            }
-        });
-
-        $("#residentOtherAllergiesChkbox").click(function () {
-            if ($(this).is(":checked")) {
-                $("#residentOtherAllergies").removeAttr("disabled");
-                $("#residentOtherAllergies").focus();
-            } else {
-                $("#residentOtherAllergies").attr("disabled", "disabled");
-            }
-        });
-  });
+  // //Enables textboxes when checkbox is clicked and vise versa
+  // $(function () {
+  //       $("#residentOtherDrugAllergiesChkbox").click(function () {
+  //           if ($(this).is(":checked")) {
+  //               $("#residentOtherDrugAllergies").removeAttr("disabled");
+  //               $("#residentOtherDrugAllergies").focus();
+  //           } else {
+  //               $("#residentOtherDrugAllergies").attr("disabled", "disabled");
+  //           }
+  //       });
+  // });
 
   function cancelUpdateResident(){
     $("#residentModalTitle").text("Resident Details");
@@ -732,10 +1173,9 @@
     $("#residentWeight").prop("disabled", true);
     $("#residentHeight").prop("disabled", true);
     $("#residentBloodType").prop("disabled", true);
-    $(".residentHealth").prop("disabled", true);
-    $(".residentAllergies").prop("disabled", true);
-    $("#residentMedication").prop("disabled", true);
-    $("#residentCaretaker").prop("disabled", true);
+    $("#add-new-condition").prop("disabled", true);
+    $("#add-new-allergies").prop("disabled", true);
+    $("#add-new-medication").prop("disabled", true);
     $("#residentPhoneNum").prop("disabled", true);
     $("#residentGuardianName").prop("disabled", true);
     $("#residentEmergencyNum").prop("disabled", true);
@@ -744,15 +1184,62 @@
     $("#residentCity").prop("disabled", true);
     $("#residentState").prop("disabled", true);
 	$("#residentPostal").prop("disabled", true);
+	$(".closeDiv").prop("disabled", true);
 
     //reset the data
     $("#residentName").val(resident.name);
     $("#residentCaretaker").val(resident.caretaker);
     $("#residentRoom").val(resident.room);
+    $("#residentGender").val(resident.gender);
+    $("#residentDOB").val(resident.dob);
+    $("#residentIC").val(resident.ic);
+    $("#residentNationality").val(resident.nationality);
+    $("#residentWeight").val(resident.weight);
+    $("#residentHeight").val(resident.height);
+    $("#residentBloodType").val(resident.bloodtype);
+
+    /* ALERT! CONDITION ALLERGIES AND MEDICATION
+    	WHEN CANCEL BTN CLICKED ALL SHOULD BE GONE 
+    	AND REPLACED BY PREVIOUS VALUES FETCHED */
+    /* 
+    $("#add-new-condition").val(resident.condition);
+    $("#add-new-allergies").val(resident.allergies);
+    $("#add-new-medication").val(resident.medication);
+	*/
+	//DELETING ALL CREATED DIVS
+	$('.healthConditions').remove();
+  	$('.allergies').remove();
+  	$('.medication').remove();
+
+  	//CLEARING TEXT BOX
+  	$('#new-condition').val('');
+  	$('#new-allergies').val('');
+  	$('#new-medication').val('');
+
+  	//ADDING BACK DIVS
+  	//WIP WIP WIP WIP WIP WIP WIP WIP WIP
+
+
+    $("#residentPhoneNum").val(resident.phoneNum);
+    $("#residentGuardianName").val(resident.guardianName);
+    $("#residentEmergencyNum").val(resident.emergencyNum);
+    $("#residentStreetAddress").val(resident.streetAdd);
+    $("#residentStreetAddress2").val(resident.streetAdd2);
+    $("#residentCity").val(resident.city);
+    $("#residentState").val(resident.state);
+    $("#residentPostal").val(resident.postal);
   }
 
   function deleteResident(){
     var confirmDeletion = confirm('Are you sure? This will remove this resident!');
+  }
+
+  // Get random color
+  function getRandomColor() {
+    var colors = ['992525', '5F9925', '259999', '5F2599'];
+    var color = "#"
+	color += colors[Math.floor(Math.random() * colors.length)];
+	return color;
   }
 
 </script>

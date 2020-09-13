@@ -15,6 +15,8 @@ Tenki dashboard, built with adminlte starter page
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- Extra stylesheet -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -30,6 +32,9 @@ Tenki dashboard, built with adminlte starter page
           <a href="#" onclick="getAllResidents()" class="nav-link">Refresh List</a>
         </li>
       </ul>
+
+      <p class="lead welcomeMsg col">Welcome back Traveler!</p>
+
     </nav>
     <!-- /.navbar -->
 
@@ -37,7 +42,7 @@ Tenki dashboard, built with adminlte starter page
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="assets/eden-logo-white+grey.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Edensight</span>
       </a>
 
@@ -59,7 +64,7 @@ Tenki dashboard, built with adminlte starter page
             <li class="nav-header">ADMIN</li>
             <li class="nav-item">
               <a href="adminResidents.html" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <i class="nav-icon fas fa-users"></i>
                 <p>
                   Residents
                 </p>
@@ -67,30 +72,22 @@ Tenki dashboard, built with adminlte starter page
 
             </li>
             <li class="nav-item">
-              <a href="adminUsers.html" class="nav-link">
-                <i class="nav-icon fas fa-calendar"></i>
+              <a href="adminStaff.html" class="nav-link">
+                <i class="nav-icon fas fa-user-tie"></i>
                 <p>
-                  Users
+                  Staff
                 </p>
               </a>
             </li>
             <li class="nav-header">STAFF</li>
             <li class="nav-item">
               <a href="residents.html" class="nav-link active">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <i class="nav-icon fas fa-users"></i>
                 <p>
                   Residents
                 </p>
               </a>
 
-            </li>
-            <li class="nav-item">
-              <a href="users.html" class="nav-link">
-                <i class="nav-icon fas fa-calendar"></i>
-                <p>
-                  Users
-                </p>
-              </a>
             </li>
           </ul>
         </nav>
@@ -197,119 +194,291 @@ Tenki dashboard, built with adminlte starter page
           </button>
         </div>
 
-        <!-- Widgets for Vital Signs -->
-        <div class="modal-body">
         <div class="row">
-          <div class="col-lg-6 col-6">
-            <!-- small card -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                <p>BPM</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-heartbeat"></i>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 col-6">
-            <!-- small card -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>98<sup style="font-size: 20px">%</sup></h3>
-
-                <p>SpO2</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-tint"></i>
-              </div>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
-        <!-- /.row -->
-
-        <div class="row">
-          <div class="col-md-12">
-            <!-- Line chart -->
-            <div class="card card-primary card-outline">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="far fa-chart-bar"></i>
-                  Line Chart
-                </h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                </div>
+          <div class="col-12 col-sm-12">
+            <div class="card card-primary card-tabs">
+              <div class="card-header p-0 pt-1">
+                <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="custom-tabs-one-status-tab" data-toggle="pill" href="#custom-tabs-one-status" role="tab" aria-controls="custom-tabs-one-status" aria-selected="true">Status</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-one-details-tab" data-toggle="pill" href="#custom-tabs-one-details" role="tab" aria-controls="custom-tabs-one-details" aria-selected="false">Details</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-one-health-tab" data-toggle="pill" href="#custom-tabs-one-health" role="tab" aria-controls="custom-tabs-one-health" aria-selected="false">Health</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-one-history-tab" data-toggle="pill" href="#custom-tabs-one-history" role="tab" aria-controls="custom-tabs-one-history" aria-selected="false">History</a>
+                  </li>
+                </ul>
               </div>
               <div class="card-body">
-                <div id="line-chart" style="height: 300px;"></div>
-              </div>
-              <!-- /.card-body-->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
+                <div class="tab-content" id="custom-tabs-one-tabContent">
+                  <div class="tab-pane fade show active" id="custom-tabs-one-status" role="tabpanel" aria-labelledby="custom-tabs-one-status-tab">
+                     <div class="modal-body">
+                      <div class="row">
+                        <div class="col-lg-6 col-6">
+                          <!-- small card -->
+                          <div class="small-box bg-success">
+                            <div class="inner">
+                              <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-        <div class="row">
-          <div class="col-12">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-history"></i>
-                    History
-                  </h3>
+                              <p>BPM</p>
+                            </div>
+                            <div class="icon">
+                              <i class="fas fa-heartbeat"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-6">
+                          <!-- small card -->
+                          <div class="small-box bg-warning">
+                            <div class="inner">
+                              <h3>98<sup style="font-size: 20px">%</sup></h3>
 
-                  <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
+                              <p>SpO2</p>
+                            </div>
+                            <div class="icon">
+                              <i class="fas fa-tint"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- ./col -->
+                      </div>
+                      <!-- /.row -->
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <!-- Line chart -->
+                          <div class="card card-primary card-outline">
+                            <div class="card-header">
+                              <h3 class="card-title">
+                                <i class="far fa-chart-bar"></i>
+                                Line Chart
+                              </h3>
+
+                              <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                  <i class="fas fa-minus"></i>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="card-body">
+                              <div id="line-chart" style="height: 300px;"></div>
+                            </div>
+                            <!-- /.card-body-->
+                          </div>
+                          <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-one-details" role="tabpanel" aria-labelledby="custom-tabs-one-details-tab">
+                    <div class="modal-body">
+                     <table id="residentDetailsTable">
+                       <tr>
+                         <th>Resident ID</th>
+                         <th>:</th>
+                         <td></td>
+                       </tr>
+                       <tr>
+                         <th>Resident Name</th>
+                         <th>:</th>
+                         <td></td>
+                       </tr>
+                       <tr>
+                         <th>Caretaker</th>
+                         <th>:</th>
+                         <td></td>
+                       </tr>
+                       <tr>
+                         <th>Room Number</th>
+                         <th>:</th>
+                         <td></td>
+                       </tr>
+                       <tr>
+                         <th>Gender</th>
+                         <th>:</th>
+                         <td></td>
+                       </tr>
+                       <tr>
+                         <th>Date of birth</th>
+                         <th>:</th>
+                         <td></td>
+                       </tr>
+                       <tr>
+                         <th>IC No.</th>
+                         <th>:</th>
+                         <td></td>
+                       </tr>
+                       <tr>
+                         <th>Nationality</th>
+                         <th>:</th>
+                         <td></td>
+                       </tr>
+                       <tr>
+                         <th>Resident's Phone Number</th>
+                         <th>:</th>
+                         <td></td>
+                       </tr>
+                       <tr>
+                         <th>Guardian's Name</th>
+                         <th>:</th>
+                         <td></td>
+                       </tr>
+                       <tr>
+                         <th>Emergency Phone Number</th>
+                         <th>:</th>
+                         <td></td>
+                       </tr>
+                       <tr>
+                         <th>Address</th>
+                         <th>:</th>
+                         <td></td>
+                       </tr>
+                     </table>
+                   </div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-one-health" role="tabpanel" aria-labelledby="custom-tabs-one-health-tab">
+                    <form id='update_resident_form_2'>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="residentWeight">Weight (kg)</label>
+                          <input type="text" class="form-control" id="residentWeight" required="" disabled="">
+                        </div>
+                        <div class="form-group">
+                          <label for="residentHeight">Height (cm)</label>
+                          <input type="text" class="form-control" id="residentHeight" required="" disabled="">
+                        </div>
+                        <div class="form-group">
+                          <label for="residentBloodType">Blood Type</label>
+                              <select class="form-control" id="residentBloodType" required="" disabled="">
+                                <option>A</option>
+                                <option>B</option>
+                                <option>AB</option>
+                                <option>O</option>
+                              </select>
+                        </div>
+                        <div class="form-group">
+                          <label>Health Conditions</label><br>
+                          
+                          <div id="healthConditions">
+                            <div class="card-body">
+                              <div class="input-group">
+                                <input id="new-condition" type="text" class="form-control" placeholder="Health Conditions (Diabetes, Stroke, etc)">
+
+                                <div class="input-group-append">
+                                  <button id="add-new-condition" type="button" class="btn btn-primary" disabled="">Add</button>
+                                </div>
+                                <!-- /btn-group -->
+                              </div>
+                              <!-- /input-group -->
+                            </div>
+                          </div>
+                        </div>
+                      
+                        <div class="form-group">
+                          <label>Allergies</label><br>
+
+                          <div id="allergies">
+                            <div class="card-body">
+                              <div class="input-group">
+                                <input id="new-allergies" type="text" class="form-control" placeholder="Allergies (Drugs, etc)">
+
+                                <div class="input-group-append">
+                                  <button id="add-new-allergies" type="button" class="btn btn-primary" disabled="">Add</button>
+                                </div>
+                                <!-- /btn-group -->
+                              </div>
+                              <!-- /input-group -->
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label>Medication</label><br>
+
+                          <div id="medication">
+                            <div class="card-body">
+                              <div class="input-group">
+                                <input id="new-medication" type="text" class="form-control" placeholder="Medication">
+
+                                <div class="input-group-append">
+                                  <button id="add-new-medication" type="button" class="btn btn-primary" disabled="">Add</button>
+                                </div>
+                                <!-- /btn-group -->
+                              </div>
+                              <!-- /input-group -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- /.END OF FORM -->
+                    <div class="modal-footer" id="residentModalFooter">
+                      <button type="button" class="btn btn-primary" onclick="enableUpdateResident()">Modify Resident</button>
+                    </div>
+                    <div class="modal-footer" id="updateResidentFooter" style="display:none;">
+                      <button type="button" class="btn btn-secondary" onclick="cancelUpdateResident()">Cancel</button>
+                      <button type="submit" class="btn btn-info">Update Resident</button>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-one-history" role="tabpanel" aria-labelledby="custom-tabs-one-history-tab">
+                     <div class="row">
+                      <div class="col-12">
+                          <div class="card">
+                            <div class="card-header">
+                              <h3 class="card-title">
+                                <i class="fas fa-history"></i>
+                                History
+                              </h3>
+
+                              <div class="card-tools">
+                              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                              </button>
+                            </div>
+                            </div>
+                            <div class="card-body">
+                              <table id="resident_history_table" class="table table-bordered table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>Date</th>
+                                    <th>BPM</th>
+                                    <th>Sp02</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <!-- Test -->
+                                  <tr>
+                                    <td>101</td>
+                                    <td>101</td>
+                                    <td>101</td>
+                                  </tr>
+                                </tbody>
+                                <tfoot>
+                                  <tr>
+                                    <th>Date</th>
+                                    <th>BPM</th>
+                                    <th>Sp02</th>
+                                  </tr>
+                                </tfoot>
+                              </table>
+                            </div>
+                            <!-- /.card-body -->
+                          </div>
+                          <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+                  </div>
                 </div>
-                </div>
-                <div class="card-body">
-                  <table id="resident_history_table" class="table table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Caretaker</th>
-                        <th>Room</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- Test -->
-                      <tr>
-                        <td>101</td>
-                        <td>101</td>
-                        <td>101</td>
-                        <td>101</td>
-                        <td>101</td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Caretaker</th>
-                        <th>Room</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-                <!-- /.card-body -->
               </div>
               <!-- /.card -->
             </div>
-            <!-- /.col -->
           </div>
-          <!-- /.row -->
         </div>
       </div>
     </div>
@@ -576,6 +745,173 @@ Tenki dashboard, built with adminlte starter page
 
   })
   /* END LINE CHART */
+
+
+  function enableUpdateResident(){
+    //change title
+    $("#residentModalTitle").text("Modify Resident");
+
+    //change buttons
+    $("#residentModalFooter").hide();
+    $("#updateResidentFooter").show();
+
+    //allow editing
+    $("#residentWeight").prop("disabled", false);
+    $("#residentHeight").prop("disabled", false);
+    $("#residentBloodType").prop("disabled", false);
+    $("#add-new-condition").prop("disabled", false);
+    $("#add-new-allergies").prop("disabled", false);
+    $("#add-new-medication").prop("disabled", false);
+    $(".closeDiv").prop("disabled", false);
+
+  }
+
+
+  function cancelUpdateResident(){
+    $("#residentModalTitle").text("Resident Details");
+
+    //change buttons
+    $("#residentModalFooter").show();
+    $("#updateResidentFooter").hide();
+
+    //disallow editing
+    $("#residentWeight").prop("disabled", true);
+    $("#residentHeight").prop("disabled", true);
+    $("#residentBloodType").prop("disabled", true);
+    $("#add-new-condition").prop("disabled", true);
+    $("#add-new-allergies").prop("disabled", true);
+    $("#add-new-medication").prop("disabled", true);
+    $(".closeDiv").prop("disabled", true);
+
+    //reset the data
+    $("#residentName").val(resident.name);
+    $("#residentCaretaker").val(resident.caretaker);
+    $("#residentRoom").val(resident.room);
+  }
+
+
+
+  $('#add-new-condition').click(function (e) {
+      e.preventDefault()
+      // Get value and make sure it is not null
+      var val = $('#new-condition').val()
+      if (val.length == 0) {
+        return
+      }
+
+      // Create events
+      var condition = $('<div />')
+      condition.css({
+        'background-color': getRandomColor(),
+        'border-color'    : getRandomColor(),
+        'color'           : '#fff',
+        'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+        'border-radius'   : '.25rem',
+        'font-weight'     : '700',
+        'margin-bottom'   : '4px',
+        'padding'     : '5px 10px'
+      }).addClass('healthConditions')
+      condition.text(val)
+
+      condition.addClass('alert')
+
+      $("#healthConditions").prepend(condition)
+
+      // Remove event from text input
+      $('#new-condition').val('')
+
+      var x = condition.html();
+      var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+      // Add button to condition div
+      condition.html(x+y);
+
+    })
+
+    $('#add-new-allergies').click(function (e) {
+      e.preventDefault()
+      // Get value and make sure it is not null
+      var val = $('#new-allergies').val()
+      if (val.length == 0) {
+        return
+      }
+
+      // Create events
+      var allergies = $('<div />')
+      allergies.css({
+        'background-color': getRandomColor(),
+        'border-color'    : getRandomColor(),
+        'color'           : '#fff',
+        'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+        'border-radius'   : '.25rem',
+        'font-weight'     : '700',
+        'margin-bottom'   : '4px',
+        'padding'     : '5px 10px'
+      }).addClass('allergies')
+      allergies.text(val)
+
+      allergies.addClass('alert')
+
+      $("#allergies").prepend(allergies)
+
+      // Remove event from text input
+      $('#new-allergies').val('')
+
+      // Add button to each div
+      var x = allergies.html();
+      var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+      // Add button to condition div
+      allergies.html(x+y);
+
+    })
+
+    $('#add-new-medication').click(function (e) {
+      e.preventDefault()
+      // Get value and make sure it is not null
+      var val = $('#new-medication').val()
+      if (val.length == 0) {
+        return
+      }
+
+      // Create events
+      var medication = $('<div />')
+      medication.css({
+        'background-color': getRandomColor(),
+        'border-color'    : getRandomColor(),
+        'color'           : '#fff',
+        'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+        'border-radius'   : '.25rem',
+        'font-weight'     : '700',
+        'margin-bottom'   : '4px',
+        'padding'     : '5px 10px'
+      }).addClass('medication')
+      medication.text(val)
+
+      medication.addClass('alert')
+      
+      $("#medication").prepend(medication)
+
+      // Remove event from text input
+      $('#new-medication').val('')
+
+      // Add button to each div
+      var x = medication.html();
+      var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+      // Add button to condition div
+      medication.html(x+y);
+
+    })
+
+    // Get random color
+    function getRandomColor() {
+      var colors = ['B82A2A', '71B82A', '2AB8B8', '712AB8'];
+      var color = "#"
+    color += colors[Math.floor(Math.random() * colors.length)];
+    return color;
+  }
+
 
 </script>
 
