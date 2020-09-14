@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<!--
-Tenki dashboard, built with adminlte starter page
--->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -17,6 +14,8 @@ Tenki dashboard, built with adminlte starter page
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Extra stylesheet -->
   <link rel="stylesheet" href="style.css">
+  <!-- Extra javascript -->
+  <script src="main.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -222,7 +221,7 @@ Tenki dashboard, built with adminlte starter page
                           <!-- small card -->
                           <div class="small-box bg-success">
                             <div class="inner">
-                              <h3>53<sup style="font-size: 20px">%</sup></h3>
+                              <h3><span id="residentCurrentBPM">53</span><sup style="font-size: 20px">%</sup></h3>
 
                               <p>BPM</p>
                             </div>
@@ -235,7 +234,7 @@ Tenki dashboard, built with adminlte starter page
                           <!-- small card -->
                           <div class="small-box bg-warning">
                             <div class="inner">
-                              <h3>98<sup style="font-size: 20px">%</sup></h3>
+                              <h3><span id="residentCurrentSp02">98</span><sup style="font-size: 20px">%</sup></h3>
 
                               <p>SpO2</p>
                             </div>
@@ -281,62 +280,62 @@ Tenki dashboard, built with adminlte starter page
                        <tr>
                          <th>Resident ID</th>
                          <th>:</th>
-                         <td></td>
+                         <td id="residentID"></td>
                        </tr>
                        <tr>
                          <th>Resident Name</th>
                          <th>:</th>
-                         <td></td>
+                         <td id="residentName"></td>
                        </tr>
                        <tr>
                          <th>Caretaker</th>
                          <th>:</th>
-                         <td></td>
+                         <td id="residentCaretaker"></td>
                        </tr>
                        <tr>
                          <th>Room Number</th>
                          <th>:</th>
-                         <td></td>
+                         <td id="residentRoom"></td>
                        </tr>
                        <tr>
                          <th>Gender</th>
                          <th>:</th>
-                         <td></td>
+                         <td id="residentGender"></td>
                        </tr>
                        <tr>
                          <th>Date of birth</th>
                          <th>:</th>
-                         <td></td>
+                         <td id="residentDOB"></td>
                        </tr>
                        <tr>
                          <th>IC No.</th>
                          <th>:</th>
-                         <td></td>
+                         <td id="residentIC"></td>
                        </tr>
                        <tr>
                          <th>Nationality</th>
                          <th>:</th>
-                         <td></td>
+                         <td id="residentNationality"></td>
                        </tr>
                        <tr>
                          <th>Resident's Phone Number</th>
                          <th>:</th>
-                         <td></td>
+                         <td id="residentPNum"></td>
                        </tr>
                        <tr>
                          <th>Guardian's Name</th>
                          <th>:</th>
-                         <td></td>
+                         <td id="residentGuardian"></td>
                        </tr>
                        <tr>
                          <th>Emergency Phone Number</th>
                          <th>:</th>
-                         <td></td>
+                         <td id="residentEmergencyPNum"></td>
                        </tr>
                        <tr>
                          <th>Address</th>
                          <th>:</th>
-                         <td></td>
+                         <td id="residentAddress"></td>
                        </tr>
                      </table>
                    </div>
@@ -419,7 +418,7 @@ Tenki dashboard, built with adminlte starter page
                     <div class="modal-footer" id="residentModalFooter">
                       <button type="button" class="btn btn-primary" onclick="enableUpdateResident()">Modify Resident</button>
                     </div>
-                    <div class="modal-footer" id="updateResidentFooter" style="display:none;">
+                    <div class="modal-footer" id="updateResidentFooter" onclick="testSubmittedData()" style="display:none;">
                       <button type="button" class="btn btn-secondary" onclick="cancelUpdateResident()">Cancel</button>
                       <button type="submit" class="btn btn-info">Update Resident</button>
                     </div>
@@ -450,12 +449,12 @@ Tenki dashboard, built with adminlte starter page
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <!-- Test -->
+                                  <!-- Test 
                                   <tr>
                                     <td>101</td>
                                     <td>101</td>
                                     <td>101</td>
-                                  </tr>
+                                  </tr>-->
                                 </tbody>
                                 <tfoot>
                                   <tr>
@@ -549,6 +548,9 @@ Tenki dashboard, built with adminlte starter page
 
     //fetch any data that we need on page load
     getAllResidents();
+
+    //test
+    testDetailsForms();
   });
 
   $(function () { //stuff here runs on page load
@@ -561,11 +563,9 @@ Tenki dashboard, built with adminlte starter page
       "autoWidth": false,
       "responsive": true,
       "columns": [
-        { "data": "_id" },
-        { "data": "name" },
-        { "data": "status" },
-        { "data": "caretaker" },
-        { "data": "room" }
+        { "data": "date" },
+        { "data": "bpm" },
+        { "data": "sp02" }
       ]
     });
 
@@ -575,15 +575,108 @@ Tenki dashboard, built with adminlte starter page
 
   /********** event listeners **********/
 
+  //update resident
+  $('#update_resident_form2').submit(function (e){
+    //no validate, we are blindly trusting our users
+    //instead we ask them to self validate :)
+    e.preventDefault(); //prevent form submit default behaviour
+    var userValidation = confirm("Please make sure all information is correct!");
+    if (userValidation){
+      //send to server
+      $.ajax({
+        type: "PUT",
+        url: "api/residents/update/" + $("#residentID").text(),
+        contentType : 'application/json',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+          //include credentials
+          xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
+        },
+        data: JSON.stringify({
+          weight: $("#residentWeight").val(),
+          height: $("#residentHeight").val(),
+          bloodType: $('#residentBloodType').val(),
+
+          healthConditions: getEachHealth($('.healthConditions')),
+          allergies: getEachHealth($('.allergies')),
+          medication: getEachHealth($('.medication'))
+        }),
+        success: function (resident){
+          //on success, clear form, modal and update list
+          console.log("resident updated: "+ resident);
+          $("#residentModal").modal('hide');
+          getAllResidents();
+        },
+        error: function (xhr){
+          var code = xhr.status;
+
+          //handle 401
+          if (code == 401){
+            $("#residentModal").modal('hide');
+            handleUnauthorized();
+          }
+        }
+      });
+    }
+
+  });
+
+
   //table: handle when clicking rows
   $('#residents_table tbody').on("click", "tr", function() {
     resident = residents_table.row( this ).data();
 
+    //history test
+    var history = resident.history;
+    lineGraph(history);
+
+    //draw historyTable
+    resident_history_table.clear();
+    resident_history_table.rows.add(history);
+    resident_history_table.draw();
+
+
+    //populate the details
+    $("#residentID").text(resident._id);
+    $("#residentName").text(resident.name);
+    $("#residentCaretaker").text(resident.caretaker);
+    $("#residentRoom").text(resident.room);
+    $("#residentGender").text(resident.gender);
+    $("#residentDOB").text(resident.dob);
+    $("#residentIC").text(resident.ic);
+    $("#residentNationality").text(resident.nationality);
+    $("#residentPNum").text(resident.pNum);
+    $("#residentGuardian").text(resident.guardian);
+    $("#residentEmergencyPNum").text(resident.emergencyPNum);
+    $("#residentAddress").text(resident.streetAdd+ ", " +resident.streetAdd2+ ", " +resident.city+ ", " +resident.state+ ", " +resident.postal
+      );
+
+    $("#residentCurrentBPM").text(resident.bpm);
+    $("#residentCurrentSp02").text(resident.sp02);
+
     //populate the form
-    $("#residentID").val(resident._id);
-    $("#residentName").val(resident.name);
-    $("#residentCaretaker").val(resident.caretaker);
-    $("#residentRoom").val(resident.room);
+    $("#residentWeight").val(resident.weight);
+    $("#residentHeight").val(resident.height);
+    $("#residentBloodType").val(resident.bloodType);
+
+    //clear divs
+    $('.healthConditions').remove();
+    $('.allergies').remove();
+    $('.medication').remove();
+
+    //DELETE COMMENT WHEN RESIDENT HAS THIS VAR
+    //ADDING BACK DIVS
+    for(i=0; i<resident.healthConditions.length; i++){
+      showEachHealth(resident.healthConditions[i], 'healthConditions')
+    }
+
+    for(i=0; i<resident.allergies.length; i++){
+      showEachHealth(resident.allergies[i], 'allergies')
+    }
+
+    for(i=0; i<resident.medication.length; i++){
+      showEachHealth(resident.medication[i], 'medication')
+    }
 
     $("#residentModal").modal('toggle');
   });
@@ -593,6 +686,136 @@ Tenki dashboard, built with adminlte starter page
   $('#residentModal').on('hide.bs.modal', function (e) {
     cancelResidentView();
   })
+
+
+  // EDIT RESIDENT SIDE
+  $('#add-new-condition').click(function (e) {
+    e.preventDefault()
+    // Get value and make sure it is not null
+    var val = $('#new-condition').val()
+    if (val.length == 0) {
+      return
+    }
+
+    // Create events
+    var condition = $('<div />')
+    condition.css({
+      'background-color': getRandomColor(),
+      'border-color'    : getRandomColor(),
+      'color'           : '#fff',
+      'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+      'border-radius'   : '.25rem',
+      'font-weight'     : '700',
+      'margin-bottom'   : '4px',
+      'margin-right'  : '4px',
+      'padding'     : '5px 10px',
+      'width'     : 'auto',
+      'display'     : 'inline-block'
+    }).addClass('healthConditions')
+    condition.text(val)
+
+    condition.addClass('alert')
+
+    $("#healthConditions").prepend(condition)
+
+    // Remove event from text input
+    $('#new-condition').val('')
+
+    var x = condition.html();
+    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+    // Add button to condition div
+    condition.html(x+y);
+
+  })
+
+
+  $('#add-new-allergies').click(function (e) {
+    e.preventDefault()
+    // Get value and make sure it is not null
+    var val = $('#new-allergies').val()
+    if (val.length == 0) {
+      return
+    }
+
+    // Create events
+    var allergies = $('<div />')
+    allergies.css({
+      'background-color': getRandomColor(),
+      'border-color'    : getRandomColor(),
+      'color'           : '#fff',
+      'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+      'border-radius'   : '.25rem',
+      'font-weight'     : '700',
+      'margin-bottom'   : '4px',
+      'margin-right'  : '4px',
+      'padding'     : '5px 10px',
+      'width'     : 'auto',
+      'display'     : 'inline-block'
+    }).addClass('allergies')
+    allergies.text(val)
+
+    allergies.addClass('alert')
+
+    $("#allergies").prepend(allergies)
+
+    // Remove event from text input
+    $('#new-allergies').val('')
+
+    // Add button to each div
+    var x = allergies.html();
+    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+    // Add button to condition div
+    allergies.html(x+y);
+
+  })
+
+  $('#add-new-medication').click(function (e) {
+    e.preventDefault()
+    // Get value and make sure it is not null
+    var val = $('#new-medication').val()
+    if (val.length == 0) {
+      return
+    }
+
+    // Create events
+    var medication = $('<div />')
+    medication.css({
+      'background-color': getRandomColor(),
+      'border-color'    : getRandomColor(),
+      'color'           : '#fff',
+      'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+      'border-radius'   : '.25rem',
+      'font-weight'     : '700',
+      'margin-bottom'   : '4px',
+      'margin-right'  : '4px',
+      'padding'     : '5px 10px',
+      'width'     : 'auto',
+      'display'     : 'inline-block'
+    }).addClass('medication')
+    medication.text(val)
+
+    medication.addClass('alert')
+      
+    $("#medication").prepend(medication)
+
+    // Remove event from text input
+    $('#new-medication').val('')
+
+    // Add button to each div
+    var x = medication.html();
+    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+    // Add button to condition div
+    medication.html(x+y);
+
+  })
+
+  //END
+
+
+
 
   /********** functions **********/
 
@@ -644,107 +867,146 @@ Tenki dashboard, built with adminlte starter page
     });
   }
 
+
+  /*
+   * LINE CHART
+   * ----------
+   */
+  //LINE given data
+  function lineGraph(history){
+    var bpmArray = [];
+    var line_ticks = [];
+
+    for(var i=0; i<history.length; i++){
+      var tempArray = [];
+      var tempArray2 = [];
+
+      tempArray.push(i+1, history[i].bpm);
+      bpmArray.push(tempArray);
+
+      tempArray2.push(i+1, history[i].date);
+      line_ticks.push(tempArray2);
+    } 
+
+    var line_data1 = {
+      data : bpmArray,
+      color: '#3c8dbc'
+    }
+
+    //console.log(bpmArray);
+    //console.log(line_ticks);
+
+    $.plot('#line-chart', [line_data1], {
+      grid  : {
+        hoverable  : true,
+        borderColor: '#f3f3f3',
+        borderWidth: 1,
+        tickColor  : '#f3f3f3'
+      },
+      series: {
+        shadowSize: 0,
+        lines     : {
+          show: true
+        },
+        points    : {
+          show: true
+        }
+      },
+      lines : {
+        fill : false,
+        color: ['#3c8dbc', '#f56954']
+      },
+      yaxis : {
+        show: true
+      },
+      xaxis : {
+        show: true,
+        ticks: line_ticks
+      }
+    })
+    //Initialize tooltip on hover
+    $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
+      position: 'absolute',
+      display : 'none',
+      opacity : 0.8,
+      zIndex : 9999
+    }).appendTo('body')
+    $('#line-chart').bind('plothover', function (event, pos, item) {
+
+      if (item) {
+        var x = item.datapoint[0].toFixed(2),
+            y = item.datapoint[1].toFixed(2)
+
+        $('#line-chart-tooltip').html(item.series.label + ' of ' + x + ' = ' + y)
+          .css({
+            top : item.pageY + 5,
+            left: item.pageX + 5
+          })
+          .fadeIn(200)
+      } else {
+        $('#line-chart-tooltip').hide()
+      }
+
+    })
+  }
+  /* END LINE CHART */
+
   function enableResidentView(){
     //change title
     $("#residentModalTitle").text("Modify Resident");
 
     //change buttons
     $("#residentModalFooter").hide();
-
-    //allow editing
-    $("#residentName").prop("disabled", false);
-    $("#residentCaretaker").prop("disabled", false);
-    $("#residentRoom").prop("disabled", false);
   }
 
   function cancelResidentView(){
     //change buttons
     $("#residentModalFooter").show();
+    $("#updateResidentFooter").hide();
 
     //disallow editing
-    $("#residentName").prop("disabled", true);
-    $("#residentCaretaker").prop("disabled", true);
-    $("#residentRoom").prop("disabled", true);
+    $("#residentWeight").prop("disabled", true);
+    $("#residentHeight").prop("disabled", true);
+    $("#residentBloodType").prop("disabled", true);
+    $("#add-new-condition").prop("disabled", true);
+    $("#add-new-allergies").prop("disabled", true);
+    $("#add-new-medication").prop("disabled", true);
+    $(".closeDiv").prop("disabled", true);
 
     //reset the data
     $("#residentName").val(resident.name);
     $("#residentCaretaker").val(resident.caretaker);
     $("#residentRoom").val(resident.room);
-  }
+    $("#residentWeight").val(resident.weight);
+    $("#residentHeight").val(resident.height);
+    $("#residentBloodType").val(resident.bloodType);
 
+    /* ALERT! CONDITION ALLERGIES AND MEDICATION
+      WHEN CANCEL BTN CLICKED ALL SHOULD BE GONE 
+      AND REPLACED BY PREVIOUS VALUES FETCHED */
+    //DELETING ALL CREATED DIVS
+    $('.healthConditions').remove();
+    $('.allergies').remove();
+    $('.medication').remove();
 
-  /*
-   * LINE CHART
-   * ----------
-   */
-  //LINE randomly generated data
+    //CLEARING TEXT BOX
+    $('#new-condition').val('');
+    $('#new-allergies').val('');
+    $('#new-medication').val('');
 
-  var sin = [],
-      cos = []
-  for (var i = 0; i < 14; i += 0.5) {
-    sin.push([i, Math.sin(i)])
-    cos.push([i, Math.cos(i)])
-  }
-  var line_data1 = {
-    data : sin,
-    color: '#3c8dbc'
-  }
-  var line_data2 = {
-    data : cos,
-    color: '#00c0ef'
-  }
-  $.plot('#line-chart', [line_data1, line_data2], {
-    grid  : {
-      hoverable  : true,
-      borderColor: '#f3f3f3',
-      borderWidth: 1,
-      tickColor  : '#f3f3f3'
-    },
-    series: {
-      shadowSize: 0,
-      lines     : {
-        show: true
-      },
-      points    : {
-        show: true
-      }
-    },
-    lines : {
-      fill : false,
-      color: ['#3c8dbc', '#f56954']
-    },
-    yaxis : {
-      show: true
-    },
-    xaxis : {
-      show: true
-    }
-  })
-  //Initialize tooltip on hover
-  $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
-    position: 'absolute',
-    display : 'none',
-    opacity : 0.8,
-    zIndex : 9999
-  }).appendTo('body')
-  $('#line-chart').bind('plothover', function (event, pos, item) {
-
-    if (item) {
-      var x = item.datapoint[0].toFixed(2),
-          y = item.datapoint[1].toFixed(2)
-
-      $('#line-chart-tooltip').html(item.series.label + ' of ' + x + ' = ' + y)
-        .css({
-          top : item.pageY + 5,
-          left: item.pageX + 5
-        })
-        .fadeIn(200)
-    } else {
-      $('#line-chart-tooltip').hide()
+    //ADDING BACK DIVS
+    for(i=0; i<resident.healthConditions.length; i++){
+      showEachHealth(resident.healthConditions[i], 'healthConditions')
     }
 
-  })
-  /* END LINE CHART */
+    for(i=0; i<resident.allergies.length; i++){
+      showEachHealth(resident.allergies[i], 'allergies')
+    }
+
+    for(i=0; i<resident.medication.length; i++){
+      showEachHealth(resident.medication[i], 'medication')
+    }
+  }
 
 
   function enableUpdateResident(){
@@ -787,131 +1049,153 @@ Tenki dashboard, built with adminlte starter page
     $("#residentName").val(resident.name);
     $("#residentCaretaker").val(resident.caretaker);
     $("#residentRoom").val(resident.room);
+    $("#residentWeight").val(resident.weight);
+    $("#residentHeight").val(resident.height);
+    $("#residentBloodType").val(resident.bloodType);
+
+    /* ALERT! CONDITION ALLERGIES AND MEDICATION
+      WHEN CANCEL BTN CLICKED ALL SHOULD BE GONE 
+      AND REPLACED BY PREVIOUS VALUES FETCHED */
+    //DELETING ALL CREATED DIVS
+    $('.healthConditions').remove();
+    $('.allergies').remove();
+    $('.medication').remove();
+
+    //CLEARING TEXT BOX
+    $('#new-condition').val('');
+    $('#new-allergies').val('');
+    $('#new-medication').val('');
+
+    //ADDING BACK DIVS
+    for(i=0; i<resident.healthConditions.length; i++){
+      showEachHealth(resident.healthConditions[i], 'healthConditions')
+    }
+
+    for(i=0; i<resident.allergies.length; i++){
+      showEachHealth(resident.allergies[i], 'allergies')
+    }
+
+    for(i=0; i<resident.medication.length; i++){
+      showEachHealth(resident.medication[i], 'medication')
+    }
   }
 
-
-
-  $('#add-new-condition').click(function (e) {
-      e.preventDefault()
-      // Get value and make sure it is not null
-      var val = $('#new-condition').val()
-      if (val.length == 0) {
-        return
-      }
-
-      // Create events
-      var condition = $('<div />')
-      condition.css({
-        'background-color': getRandomColor(),
-        'border-color'    : getRandomColor(),
-        'color'           : '#fff',
-        'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-        'border-radius'   : '.25rem',
-        'font-weight'     : '700',
-        'margin-bottom'   : '4px',
-        'padding'     : '5px 10px'
-      }).addClass('healthConditions')
-      condition.text(val)
-
-      condition.addClass('alert')
-
-      $("#healthConditions").prepend(condition)
-
-      // Remove event from text input
-      $('#new-condition').val('')
-
-      var x = condition.html();
-      var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
-
-      // Add button to condition div
-      condition.html(x+y);
-
-    })
-
-    $('#add-new-allergies').click(function (e) {
-      e.preventDefault()
-      // Get value and make sure it is not null
-      var val = $('#new-allergies').val()
-      if (val.length == 0) {
-        return
-      }
-
-      // Create events
-      var allergies = $('<div />')
-      allergies.css({
-        'background-color': getRandomColor(),
-        'border-color'    : getRandomColor(),
-        'color'           : '#fff',
-        'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-        'border-radius'   : '.25rem',
-        'font-weight'     : '700',
-        'margin-bottom'   : '4px',
-        'padding'     : '5px 10px'
-      }).addClass('allergies')
-      allergies.text(val)
-
-      allergies.addClass('alert')
-
-      $("#allergies").prepend(allergies)
-
-      // Remove event from text input
-      $('#new-allergies').val('')
-
-      // Add button to each div
-      var x = allergies.html();
-      var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
-
-      // Add button to condition div
-      allergies.html(x+y);
-
-    })
-
-    $('#add-new-medication').click(function (e) {
-      e.preventDefault()
-      // Get value and make sure it is not null
-      var val = $('#new-medication').val()
-      if (val.length == 0) {
-        return
-      }
-
-      // Create events
-      var medication = $('<div />')
-      medication.css({
-        'background-color': getRandomColor(),
-        'border-color'    : getRandomColor(),
-        'color'           : '#fff',
-        'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-        'border-radius'   : '.25rem',
-        'font-weight'     : '700',
-        'margin-bottom'   : '4px',
-        'padding'     : '5px 10px'
-      }).addClass('medication')
-      medication.text(val)
-
-      medication.addClass('alert')
-      
-      $("#medication").prepend(medication)
-
-      // Remove event from text input
-      $('#new-medication').val('')
-
-      // Add button to each div
-      var x = medication.html();
-      var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
-
-      // Add button to condition div
-      medication.html(x+y);
-
-    })
-
-    // Get random color
-    function getRandomColor() {
-      var colors = ['B82A2A', '71B82A', '2AB8B8', '712AB8'];
-      var color = "#"
+  // Get random color
+  function getRandomColor() {
+    var colors = ['B82A2A', '71B82A', '2AB8B8', '712AB8'];
+    var color = "#";
     color += colors[Math.floor(Math.random() * colors.length)];
     return color;
   }
 
+
+
+  /********** Testing **********/
+
+  //test all data submitted
+  function testSubmittedData(){
+    console.log($("#residentWeight").val());
+    console.log($("#residentHeight").val());
+    console.log($('#residentBloodType').val());
+
+    var healthConditions = [];
+    var allergies = [];
+    var medications = [];
+
+    healthConditions = getEachHealth($('.healthConditions'));
+    allergies = getEachHealth($('.allergies'));
+    medications = getEachHealth($('.medication'));
+
+    console.log("ID"+ $("#residentID").text());
+
+    console.log(getEachHealth($('.healthConditions')));
+    console.log(getEachHealth($('.allergies')));
+    console.log(getEachHealth($('.medication')));
+  }
+
+
+  // //test forms and details
+  // function testDetailsForms(){
+  //   var resident = {_id: '101', name: 'lls', caretaker: 'pop', status: 'healthy', room: 'r2013', gender: 'Male', dob: '05/14/1999', ic: '1021345612', nationality: 'malaysian', pNum: '0178293647', guardian: 'hahayou', emergencyPNum: '0174837291', streetAdd: 'Lebuh blablabla', streetAdd2: 'Taman Rapat Indah', city: 'Ipoh', state: 'Perak', postal: '31350', weight: '45', height: '144', bloodType: 'A', healthConditions: ['123'], allergies: ['333','555'], medication: ['222', '777', 'smtg'], bpm: ['50'], sp02: ['90'], history: [{date: '14/6/1986', bpm: '55', sp02: '60'}]};
+  //   var resident2 = {_id: '101', name: 'lls2', caretaker: 'pop2', status: 'not healthy', room: 'r2015', gender: 'Female', dob: '05/14/1988', ic: '0178293647', nationality: 'malaysian', pNum: '1021345612', guardian: 'hahayou2', emergencyPNum: '0174837291', streetAdd: 'Lebuh blablabla', streetAdd2: 'Taman Rapat Indah', city: 'Ipoh', state: 'Perak', postal: '31350', weight: '45', height: '144', bloodType: 'O', healthConditions: ['321'], allergies: ['222','777'], medication: ['223332', '733377', 'smtg'], bpm: ['60'], sp02: ['95'], history: [{date: '05/14/1999', bpm: '55', sp02: '60'}, {date: '05/15/1999', bpm: '58', sp02: '90'}]};
+
+
+  //   var residents = [resident, resident2];
+
+
+  //   residents_table.clear();
+  //   residents_table.rows.add(residents);
+  //   residents_table.draw();
+  // }
+
+  // get data from each of the health divs and puts them into an array
+  // function getEachHealth(variable){
+  //   var array = [];
+
+  //   variable.each(function()
+  //   {
+  //     var str = $(this).text();
+  //     // to delete the x from button text
+  //     array.push(str.substring(0, str.length-1));
+  //   })
+
+  //   return array;
+  // }
+
+
+  //Test showing back each allergies
+
+  //******* DON'T DELETE IT'S FOR TESTING *******//
+  // healthConditions = ['Diabetes', 'Stroke'];
+  // allergies = ['Eggs', 'Flower'];
+  // medication = ['Medicine#1 once a day', 'Medicine#2 once a week'];
+
+  // for(i=0; i<healthConditions.length; i++){
+  //   showEachHealth(healthConditions[i], 'healthConditions')
+  // }
+
+  // for(i=0; i<allergies.length; i++){
+  //   showEachHealth(allergies[i], 'allergies')
+  // }
+
+  // for(i=0; i<medication.length; i++){
+  //   showEachHealth(medication[i], 'medication')
+  // }
+
+
+  /*function showEachHealth(item, className){
+    var notObject = className;
+      
+    var className = $('<div />')
+    className.css({
+      'background-color': getRandomColor(),
+      'border-color'    : getRandomColor(),
+      'color'           : '#fff',
+      'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+      'border-radius'   : '.25rem',
+      'font-weight'     : '700',
+      'margin-bottom'   : '4px',
+      'margin-right'  : '4px',
+      'padding'     : '5px 10px',
+      'width'     : 'auto',
+      'display'     : 'inline-block'
+    }).addClass(className)
+    className.text(item)
+
+    className.addClass('alert')
+
+    $("#" + notObject).prepend(className)
+
+    // Remove event from text input
+    $('#new-' + notObject).val('')
+
+    // Add button to each div
+    var x = className.html();
+    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+    // Add button to condition div
+    className.html(x+y);
+  }*/
 
 </script>
 
