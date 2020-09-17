@@ -20,7 +20,7 @@ router.get('/all', async (req: Request, res: Response) => {
   return res.status(OK).json(residents);
 });
 
-// get one (detailed)
+// get one (detailed?)
 // residents/:id
 router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params as ParamsDictionary;
@@ -53,7 +53,7 @@ router.put('/update/:id', async (req: Request, res: Response) => {
       error: paramMissingError,
     });
   }
-  
+
   //update the resident and get the updated resident
   const updatedResident = await residentDao.update(Number(id), resident);
   //return the updated resident
