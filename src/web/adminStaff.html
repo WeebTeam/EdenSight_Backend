@@ -132,13 +132,6 @@ Tenki dashboard, built with adminlte starter page
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- Test -->
-                      <tr>
-                        <td>LLS</td>
-                        <td>loli</td>
-                        <td>10101010101</td>
-                        <td>Yes</td>
-                      </tr>
                     </tbody>
                     <tfoot>
                       <tr>
@@ -248,7 +241,7 @@ Tenki dashboard, built with adminlte starter page
             </div>
             <div class="form-group">
               <label for="staffPassword">Password</label>
-              <input type="Password" class="form-control" id="staffPassword" required="" disabled="">
+              <input type="Password" class="form-control" id="staffPassword" disabled="">
             </div>
             <div class="form-group">
               <label for="staffPhoneNum">Phone Number</label>
@@ -261,7 +254,7 @@ Tenki dashboard, built with adminlte starter page
           </div>
           <div class="modal-footer" id="updateStaffFooter" style="display:none;">
             <button type="button" class="btn btn-secondary" onclick="cancelUpdateStaff()">Cancel</button>
-            <button type="submit" class="btn btn-info" onclick="updateStaff()">Update Staff</button>
+            <button type="submit" class="btn btn-info">Update Staff</button>
           </div>
         </form>
         <div class="modal-footer" id="staffModalFooter">
@@ -320,8 +313,8 @@ Tenki dashboard, built with adminlte starter page
       "responsive": true,
       "columns": [
         { "data": "name" },
-        { "data": "username" },
-        { "data": "phoneNum" },
+        { "data": "uname" },
+        { "data": "pNum" },
         { "data": "admin" }
       ]
     });
@@ -336,7 +329,8 @@ Tenki dashboard, built with adminlte starter page
   /********** event listeners **********/
 
   //submit new staff form
-  $('#new_staff_form').submit(function (){
+  $('#new_staff_form').submit(function (e) {
+    e.preventDefault();
     //no validate, we are blindly trusting our staff
     //instead we ask them to self validate :)
     var staffValidation = confirm("Please make sure all information is correct!");
@@ -344,7 +338,7 @@ Tenki dashboard, built with adminlte starter page
       //send to server
       $.ajax({
         type: "POST",
-        url: "api/residents/add/",
+        url: "api/users/add/",
         contentType : 'application/json',
         dataType: 'json',
         beforeSend: function (xhr) {
@@ -352,9 +346,11 @@ Tenki dashboard, built with adminlte starter page
           xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
         },
         data: JSON.stringify({
-          name: $("#newResidentName").val(),
-          caretaker:  $("#newResidentCaretaker").val(),
-          room:  $("#newResidentRoom").val()
+          name: $("#newStaffName").val(),
+          uname:  $("#newStaffUsername").val(),
+          passwd: $("#newStaffPassword").val(),
+          pNum: $("#newStaffPhoneNum").val(),
+          admin:  $("#newIsStaffAdmin").prop('checked')
         }),
         success: function (resident){
           //on success, clear form, modal and update list
@@ -376,10 +372,9 @@ Tenki dashboard, built with adminlte starter page
 
     //populate the form
     $("#staffName").val(staff.name);
-    $("#staffUsername").val(staff.username);
-    $("#staffPassword").val(staff.password);
-    $("#staffPhoneNum").val(staff.phoneNum);
-    $("#isStaffAdmin").val(staff.admin);
+    $("#staffUsername").val(staff.uname);
+    $("#staffPhoneNum").val(staff.pNum);
+    $("#isStaffAdmin").prop('checked', staff.admin);
 
     $("#staffModal").modal('toggle');
   });
@@ -391,15 +386,16 @@ Tenki dashboard, built with adminlte starter page
   })
 
   //update staff
-  $('#update_staff_form').submit(function (){
+  $('#update_staff_form').submit(function (e) {
+    e.preventDefault();
     //no validate, we are blindly trusting our staff
     //instead we ask them to self validate :)
     var staffValidation = confirm("Please make sure all information is correct!");
     if (staffValidation){
       //send to server
       $.ajax({
-        type: "POST",
-        url: "api/residents/update/",
+        type: "PUT",
+        url: "api/users/update/" + $("#staffUsername").val(),
         contentType : 'application/json',
         dataType: 'json',
         beforeSend: function (xhr) {
@@ -407,13 +403,14 @@ Tenki dashboard, built with adminlte starter page
           xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
         },
         data: JSON.stringify({
-          name: $("#residentName").val(),
-          caretaker:  $("#residentCaretaker").val(),
-          room:  $("#residentRoom").val()
+          name: $("#staffName").val(),
+          passwd: $("#staffPassword").val(),
+          pNum: $("#staffPhoneNum").val(),
+          admin:  $("#isStaffAdmin").prop('checked')
         }),
-        success: function (resident){
+        success: function (staff){
           //on success, clear form, modal and update list
-          console.log("resident updated: "+ resident);
+          console.log("staff updated: "+ staff);
           $("#staffModal").modal('toggle');
           getAllStaff();
         }
@@ -433,7 +430,7 @@ Tenki dashboard, built with adminlte starter page
   function getAllStaff() {
     $.ajax({
       type: "GET",
-      url: "api/residents/all/",
+      url: "api/users/all/",
       dataType: 'json',
       beforeSend: function (xhr) {
         //include credentials
@@ -453,24 +450,6 @@ Tenki dashboard, built with adminlte starter page
           handleUnauthorized();
         }
       }
-    });
-  }
-
-  function getStaffById() {
-    $.ajax({
-      type: "GET",
-      url: "api/residents/",
-      dataType: 'json',
-      beforeSend: function (xhr) {
-        //include credentials
-        xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
-      },
-      success: function (resident){
-        //on success, display resident details
-
-      }
-      //todo: handle error, 401
-      //display alert
     });
   }
 
@@ -506,9 +485,9 @@ Tenki dashboard, built with adminlte starter page
 
     //reset the data
     $("#staffName").val(staff.name);
-    $("#staffUsername").val(staff.username);
-    $("#staffPassword").val(staff.password);
-    $("#staffPhoneNum").val(staff.phoneNum);
+    $("#staffUsername").val(staff.usnemr);
+    $("#staffPassword").val("");
+    $("#staffPhoneNum").val(staff.pNum);
     $("#isStaffAdmin").val(staff.isStaffAdmin);
   }
 

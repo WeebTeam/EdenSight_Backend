@@ -6,6 +6,7 @@ export interface IUser {
   name: string;
   pwdHash: string;
   admin: boolean;
+  pNum: string;
 }
 
 class User implements IUser {
@@ -21,11 +22,15 @@ class User implements IUser {
   @prop()
   public admin: boolean;
 
-  constructor(uname: string, name?: string, pwdHash?: string, admin?: boolean) {
+  @prop()
+  public pNum: string;
+
+  constructor(uname: string, name?: string, pwdHash?: string, admin?: boolean, pNum?:string) {
     this.uname = uname;
     this.name = name || '';
     this.pwdHash = pwdHash || '';
     this.admin = admin || false;
+    this.pNum = pNum || '';
   }
 }
 

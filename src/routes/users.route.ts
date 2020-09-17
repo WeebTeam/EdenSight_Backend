@@ -32,7 +32,7 @@ router.get('/:uname', async (req: Request, res: Response) => {
 //add user
 // users/add
 router.post('/add', async (req: Request, res: Response) => {
-  const { user } = req.body;
+  const user = req.body;
   if (!user) {
     return res.status(BAD_REQUEST).json({
       error: paramMissingError,
@@ -46,7 +46,7 @@ router.post('/add', async (req: Request, res: Response) => {
 // users/update/:uname
 router.put('/update/:uname', async (req: Request, res: Response) => {
   const { uname } = req.params as ParamsDictionary;
-  const { user } = req.body;
+  const user = req.body;
   if (!user || !uname) {
     return res.status(BAD_REQUEST).json({
       error: paramMissingError,

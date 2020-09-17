@@ -1,4 +1,6 @@
 import User, { UserModel } from '@models/user.model';
+import bcrypt from 'bcrypt';
+import { pwdSaltRounds } from '@shared/constants';
 
 class UserDao {
 
@@ -18,9 +20,10 @@ class UserDao {
     }
   }
 
-  public async add(user: User): Promise<User | null> {
+  public async add(user: any): Promise<User | null> {
       try {
-          return await UserModel.create(user);
+        user.pwdHash = bcrypt.hashSync(user.passwd, pwdSaltRounds);;
+        return await UserModel.create(user);
       } catch (err) {
           throw err;
       }
@@ -28,12 +31,16 @@ class UserDao {
 
   public async update(uname: string, updateParams: any): Promise<User | null> {
     try {
-      await UserModel.updateOne(
-        { uname: uname },
-        updateParams
-      );
+      if (updateParams.passwd != ""){
+        updateParams.pwdHash = bcrypt.hashSync(updateParams.passwd, pwdSaltRounds);
+      }
 
-      return await UserModel.findOne({ uname :uname });
+      await UserModel.updateOne(
+          { uname: uname },
+          updateParams
+        );
+
+      return await UserModel.findOne({ uname: uname });
     } catch (err) {
         throw err;
     }
