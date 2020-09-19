@@ -34,6 +34,54 @@ function showEachHealth(item, className){
 }
 
 
+// function to trigger the event listeners
+function allowAddingHealth(divClassName, className){
+  var notObject = className;
+
+  $('#add-' + divClassName).click(function (e) {
+    e.preventDefault()
+    // Get value and make sure it is not null
+    var val = $('#' + divClassName).val()
+    if (val.length == 0) {
+      return
+    }
+
+    // Create events
+    var className = $('<div />')
+    className.css({
+      'background-color': getRandomColor(),
+      'border-color'    : getRandomColor(),
+      'color'           : '#fff',
+      'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+      'border-radius'   : '.25rem',
+      'font-weight'     : '700',
+      'margin-bottom'   : '4px',
+      'margin-right'  : '4px',
+      'padding'     : '5px 10px',
+      'width'     : 'auto',
+      'display'     : 'inline-block'
+    }).addClass(notObject)
+    className.text(val)
+
+    className.addClass('alert')
+
+    className.addClass('col')
+
+    $("#" + notObject).prepend(className)
+
+    // Remove event from text input
+    $("#" + divClassName).val('')
+
+    var x = className.html();
+    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+    // Add button to className div
+    className.html(x+y);
+
+  })
+}
+
+
 // get data from each of the health divs and puts them into an array
 function getEachHealth(variable){
   var array = [];

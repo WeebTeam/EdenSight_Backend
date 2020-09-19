@@ -418,7 +418,7 @@
                     <div class="modal-footer" id="residentModalFooter">
                       <button type="button" class="btn btn-primary" onclick="enableUpdateResident()">Modify Resident</button>
                     </div>
-                    <div class="modal-footer" id="updateResidentFooter" onclick="testSubmittedData()" style="display:none;">
+                    <div class="modal-footer" id="updateResidentFooter" style="display:none;">
                       <button type="button" class="btn btn-secondary" onclick="cancelUpdateResident()">Cancel</button>
                       <button type="submit" class="btn btn-info">Update Resident</button>
                     </div>
@@ -689,128 +689,133 @@
 
 
   // EDIT RESIDENT SIDE
-  $('#add-new-condition').click(function (e) {
-    e.preventDefault()
-    // Get value and make sure it is not null
-    var val = $('#new-condition').val()
-    if (val.length == 0) {
-      return
-    }
-
-    // Create events
-    var condition = $('<div />')
-    condition.css({
-      'background-color': getRandomColor(),
-      'border-color'    : getRandomColor(),
-      'color'           : '#fff',
-      'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-      'border-radius'   : '.25rem',
-      'font-weight'     : '700',
-      'margin-bottom'   : '4px',
-      'margin-right'  : '4px',
-      'padding'     : '5px 10px',
-      'width'     : 'auto',
-      'display'     : 'inline-block'
-    }).addClass('healthConditions')
-    condition.text(val)
-
-    condition.addClass('alert')
-
-    $("#healthConditions").prepend(condition)
-
-    // Remove event from text input
-    $('#new-condition').val('')
-
-    var x = condition.html();
-    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
-
-    // Add button to condition div
-    condition.html(x+y);
-
-  })
+  allowAddingHealth("new-condition", "healthConditions");
+  allowAddingHealth("new-allergies", "allergies");
+  allowAddingHealth("new-medication", "medication");
 
 
-  $('#add-new-allergies').click(function (e) {
-    e.preventDefault()
-    // Get value and make sure it is not null
-    var val = $('#new-allergies').val()
-    if (val.length == 0) {
-      return
-    }
+  // $('#add-new-condition').click(function (e) {
+  //   e.preventDefault()
+  //   // Get value and make sure it is not null
+  //   var val = $('#new-condition').val()
+  //   if (val.length == 0) {
+  //     return
+  //   }
 
-    // Create events
-    var allergies = $('<div />')
-    allergies.css({
-      'background-color': getRandomColor(),
-      'border-color'    : getRandomColor(),
-      'color'           : '#fff',
-      'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-      'border-radius'   : '.25rem',
-      'font-weight'     : '700',
-      'margin-bottom'   : '4px',
-      'margin-right'  : '4px',
-      'padding'     : '5px 10px',
-      'width'     : 'auto',
-      'display'     : 'inline-block'
-    }).addClass('allergies')
-    allergies.text(val)
+  //   // Create events
+  //   var condition = $('<div />')
+  //   condition.css({
+  //     'background-color': getRandomColor(),
+  //     'border-color'    : getRandomColor(),
+  //     'color'           : '#fff',
+  //     'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+  //     'border-radius'   : '.25rem',
+  //     'font-weight'     : '700',
+  //     'margin-bottom'   : '4px',
+  //     'margin-right'  : '4px',
+  //     'padding'     : '5px 10px',
+  //     'width'     : 'auto',
+  //     'display'     : 'inline-block'
+  //   }).addClass('healthConditions')
+  //   condition.text(val)
 
-    allergies.addClass('alert')
+  //   condition.addClass('alert')
 
-    $("#allergies").prepend(allergies)
+  //   $("#healthConditions").prepend(condition)
 
-    // Remove event from text input
-    $('#new-allergies').val('')
+  //   // Remove event from text input
+  //   $('#new-condition').val('')
 
-    // Add button to each div
-    var x = allergies.html();
-    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+  //   var x = condition.html();
+  //   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
 
-    // Add button to condition div
-    allergies.html(x+y);
+  //   // Add button to condition div
+  //   condition.html(x+y);
 
-  })
+  // })
 
-  $('#add-new-medication').click(function (e) {
-    e.preventDefault()
-    // Get value and make sure it is not null
-    var val = $('#new-medication').val()
-    if (val.length == 0) {
-      return
-    }
 
-    // Create events
-    var medication = $('<div />')
-    medication.css({
-      'background-color': getRandomColor(),
-      'border-color'    : getRandomColor(),
-      'color'           : '#fff',
-      'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-      'border-radius'   : '.25rem',
-      'font-weight'     : '700',
-      'margin-bottom'   : '4px',
-      'margin-right'  : '4px',
-      'padding'     : '5px 10px',
-      'width'     : 'auto',
-      'display'     : 'inline-block'
-    }).addClass('medication')
-    medication.text(val)
+  // $('#add-new-allergies').click(function (e) {
+  //   e.preventDefault()
+  //   // Get value and make sure it is not null
+  //   var val = $('#new-allergies').val()
+  //   if (val.length == 0) {
+  //     return
+  //   }
 
-    medication.addClass('alert')
+  //   // Create events
+  //   var allergies = $('<div />')
+  //   allergies.css({
+  //     'background-color': getRandomColor(),
+  //     'border-color'    : getRandomColor(),
+  //     'color'           : '#fff',
+  //     'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+  //     'border-radius'   : '.25rem',
+  //     'font-weight'     : '700',
+  //     'margin-bottom'   : '4px',
+  //     'margin-right'  : '4px',
+  //     'padding'     : '5px 10px',
+  //     'width'     : 'auto',
+  //     'display'     : 'inline-block'
+  //   }).addClass('allergies')
+  //   allergies.text(val)
+
+  //   allergies.addClass('alert')
+
+  //   $("#allergies").prepend(allergies)
+
+  //   // Remove event from text input
+  //   $('#new-allergies').val('')
+
+  //   // Add button to each div
+  //   var x = allergies.html();
+  //   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+  //   // Add button to condition div
+  //   allergies.html(x+y);
+
+  // })
+
+  // $('#add-new-medication').click(function (e) {
+  //   e.preventDefault()
+  //   // Get value and make sure it is not null
+  //   var val = $('#new-medication').val()
+  //   if (val.length == 0) {
+  //     return
+  //   }
+
+  //   // Create events
+  //   var medication = $('<div />')
+  //   medication.css({
+  //     'background-color': getRandomColor(),
+  //     'border-color'    : getRandomColor(),
+  //     'color'           : '#fff',
+  //     'box-shadow'    : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+  //     'border-radius'   : '.25rem',
+  //     'font-weight'     : '700',
+  //     'margin-bottom'   : '4px',
+  //     'margin-right'  : '4px',
+  //     'padding'     : '5px 10px',
+  //     'width'     : 'auto',
+  //     'display'     : 'inline-block'
+  //   }).addClass('medication')
+  //   medication.text(val)
+
+  //   medication.addClass('alert')
       
-    $("#medication").prepend(medication)
+  //   $("#medication").prepend(medication)
 
-    // Remove event from text input
-    $('#new-medication').val('')
+  //   // Remove event from text input
+  //   $('#new-medication').val('')
 
-    // Add button to each div
-    var x = medication.html();
-    var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+  //   // Add button to each div
+  //   var x = medication.html();
+  //   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
 
-    // Add button to condition div
-    medication.html(x+y);
+  //   // Add button to condition div
+  //   medication.html(x+y);
 
-  })
+  // })
 
   //END
 

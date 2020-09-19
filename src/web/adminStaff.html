@@ -493,6 +493,26 @@ Tenki dashboard, built with adminlte starter page
 
   function deleteStaff(){
     var confirmDeletion = confirm('Are you sure? This will remove this staff!');
+    if(confirmDeletion == true){
+      $.ajax({
+        url: "api/users/delete/" + $("#staffUsername").val(),
+        type: 'DELETE',
+        success: function(result) {
+          //on success, clear form, modal and update list
+          console.log("staff deleted. ");
+          getAllStaff();
+        },
+        error: function (xhr){
+          var code = xhr.status;
+
+          //handle 401
+          if (code == 401){
+            $("#staffModal").modal('hide');
+            handleUnauthorized();
+          }
+        }
+      });
+    }
   }
 
 

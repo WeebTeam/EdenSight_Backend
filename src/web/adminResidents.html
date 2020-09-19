@@ -856,258 +856,269 @@ $('#update_resident_form').submit(function (e){
 
 // NEW RESIDENT SIDE
 // When add btn clicked, it will add in a div with the value given by user with selected random colors
-$('#add-new-condition-new').click(function (e) {
-  e.preventDefault()
-  // Get value and make sure it is not null
-  var val = $('#new-condition-new').val()
-  if (val.length == 0) {
-    return
-  }
-
-  // Create events
-  var condition = $('<div />')
-  condition.css({
-    'background-color': getRandomColor(),
-    'border-color'    : getRandomColor(),
-    'color'           : '#fff',
-    'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-    'border-radius'   : '.25rem',
-    'font-weight'     : '700',
-    'margin-bottom'	  : '4px',
-    'margin-right'  : '4px',
-    'padding'		  : '5px 10px',
-    'width'		  : 'auto',
-    'display'		  : 'inline-block'
-  }).addClass('healthConditions-new')
-  condition.text(val)
-
-  condition.addClass('alert')
-
-  condition.addClass('col')
-
-  $("#healthConditions-new").prepend(condition)
-
-  // Remove event from text input
-  $('#new-condition-new').val('')
-
-  var x = condition.html();
-  var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
-
-  // Add button to condition div
-  condition.html(x+y);
-
-})
+allowAddingHealth("new-condition-new", "healthConditions-new");
+allowAddingHealth("new-allergies-new", "allergies-new");
+allowAddingHealth("new-medication-new", "medication-new");
 
 
-$('#add-new-allergies-new').click(function (e) {
-  e.preventDefault()
-  // Get value and make sure it is not null
-  var val = $('#new-allergies-new').val()
-  if (val.length == 0) {
-    return
-  }
 
-  // Create events
-  var allergies = $('<div />')
-  allergies.css({
-    'background-color': getRandomColor(),
-    'border-color'    : getRandomColor(),
-    'color'           : '#fff',
-    'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-    'border-radius'   : '.25rem',
-    'font-weight'     : '700',
-    'margin-bottom'	  : '4px',
-    'margin-right'  : '4px',
-    'padding'		  : '5px 10px',
-    'width'		  : 'auto',
-    'display'		  : 'inline-block'
-  }).addClass('allergies-new')
-  allergies.text(val)
+// $('#add-new-condition-new').click(function (e) {
+//   e.preventDefault()
+//   // Get value and make sure it is not null
+//   var val = $('#new-condition-new').val()
+//   if (val.length == 0) {
+//     return
+//   }
 
-  allergies.addClass('alert')
+//   // Create events
+//   var condition = $('<div />')
+//   condition.css({
+//     'background-color': getRandomColor(),
+//     'border-color'    : getRandomColor(),
+//     'color'           : '#fff',
+//     'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+//     'border-radius'   : '.25rem',
+//     'font-weight'     : '700',
+//     'margin-bottom'	  : '4px',
+//     'margin-right'  : '4px',
+//     'padding'		  : '5px 10px',
+//     'width'		  : 'auto',
+//     'display'		  : 'inline-block'
+//   }).addClass('healthConditions-new')
+//   condition.text(val)
 
-  $("#allergies-new").prepend(allergies)
+//   condition.addClass('alert')
 
-  // Remove event from text input
-  $('#new-allergies-new').val('')
+//   condition.addClass('col')
 
-  // Add button to each div
-  var x = allergies.html();
-  var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+//   $("#healthConditions-new").prepend(condition)
 
-  // Add button to condition div
-  allergies.html(x+y);
+//   // Remove event from text input
+//   $('#new-condition-new').val('')
 
-})
+//   var x = condition.html();
+//   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+//   // Add button to condition div
+//   condition.html(x+y);
+
+// })
 
 
-$('#add-new-medication-new').click(function (e) {
-  e.preventDefault()
-  // Get value and make sure it is not null
-  var val = $('#new-medication-new').val()
-  if (val.length == 0) {
-    return
-  }
+// $('#add-new-allergies-new').click(function (e) {
+//   e.preventDefault()
+//   // Get value and make sure it is not null
+//   var val = $('#new-allergies-new').val()
+//   if (val.length == 0) {
+//     return
+//   }
 
-  // Create events
-  var medication = $('<div />')
-  medication.css({
-    'background-color': getRandomColor(),
-    'border-color'    : getRandomColor(),
-    'color'           : '#fff',
-    'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-    'border-radius'   : '.25rem',
-    'font-weight'     : '700',
-    'margin-bottom'	  : '4px',
-    'margin-right'  : '4px',
-    'padding'		  : '5px 10px',
-    'width'		  : 'auto',
-    'display'		  : 'inline-block'
-  }).addClass('medication-new')
-  medication.text(val)
+//   // Create events
+//   var allergies = $('<div />')
+//   allergies.css({
+//     'background-color': getRandomColor(),
+//     'border-color'    : getRandomColor(),
+//     'color'           : '#fff',
+//     'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+//     'border-radius'   : '.25rem',
+//     'font-weight'     : '700',
+//     'margin-bottom'	  : '4px',
+//     'margin-right'  : '4px',
+//     'padding'		  : '5px 10px',
+//     'width'		  : 'auto',
+//     'display'		  : 'inline-block'
+//   }).addClass('allergies-new')
+//   allergies.text(val)
 
-  medication.addClass('alert')
+//   allergies.addClass('alert')
 
-  $("#medication-new").prepend(medication)
+//   $("#allergies-new").prepend(allergies)
 
-  // Remove event from text input
-  $('#new-medication-new').val('')
+//   // Remove event from text input
+//   $('#new-allergies-new').val('')
 
-  // Add button to each div
-  var x = medication.html();
-  var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+//   // Add button to each div
+//   var x = allergies.html();
+//   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
 
-  // Add button to condition div
-  medication.html(x+y);
+//   // Add button to condition div
+//   allergies.html(x+y);
 
-})
+// })
+
+
+// $('#add-new-medication-new').click(function (e) {
+//   e.preventDefault()
+//   // Get value and make sure it is not null
+//   var val = $('#new-medication-new').val()
+//   if (val.length == 0) {
+//     return
+//   }
+
+//   // Create events
+//   var medication = $('<div />')
+//   medication.css({
+//     'background-color': getRandomColor(),
+//     'border-color'    : getRandomColor(),
+//     'color'           : '#fff',
+//     'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+//     'border-radius'   : '.25rem',
+//     'font-weight'     : '700',
+//     'margin-bottom'	  : '4px',
+//     'margin-right'  : '4px',
+//     'padding'		  : '5px 10px',
+//     'width'		  : 'auto',
+//     'display'		  : 'inline-block'
+//   }).addClass('medication-new')
+//   medication.text(val)
+
+//   medication.addClass('alert')
+
+//   $("#medication-new").prepend(medication)
+
+//   // Remove event from text input
+//   $('#new-medication-new').val('')
+
+//   // Add button to each div
+//   var x = medication.html();
+//   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+//   // Add button to condition div
+//   medication.html(x+y);
+
+// })
 // END
 
 
 
 
 // EDIT RESIDENT SIDE
-$('#add-new-condition').click(function (e) {
-  e.preventDefault()
-  // Get value and make sure it is not null
-  var val = $('#new-condition').val()
-  if (val.length == 0) {
-    return
-  }
+allowAddingHealth("new-condition", "healthConditions");
+allowAddingHealth("new-allergies", "allergies");
+allowAddingHealth("new-medication", "medication");
 
-  // Create events
-  var condition = $('<div />')
-  condition.css({
-    'background-color': getRandomColor(),
-    'border-color'    : getRandomColor(),
-    'color'           : '#fff',
-    'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-    'border-radius'   : '.25rem',
-    'font-weight'     : '700',
-    'margin-bottom'	  : '4px',
-    'margin-right'  : '4px',
-    'padding'		  : '5px 10px',
-    'width'		  : 'auto',
-    'display'		  : 'inline-block'
-  }).addClass('healthConditions')
-  condition.text(val)
 
-  condition.addClass('alert')
+// $('#add-new-condition').click(function (e) {
+//   e.preventDefault()
+//   // Get value and make sure it is not null
+//   var val = $('#new-condition').val()
+//   if (val.length == 0) {
+//     return
+//   }
 
-  $("#healthConditions").prepend(condition)
+//   // Create events
+//   var condition = $('<div />')
+//   condition.css({
+//     'background-color': getRandomColor(),
+//     'border-color'    : getRandomColor(),
+//     'color'           : '#fff',
+//     'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+//     'border-radius'   : '.25rem',
+//     'font-weight'     : '700',
+//     'margin-bottom'	  : '4px',
+//     'margin-right'  : '4px',
+//     'padding'		  : '5px 10px',
+//     'width'		  : 'auto',
+//     'display'		  : 'inline-block'
+//   }).addClass('healthConditions')
+//   condition.text(val)
 
-  // Remove event from text input
-  $('#new-condition').val('')
+//   condition.addClass('alert')
 
-  var x = condition.html();
-  var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+//   $("#healthConditions").prepend(condition)
 
-  // Add button to condition div
-  condition.html(x+y);
+//   // Remove event from text input
+//   $('#new-condition').val('')
 
-})
+//   var x = condition.html();
+//   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
 
-$('#add-new-allergies').click(function (e) {
-  e.preventDefault()
-  // Get value and make sure it is not null
-  var val = $('#new-allergies').val()
-  if (val.length == 0) {
-    return
-  }
+//   // Add button to condition div
+//   condition.html(x+y);
 
-  // Create events
-  var allergies = $('<div />')
-  allergies.css({
-    'background-color': getRandomColor(),
-    'border-color'    : getRandomColor(),
-    'color'           : '#fff',
-    'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-    'border-radius'   : '.25rem',
-    'font-weight'     : '700',
-    'margin-bottom'	  : '4px',
-    'margin-right'  : '4px',
-    'padding'		  : '5px 10px',
-    'width'		  : 'auto',
-    'display'		  : 'inline-block'
-  }).addClass('allergies')
-  allergies.text(val)
+// })
 
-  allergies.addClass('alert')
+// $('#add-new-allergies').click(function (e) {
+//   e.preventDefault()
+//   // Get value and make sure it is not null
+//   var val = $('#new-allergies').val()
+//   if (val.length == 0) {
+//     return
+//   }
 
-  $("#allergies").prepend(allergies)
+//   // Create events
+//   var allergies = $('<div />')
+//   allergies.css({
+//     'background-color': getRandomColor(),
+//     'border-color'    : getRandomColor(),
+//     'color'           : '#fff',
+//     'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+//     'border-radius'   : '.25rem',
+//     'font-weight'     : '700',
+//     'margin-bottom'	  : '4px',
+//     'margin-right'  : '4px',
+//     'padding'		  : '5px 10px',
+//     'width'		  : 'auto',
+//     'display'		  : 'inline-block'
+//   }).addClass('allergies')
+//   allergies.text(val)
 
-  // Remove event from text input
-  $('#new-allergies').val('')
+//   allergies.addClass('alert')
 
-  // Add button to each div
-  var x = allergies.html();
-  var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+//   $("#allergies").prepend(allergies)
 
-  // Add button to condition div
-  allergies.html(x+y);
+//   // Remove event from text input
+//   $('#new-allergies').val('')
 
-})
+//   // Add button to each div
+//   var x = allergies.html();
+//   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
 
-$('#add-new-medication').click(function (e) {
-  e.preventDefault()
-  // Get value and make sure it is not null
-  var val = $('#new-medication').val()
-  if (val.length == 0) {
-    return
-  }
+//   // Add button to condition div
+//   allergies.html(x+y);
 
-  // Create events
-  var medication = $('<div />')
-  medication.css({
-    'background-color': getRandomColor(),
-    'border-color'    : getRandomColor(),
-    'color'           : '#fff',
-    'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-    'border-radius'   : '.25rem',
-    'font-weight'     : '700',
-    'margin-bottom'	  : '4px',
-    'margin-right'  : '4px',
-    'padding'		  : '5px 10px',
-    'width'		  : 'auto',
-    'display'		  : 'inline-block'
-  }).addClass('medication')
-  medication.text(val)
+// })
 
-  medication.addClass('alert')
+// $('#add-new-medication').click(function (e) {
+//   e.preventDefault()
+//   // Get value and make sure it is not null
+//   var val = $('#new-medication').val()
+//   if (val.length == 0) {
+//     return
+//   }
 
-  $("#medication").prepend(medication)
+//   // Create events
+//   var medication = $('<div />')
+//   medication.css({
+//     'background-color': getRandomColor(),
+//     'border-color'    : getRandomColor(),
+//     'color'           : '#fff',
+//     'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
+//     'border-radius'   : '.25rem',
+//     'font-weight'     : '700',
+//     'margin-bottom'	  : '4px',
+//     'margin-right'  : '4px',
+//     'padding'		  : '5px 10px',
+//     'width'		  : 'auto',
+//     'display'		  : 'inline-block'
+//   }).addClass('medication')
+//   medication.text(val)
 
-  // Remove event from text input
-  $('#new-medication').val('')
+//   medication.addClass('alert')
 
-  // Add button to each div
-  var x = medication.html();
-  var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+//   $("#medication").prepend(medication)
 
-  // Add button to condition div
-  medication.html(x+y);
+//   // Remove event from text input
+//   $('#new-medication').val('')
 
-})
+//   // Add button to each div
+//   var x = medication.html();
+//   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+
+//   // Add button to condition div
+//   medication.html(x+y);
+
+// })
 
 //END
 
