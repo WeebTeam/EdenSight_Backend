@@ -5,7 +5,7 @@ export interface IUser {
   uname: string;
   name: string;
   pwdHash: string;
-  admin: boolean;
+  role: string;
   pNum: string;
 }
 
@@ -20,16 +20,16 @@ class User implements IUser {
   public pwdHash: string;
 
   @prop()
-  public admin: boolean;
+  public role: string;
 
   @prop()
   public pNum: string;
 
-  constructor(uname: string, name?: string, pwdHash?: string, admin?: boolean, pNum?:string) {
+  constructor(uname: string, name?: string, pwdHash?: string, role?: string, pNum?:string) {
     this.uname = uname;
     this.name = name || '';
     this.pwdHash = pwdHash || '';
-    this.admin = admin || false;
+    this.role = role || 'staff';
     this.pNum = pNum || '';
   }
 }

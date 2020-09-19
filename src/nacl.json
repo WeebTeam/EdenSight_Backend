@@ -1,0 +1,22 @@
+[
+  {
+    "group": "admin",
+    "permissions": [
+      {
+        "resource": "*",
+        "methods": "*",
+        "action": "allow"
+      }
+    ]
+  },
+  {
+    "group": "staff",
+    "permissions": [
+      {
+        "resource": "residents/*",
+        "methods": ["GET", "PUT"],
+        "action": "allow"
+      }
+    ]
+  }
+]

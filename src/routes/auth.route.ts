@@ -38,9 +38,7 @@ router.get('/login', async (req: Request, res: Response) => {
       });
     }
 
-    //user authenticated, todo: (maybe)create and return bearer token
-
-    return res.status(OK).json({ admin: user.admin });
+    return res.status(OK).json({ uname: user.uname, role: user.role });
   }
   else {
     return res.status(BAD_REQUEST).json({

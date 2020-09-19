@@ -128,7 +128,7 @@ Tenki dashboard, built with adminlte starter page
                         <th>Staff Name</th>
                         <th>Staff Username</th>
                         <th>Phone Number</th>
-                        <th>Admin</th>
+                        <th>Role</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -138,7 +138,7 @@ Tenki dashboard, built with adminlte starter page
                         <th>Staff Name</th>
                         <th>Staff Username</th>
                         <th>Phone Number</th>
-                        <th>Admin</th>
+                        <th>Role</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -315,7 +315,7 @@ Tenki dashboard, built with adminlte starter page
         { "data": "name" },
         { "data": "uname" },
         { "data": "pNum" },
-        { "data": "admin" }
+        { "data": "role" }
       ]
     });
 
@@ -350,7 +350,7 @@ Tenki dashboard, built with adminlte starter page
           uname:  $("#newStaffUsername").val(),
           passwd: $("#newStaffPassword").val(),
           pNum: $("#newStaffPhoneNum").val(),
-          admin:  $("#newIsStaffAdmin").prop('checked')
+          role: $("#newIsStaffAdmin").prop('checked') ? 'admin' : 'staff'
         }),
         success: function (resident){
           //on success, clear form, modal and update list
@@ -374,7 +374,7 @@ Tenki dashboard, built with adminlte starter page
     $("#staffName").val(staff.name);
     $("#staffUsername").val(staff.uname);
     $("#staffPhoneNum").val(staff.pNum);
-    $("#isStaffAdmin").prop('checked', staff.admin);
+    $("#isStaffAdmin").prop('checked', staff.role == "admin");
 
     $("#staffModal").modal('toggle');
   });
@@ -406,7 +406,7 @@ Tenki dashboard, built with adminlte starter page
           name: $("#staffName").val(),
           passwd: $("#staffPassword").val(),
           pNum: $("#staffPhoneNum").val(),
-          admin:  $("#isStaffAdmin").prop('checked')
+          role: $("#isStaffAdmin").prop('checked') ? 'admin' : 'staff'
         }),
         success: function (staff){
           //on success, clear form, modal and update list

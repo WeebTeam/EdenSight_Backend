@@ -83,10 +83,12 @@
   <script>
   $(function () { //stuff here runs on page load
 
-    //check if localstorage credentials is populated (user is logged in)
+    //check if localstorage credentials is populated and authenticated (user is logged in)
     if (localStorage.getItem("credentials") != null){
+      //todo: check against server if user is still valid
+
       //redirect based on user type
-      if (localStorage.getItem("admin") == true){
+      if (localStorage.getItem("role") == "admin"){
         window.location.replace("adminResidents.html");
       }
       else{
@@ -116,8 +118,8 @@
       success: function (data){
         //on success, check user type and redirect acordingly
         localStorage.setItem("credentials", credentials);
-        if (data.admin){
-          localStorage.setItem("admin", true);
+        localStorage.setItem("role", data.role);
+        if (data.role == "admin"){
           window.location.replace("adminResidents.html");
         }
         else{
