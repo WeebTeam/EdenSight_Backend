@@ -4,6 +4,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import AuthRouter from './auth.route';
 import UsersRouter from './users.route';
 import ResidentsRouter from './residents.route';
+import VitalSignsRouter from './vitalsigns.route';
 
 // imports for user auth
 import bcrypt from 'bcrypt';
@@ -73,6 +74,7 @@ router.use(acl.authorize);
 // routes that require admin (assumes user has already logged in)
 router.use('/residents', ResidentsRouter);
 router.use('/users', UsersRouter);
+router.use('/vitalsigns', VitalSignsRouter);
 
 // Export the base-router
 export default router;

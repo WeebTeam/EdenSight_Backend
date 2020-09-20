@@ -229,6 +229,10 @@
                           <label for="newResidentRoom">Room Number</label>
                           <input type="text" class="form-control" id="newResidentRoom" required="">
                         </div>
+                        <div class="form-group">
+                          <label for="newResidentDeviceAddr">Device MAC Address</label>
+                          <input type="text" class="form-control" id="newDeviceAddr">
+                        </div>
                       </div>
                     </div>
                     <div class="tab-pane fade" id="custom-tabs-one-newDetailed" role="tabpanel" aria-labelledby="custom-tabs-one-newDetailed-tab">
@@ -454,6 +458,10 @@
                       <div class="form-group">
                         <label for="residentRoom">Room Number</label>
                         <input type="text" class="form-control" id="residentRoom" required="" disabled="">
+                      </div>
+                      <div class="form-group">
+                        <label for="residentDeviceAddr">Device MAC Address</label>
+                        <input type="text" class="form-control" id="residentDeviceAddr" disabled="">
                       </div>
                     </div>
                   </div>
@@ -692,6 +700,7 @@ $('#new_resident_form').submit(function (e){
         name: $("#newResidentName").val(),
         caretaker:  $("#newResidentCaretaker").val(),
         room:  $("#newResidentRoom").val(),
+        deviceAddr:  $("#newResidentDeviceAddr").val().toLowerCase(),
         gender: $('#newResidentGender').val(),
         dob: $("#newResidentDOB").val(),
         ic: $('#newResidentIC').val(),
@@ -745,6 +754,7 @@ $('#residents_table tbody').on("click", "tr", function() {
   $("#residentName").val(resident.name);
   $("#residentCaretaker").val(resident.caretaker);
   $("#residentRoom").val(resident.room);
+  $("#residentDeviceAddr").val(resident.deviceAddr),
   $("#residentGender").val(resident.gender);
   $("#residentDOB").val(resident.dob);
   $("#residentIC").val(resident.ic);
@@ -812,6 +822,7 @@ $('#update_resident_form').submit(function (e){
         name: $("#residentName").val(),
         caretaker:  $("#residentCaretaker").val(),
         room:  $("#residentRoom").val(),
+        deviceAddr:  $("#residentDeviceAddr").val().toLowerCase(),
         gender: $('#residentGender').val(),
         dob: $("#residentDOB").val(),
         ic: $('#residentIC').val(),
@@ -1204,6 +1215,7 @@ function enableUpdateResident(){
   $("#residentName").prop("disabled", false);
   $("#residentCaretaker").prop("disabled", false);
   $("#residentRoom").prop("disabled", false);
+  $("#residentDeviceAddr").prop("disabled", false),
   $("#residentGender").prop("disabled", false);
   $("#residentDOB").prop("disabled", false);
   $("#residentIC").prop("disabled", false);
@@ -1238,6 +1250,7 @@ function cancelUpdateResident(){
   $("#residentName").prop("disabled", true);
   $("#residentCaretaker").prop("disabled", true);
   $("#residentRoom").prop("disabled", true);
+  $("#residentDeviceAddr").prop("disabled", true),
   $("#residentGender").prop("disabled", true);
   $("#residentDOB").prop("disabled", true);
   $("#residentIC").prop("disabled", true);
@@ -1262,6 +1275,7 @@ function cancelUpdateResident(){
   $("#residentName").val(resident.name);
   $("#residentCaretaker").val(resident.caretaker);
   $("#residentRoom").val(resident.room);
+  $("#residentDeviceAddr").val(resident.deviceAddr),
   $("#residentGender").val(resident.gender);
   $("#residentDOB").val(resident.dob);
   $("#residentIC").val(resident.ic);

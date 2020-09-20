@@ -10,6 +10,7 @@ export interface IResident {
   room: string;
   enrollDate: Date;
 }
+
 @plugin(AutoIncrementID, {} )
 class Resident implements IResident {
   @prop()
@@ -84,9 +85,12 @@ class Resident implements IResident {
   @prop({ default: [] })
   public medication: string[];
 
+  @prop({ default: '' })
+  public deviceAddr: string;
+
   constructor(id: number, name: string, status?: string, caretaker?: string, room?: string, enrollDate?: Date, gender?: string, dob?:string, ic?:string, nationality?:string,
   weight?:number, height?:number, bloodType?:string, pNum?:string, emergencyPNum?:string, guardian?:string, streetAdd?:string, streetAdd2?:string, city?:string, state?:string,
-  postal?:string, healthConditions?:string[], allergies?:string[], medication?:string[]) {
+  postal?:string, healthConditions?:string[], allergies?:string[], medication?:string[], deviceAddr?:string) {
     this._id = id;
     this.name = name;
     this.status = status || '';
@@ -111,6 +115,7 @@ class Resident implements IResident {
     this.healthConditions = healthConditions || [];
     this.allergies = allergies || [];
     this.medication = medication || [];
+    this.deviceAddr = deviceAddr || '';
   }
 }
 
