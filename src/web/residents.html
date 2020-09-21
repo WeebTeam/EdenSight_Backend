@@ -221,7 +221,7 @@
                           <!-- small card -->
                           <div class="small-box bg-success">
                             <div class="inner">
-                              <h3><span id="residentCurrentBPM">53</span><sup style="font-size: 20px">%</sup></h3>
+                              <h3><span id="residentCurrentBPM">-</span><sup style="font-size: 20px">%</sup></h3>
 
                               <p>BPM</p>
                             </div>
@@ -234,7 +234,7 @@
                           <!-- small card -->
                           <div class="small-box bg-warning">
                             <div class="inner">
-                              <h3><span id="residentCurrentSp02">98</span><sup style="font-size: 20px">%</sup></h3>
+                              <h3><span id="residentCurrentSp02">-</span><sup style="font-size: 20px">%</sup></h3>
 
                               <p>SpO2</p>
                             </div>
@@ -296,6 +296,11 @@
                          <th>Room Number</th>
                          <th>:</th>
                          <td id="residentRoom"></td>
+                       </tr>
+                       <tr>
+                         <th>Device MAC Address</th>
+                         <th>:</th>
+                         <td id="residentDeviceAddr"></td>
                        </tr>
                        <tr>
                          <th>Gender</th>
@@ -563,7 +568,7 @@
       "autoWidth": false,
       "responsive": true,
       "columns": [
-        { "data": "date" },
+        { "data": "dateTime" },
         { "data": "bpm" },
         { "data": "sp02" }
       ]
@@ -575,7 +580,7 @@
 
   /********** event listeners **********/
 
-  //update resident
+  //updateTime resident
   $('#update_resident_form2').submit(function (e){
     //no validate, we are blindly trusting our users
     //instead we ask them to self validate :)
@@ -626,14 +631,15 @@
   $('#residents_table tbody').on("click", "tr", function() {
     resident = residents_table.row( this ).data();
 
+    getVitalSigns(5);
     //history test
-    var history = resident.history;
-    lineGraph(history);
+    //var history = resident.history;
+    //lineGraph(history);
 
     //draw historyTable
-    resident_history_table.clear();
-    resident_history_table.rows.add(history);
-    resident_history_table.draw();
+    //resident_history_table.clear();
+    //resident_history_table.rows.add(history);
+    //resident_history_table.draw();
 
 
     //populate the details
@@ -648,11 +654,11 @@
     $("#residentPNum").text(resident.pNum);
     $("#residentGuardian").text(resident.guardian);
     $("#residentEmergencyPNum").text(resident.emergencyPNum);
-    $("#residentAddress").text(resident.streetAdd+ ", " +resident.streetAdd2+ ", " +resident.city+ ", " +resident.state+ ", " +resident.postal
-      );
+    $("#residentAddress").text(resident.streetAdd+ ", " +resident.streetAdd2+ ", " +resident.city+ ", " +resident.state+ ", " +resident.postal);
+    $("#residentDeviceAddr").val(resident.deviceAddr);
 
-    $("#residentCurrentBPM").text(resident.bpm);
-    $("#residentCurrentSp02").text(resident.sp02);
+    //$("#residentCurrentBPM").text(resident.bpm);
+    //$("#residentCurrentSp02").text(resident.sp02);
 
     //populate the form
     $("#residentWeight").val(resident.weight);
@@ -854,6 +860,38 @@
     });
   }
 
+  function getVitalSigns(count) {
+    $.ajax({
+      type: "GET",
+      url: "api/vitalsigns/" + $("#residentDeviceAddr").text() + count,
+      dataType: 'json',
+      beforeSend: function (xhr) {
+        //include credentials
+        xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
+      },
+      success: function (vitalSigns){
+        //on success
+        lineGraph(vitalSigns);
+
+        //draw historyTable
+        resident_history_table.clear();
+        resident_history_table.rows.add(vitalSigns);
+        resident_history_table.draw();
+
+        $("#residentCurrentBPM").text(vitalSigns[0].heartRate);
+        $("#residentCurrentSp02").text(vitalSigns[0].spO2);
+      },
+      error: function (xhr){
+        var code = xhr.status;
+
+        //handle 401
+        if (code == 401){
+          handleUnauthorized();
+        }
+      }
+    });
+  }
+
   function getResidentById() {
     $.ajax({
       type: "GET",
@@ -881,15 +919,14 @@
   function lineGraph(history){
     var bpmArray = [];
     var line_ticks = [];
+    var tempArray = [];
+    var tempArray2 = [];
 
     for(var i=0; i<history.length; i++){
-      var tempArray = [];
-      var tempArray2 = [];
-
-      tempArray.push(i+1, history[i].bpm);
+      tempArray.push(i+1, history[i].heartRate);
       bpmArray.push(tempArray);
 
-      tempArray2.push(i+1, history[i].date);
+      tempArray2.push(i+1, history[i].dateTime);
       line_ticks.push(tempArray2);
     } 
 
