@@ -221,7 +221,7 @@
                           <!-- small card -->
                           <div class="small-box bg-success">
                             <div class="inner">
-                              <h3><span id="residentCurrentBPM">-</span><sup style="font-size: 20px">%</sup></h3>
+                              <h3><span id="residentCurrentBPM">-</span><sup style="font-size: 20px"></sup></h3>
 
                               <p>BPM</p>
                             </div>
@@ -525,6 +525,7 @@
 
   <!-- Flot Charts -->
   <script src="plugins/flot/jquery.flot.js"></script>
+  <script src="plugins/flot/plugins/jquery.flot.time.js"></script>
   <!-- Flot resize plugin - allows the chart to redraw when the window is resized -->
   <script src="plugins/flot/plugins/jquery.flot.resize.js"></script>
 
@@ -549,7 +550,10 @@
     });
 
     //init resident (blank for now)
-    resident = ""
+    resident = "";
+
+    var realTimeUpdate;
+    vitalSignsArray = [];
 
     //fetch any data that we need on page load
     getAllResidents();
@@ -567,6 +571,7 @@
       "info": true,
       "autoWidth": false,
       "responsive": true,
+      "order": [[ 0, "desc" ]],
       "columns": [
         { "data": "dateTime" },
         { "data": "heartRate" },
@@ -631,7 +636,12 @@
   $('#residents_table tbody').on("click", "tr", function() {
     resident = residents_table.row( this ).data();
 
-    getVitalSigns(resident.deviceAddr, 500);
+    //get last 5 min worth of reads (assuming 1read/5s)
+    getVitalSigns(resident.deviceAddr, 60);
+
+    //we update every 5 secs
+    realTimeUpdate = setInterval(function() { getVitalSigns(resident.deviceAddr, 1); } , 5000);
+
     //history test
     //var history = resident.history;
     //lineGraph(history);
@@ -831,7 +841,6 @@
   /********** functions **********/
 
   function handleUnauthorized(){
-
   }
 
   function getAllResidents() {
@@ -870,12 +879,29 @@
         xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
       },
       success: function (vitalSigns){
-        //on success
-        lineGraph(vitalSigns);
+        //change the dateTime data into a Date object
+        vitalSigns = vitalSigns.map(item => {
+          item.dateTime = new Date(item.dateTime);
+          return item;
+        });
 
-        //draw historyTable
+        //if the latest value from server is not the same as what we have, server probably updated
+        //so we put the latest one in front (unshift)
+        if (vitalSignsArray.length <= 0){
+          vitalSignsArray = vitalSigns;
+        }
+        //we only update when the actual time is the className
+        //pop old data so we keep the same time range (5 mins/60 counts of data)
+        else if (vitalSigns[0].dateTime.getTime() != vitalSignsArray[0].dateTime.getTime()) {
+          vitalSignsArray.pop();
+          vitalSignsArray.unshift(vitalSigns[0]);
+        }
+        //update the graph
+        lineGraph(vitalSignsArray);
+
+        //redraw historyTable
         resident_history_table.clear();
-        resident_history_table.rows.add(vitalSigns);
+        resident_history_table.rows.add(vitalSignsArray);
         resident_history_table.draw();
 
         $("#residentCurrentBPM").text(vitalSigns[0].heartRate);
@@ -892,49 +918,19 @@
     });
   }
 
-  function getResidentById() {
-    $.ajax({
-      type: "GET",
-      url: "api/residents/",
-      dataType: 'json',
-      beforeSend: function (xhr) {
-        //include credentials
-        xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
-      },
-      success: function (resident){
-        //on success, display resident details
-
-      }
-      //todo: handle error, 401
-      //display alert
-    });
-  }
-
-
   /*
    * LINE CHART
    * ----------
    */
   //LINE given data
   function lineGraph(history){
-    var bpmArray = [];
-    var line_ticks = [];
-    var tempArray = [];
-    var tempArray2 = [];
 
-    for(var i=0; i<history.length; i++){
-      tempArray.push(i+1, history[i].heartRate);
-      bpmArray.push(tempArray);
-
-      tempArray2.push(i+1, history[i].dateTime);
-      line_ticks.push(tempArray2);
-    }
+    var hrArray = history.map(item => [item.dateTime, item.heartRate]);
 
     var line_data1 = {
-      data : bpmArray,
+      data : hrArray,
       color: '#3c8dbc'
     }
-
     //console.log(bpmArray);
     //console.log(line_ticks);
 
@@ -963,34 +959,35 @@
       },
       xaxis : {
         show: true,
-        ticks: line_ticks
+        mode: "time",
+        timeformat: "%H:%M", // 24hr format
+        tickSize: [1, "minute"],
+        timeBase: "milliseconds",
+        timezone: "browser"
       }
     })
     //Initialize tooltip on hover
-    $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
-      position: 'absolute',
-      display : 'none',
-      opacity : 0.8,
-      zIndex : 9999
-    }).appendTo('body')
-    $('#line-chart').bind('plothover', function (event, pos, item) {
-
-      if (item) {
-        var x = item.datapoint[0].toFixed(2),
-            y = item.datapoint[1].toFixed(2)
-
-        $('#line-chart-tooltip').html(item.series.label + ' of ' + x + ' = ' + y)
-          .css({
-            top : item.pageY + 5,
-            left: item.pageX + 5
-          })
-          .fadeIn(200)
-      } else {
-        $('#line-chart-tooltip').hide()
-      }
-
-    })
-  }
+      $('<div class="tooltip-inner" id="line-chart-tooltip" ></div>').css({
+        position: 'absolute',
+        display : 'none',
+        opacity : 0.8
+      }).appendTo('body')
+      $('#line-chart').bind('plothover', function (event, pos, item) {
+        if (item) {
+          var x = new Date(item.datapoint[0]).toString(),
+              y = item.datapoint[1]
+          $('#line-chart-tooltip').html(x + '<br/>Heart Rate = ' + y + 'bpm')
+            .css({
+              top : item.pageY + 5,
+              left: item.pageX + 5,
+              zIndex: 10000
+            })
+            .fadeIn(200)
+        } else {
+          $('#line-chart-tooltip').hide()
+        }
+      })
+    }
   /* END LINE CHART */
 
   function enableResidentView(){
@@ -1002,6 +999,9 @@
   }
 
   function cancelResidentView(){
+    //remove the loop for the real time vital signs
+    clearInterval(realTimeUpdate);
+
     //change buttons
     $("#residentModalFooter").show();
     $("#updateResidentFooter").hide();
