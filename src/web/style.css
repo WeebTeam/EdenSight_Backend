@@ -21,6 +21,14 @@
 	cursor: pointer;
 }
 
+.btn-tool{
+  color: #adb5bd;
+}
+
+.btn{
+  color: #212529;
+}
+
 .card{
 	margin-bottom: 0;
 }

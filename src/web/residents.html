@@ -909,6 +909,10 @@
         $("#residentCurrentSp02").text(vitalSigns[0].spO2);
       },
       error: function (xhr){
+        $('#line-chart').empty();
+        $("#residentCurrentBPM").text("-");
+        $("#residentCurrentSp02").text("-");
+
         var code = xhr.status;
 
         //handle 401
@@ -1049,6 +1053,10 @@
     for(i=0; i<resident.medication.length; i++){
       showEachHealth(resident.medication[i], 'medication')
     }
+
+    $('#line-chart').empty();
+    $("#residentCurrentBPM").text("-");
+    $("#residentCurrentSp02").text("-");
   }
 
 
