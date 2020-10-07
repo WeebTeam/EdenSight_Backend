@@ -112,7 +112,7 @@ function checkDeviceAddr(deviceAddr){
 }
 
 function checkDoB(dob){
-	var pattern = "mm\/dd\/yyyy";     
+	var pattern = "/^mm\/dd\/yyyy$/";     
 	var dobOk = true;
 	
 	if (pattern.test(dob)){
