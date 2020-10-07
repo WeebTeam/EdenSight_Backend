@@ -41,11 +41,10 @@ function validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, w
 	else{
 		Toast.fire({
       		icon: 'error',
-      		title: 'Oops!',
+      		iconColor: '#fff',
       		html: '<pre style="color: #fff;">' + gErrorMsg + '</pre>',
-      		width: '40 rem',
-  			background: 'rgba(220,53,69,.85)',
-  			iconColor: '#fff'
+      		width: '45 rem',
+  			background: 'rgb(220,53,69)'
   		})
 		allOk = false;
 	}
