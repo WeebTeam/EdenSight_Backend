@@ -1,6 +1,6 @@
 var gErrorMsg = "";
 
-function validationOK(name, caretaker, room, deviceAddr, gender, dob, ic, nationality, weight, height, pNum, 
+function validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, weight, height, pNum, 
 	guardian, emergencyPNum, streetAdd, streetAdd2, city, state, postal){
 	gErrorMsg = "";
 
@@ -199,12 +199,12 @@ function checkPNum(pNum) {
 	var pattern = /^[0-9]{10,13}$/;     
 	var pNumOk = true;
 	
-	if ((pNums.length == 0)){        
+	if ((pNum.length == 0)){        
 		gErrorMsg = gErrorMsg + "Your phone no. cannot be blank.\n"
 		 pNumOk = false; 
 	}
 	else{
-		if (!pattern.test(pNums)){
+		if (!pattern.test(pNum)){
 			gErrorMsg = gErrorMsg + "Your phone no. must only contain alpha characters.\n"
 			pNumOk = false; 
 		}
@@ -228,7 +228,7 @@ function checkEmergencyPNum(emergencyPNum) {
 		}
 	}
 	
-	return pNumOk;
+	return emergencyPNumOk;
 }
 
 function checkGuardian(guardian){

@@ -695,7 +695,7 @@ $('#new_resident_form').submit(function (e){
   var name = $("#newResidentName").val();
   var caretaker = $("#newResidentCaretaker").val();
   var room = $("#newResidentRoom").val();
-  var deviceAddr = $("#newResidentDeviceAddr").val().toLowerCase();
+  var deviceAddr = $("#newResidentDeviceAddr").val();
   var gender = $('#newResidentGender').val();
   var dob = $("#newResidentDOB").val();
   var ic = $('#newResidentIC').val();
@@ -849,7 +849,7 @@ $('#update_resident_form').submit(function (e){
   var name = $("#residentName").val();
   var caretaker = $("#residentCaretaker").val();
   var room = $("#residentRoom").val();
-  var deviceAddr = $("#residentDeviceAddr").val().toLowerCase();
+  var deviceAddr = $("#residentDeviceAddr").val();
   var gender = $('#residentGender').val();
   var dob = $("#residentDOB").val();
   var ic = $('#residentIC').val();
@@ -869,7 +869,7 @@ $('#update_resident_form').submit(function (e){
   var errorMsgs = "";
 
 
-  var validation = validationOK(name, caretaker, room, deviceAddr, gender, dob, ic, nationality, weight, height, pNum, guardian, emergencyPNum, streetAdd, streetAdd2, city, state, postal);
+  var validation = validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, weight, height, pNum, guardian, emergencyPNum, streetAdd, streetAdd2, city, state, postal);
 
 
 
