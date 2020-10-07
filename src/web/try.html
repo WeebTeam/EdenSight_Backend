@@ -718,8 +718,6 @@ $('#new_resident_form').submit(function (e){
   var state = $("#newResidentState").val();
   var postal = $('#newResidentPostal').val();
 
-  var errorMsgs = "";
-
 
   var validation = validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, weight, height, pNum, guardian, emergencyPNum, streetAdd, streetAdd2, city, state, postal);
 
@@ -1170,6 +1168,11 @@ function deleteResident(){
       type: 'DELETE',
       success: function(result) {
         //on success, clear form, modal and update list
+        Toast.fire({
+          icon: 'info',
+          title: 'Resident Deleted!'
+        })
+
         console.log("resident deleted. ");
         getAllResidents();
       },

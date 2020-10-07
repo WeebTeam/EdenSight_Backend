@@ -50,6 +50,33 @@ function validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, w
 	return allOk;
 }
 
+
+function staffValidationOK(name, username, password, pNum){
+	gErrorMsg = "";
+
+	var nameOk = checkName(name);
+	var usernameOk = checkUsername(usernameOk);
+	var passwordOk = checkPassword(room);
+	var pNumOk = checkPNum(pNum)
+
+	var allOk = false;
+
+	if(nameOk && usernameOk && passwordOk && pNumOk){
+		allOk = true;
+	}
+	else{
+		Toast.fire({
+      		icon: 'error',
+      		html: '<pre>' + gErrorMsg + '</pre>',
+      		width: '45 rem'
+  		})
+		allOk = false;
+	}
+
+	return allOk;
+}
+
+
 /* Check Name */
 function checkName(name) {
 	var pattern = /^[a-zA-Z ]+$/;     
@@ -315,3 +342,44 @@ function checkPostal(postal){
 	
 	return postalOk;
 }
+
+
+/* Check Username */
+function checkUsername(username) {
+	var pattern = /^.+$/;     
+	var nameOk = true;
+	
+	if ((username.length == 0)){        
+		gErrorMsg = gErrorMsg + "Please enter your username.\n"
+		 nameOk = false; 
+	}
+	else{
+		if (!pattern.test(username)){
+			gErrorMsg = gErrorMsg + "Please enter a valid username.\n"
+			nameOk = false; 
+		}
+	}
+	
+	return nameOk;
+}
+
+/* Check Username */
+function checkPassword(password) {
+	var pattern = /^.+$/;     
+	var passwordOk = true;
+	
+	if ((password.length == 0)){        
+		gErrorMsg = gErrorMsg + "Please enter your password.\n"
+		 passwordOk = false; 
+	}
+	else{
+		if (!pattern.test(password)){
+			gErrorMsg = gErrorMsg + "Please enter a valid password.\n"
+			passwordOk = false; 
+		}
+	}
+	
+	return passwordOk;
+}
+
+

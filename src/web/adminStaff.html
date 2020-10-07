@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<!--
-Tenki dashboard, built with adminlte starter page
--->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -15,10 +12,15 @@ Tenki dashboard, built with adminlte starter page
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
   <!-- Extra stylesheet -->
   <link rel="stylesheet" href="style.css">
   <!-- Extra javascript -->
   <script src="main.js"></script>
+  <script src="validation.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -300,6 +302,12 @@ Tenki dashboard, built with adminlte starter page
   <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
   <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
+  <!-- SweetAlert2 -->
+  <script src="plugins/sweetalert2/sweetalert2.min.js"></script>
+  <!-- Toastr -->
+  <script src="plugins/toastr/toastr.min.js"></script>
+
+
   <!-- page script -->
   <script>
   $(function () { //stuff here runs on page load
@@ -333,8 +341,18 @@ Tenki dashboard, built with adminlte starter page
     e.preventDefault();
     //no validate, we are blindly trusting our staff
     //instead we ask them to self validate :)
-    var staffValidation = confirm("Please make sure all information is correct!");
-    if (staffValidation){
+
+    var name = $("#newStaffName").val();
+    var username = $("#newStaffUsername").val();
+    var password = $("#newStaffPassword").val();
+    var pNum = $("#newStaffPhoneNum").val();
+
+    var validation = staffValidationOK(name, username, password, pNum);
+
+
+
+    //var staffValidation = confirm("Please make sure all information is correct!");
+    if (validation){
       //send to server
       $.ajax({
         type: "POST",
@@ -352,9 +370,14 @@ Tenki dashboard, built with adminlte starter page
           pNum: $("#newStaffPhoneNum").val(),
           role: $("#newIsStaffAdmin").prop('checked') ? 'admin' : 'staff'
         }),
-        success: function (resident){
+        success: function (staff){
           //on success, clear form, modal and update list
-          console.log("resident created: "+ resident);
+          Toast.fire({
+            icon: 'success',
+            title: 'Staff Created!'
+          })
+
+          console.log("staff created: "+ staff);
           $("#new_staff_form").trigger("reset");
           $("#newStaffModal").modal('toggle');
           getAllStaff();
@@ -385,13 +408,24 @@ Tenki dashboard, built with adminlte starter page
     cancelUpdateStaff();
   })
 
+
+
   //update staff
   $('#update_staff_form').submit(function (e) {
     e.preventDefault();
     //no validate, we are blindly trusting our staff
     //instead we ask them to self validate :)
-    var staffValidation = confirm("Please make sure all information is correct!");
-    if (staffValidation){
+    var name = $("#staffName").val();
+    var username =  $("#staffUsername").val();
+    var password = $("#staffPassword").val();
+    var pNum = $("#staffPhoneNum").val();
+
+    var validation = staffValidationOK(name, username, password, pNum); 
+
+
+
+    //var staffValidation = confirm("Please make sure all information is correct!");
+    if (validation){
       //send to server
       $.ajax({
         type: "PUT",
@@ -404,12 +438,18 @@ Tenki dashboard, built with adminlte starter page
         },
         data: JSON.stringify({
           name: $("#staffName").val(),
+          uname:  $("#staffUsername").val(),
           passwd: $("#staffPassword").val(),
           pNum: $("#staffPhoneNum").val(),
           role: $("#isStaffAdmin").prop('checked') ? 'admin' : 'staff'
         }),
         success: function (staff){
           //on success, clear form, modal and update list
+          Toast.fire({
+            icon: 'success',
+            title: 'Staff Updated!'
+          })
+
           console.log("staff updated: "+ staff);
           $("#staffModal").modal('toggle');
           getAllStaff();
@@ -499,6 +539,11 @@ Tenki dashboard, built with adminlte starter page
         type: 'DELETE',
         success: function(result) {
           //on success, clear form, modal and update list
+          Toast.fire({
+            icon: 'info',
+            title: 'Staff Deleted!'
+          })
+
           console.log("staff deleted. ");
           getAllStaff();
         },
@@ -515,7 +560,13 @@ Tenki dashboard, built with adminlte starter page
     }
   }
 
-
+// Toast
+var Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 8000,
+});
 </script>
 
 </body>
