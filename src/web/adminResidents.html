@@ -202,7 +202,7 @@
                     <a class="nav-link active" id="custom-tabs-one-newGeneral-tab" data-toggle="pill" href="#custom-tabs-one-newGeneral" role="tab" aria-controls="custom-tabs-one-newGeneral" aria-selected="true">General</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="custom-tabs-one-newDetailed-tab" data-toggle="pill" href="#custom-tabs-one-newDetailed" role="tab" aria-controls="custom-tabs-one-newDetailed" aria-selected="false">Detailed</a>
+                    <a class="nav-link" id="custom-tabs-one-newDetailed-tab" data-toggle="pill" href="#custom-tabs-one-newDetailed" role="tab" aria-controls="custom-tabs-one-newDetailed" aria-selected="false">Details</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-one-newHealth-tab" data-toggle="pill" href="#custom-tabs-one-newHealth" role="tab" aria-controls="custom-tabs-one-newHealth" aria-selected="false">Health</a>
@@ -218,15 +218,15 @@
                     <div class="tab-pane fade show active" id="custom-tabs-one-newGeneral" role="tabpanel" aria-labelledby="custom-tabs-one-newGeneral-tab">
                       <div class="modal-body">
                         <div class="form-group">
-                          <label for="newResidentName">Resident Name</label>
+                          <label for="newResidentName"><span class="asterisk">*</span>Resident Name</label>
                           <input type="text" class="form-control" id="newResidentName" required="">
                         </div>
                         <div class="form-group">
-                          <label for="newResidentCaretaker">Caretaker</label>
+                          <label for="newResidentCaretaker"><span class="asterisk">*</span>Caretaker</label>
                           <input type="text" class="form-control" id="newResidentCaretaker" required="">
                         </div>
                         <div class="form-group">
-                          <label for="newResidentRoom">Room Number</label>
+                          <label for="newResidentRoom"><span class="asterisk">*</span>Room Number</label>
                           <input type="text" class="form-control" id="newResidentRoom" required="">
                         </div>
                         <div class="form-group">
@@ -246,15 +246,15 @@
                           </select>
                         </div>
                         <div class="form-group">
-                          <label for="newResidentDOB">Date of birth</label>
+                          <label for="newResidentDOB"><span class="asterisk">*</span>Date of birth</label>
                           <input type="date" class="form-control" id="newResidentDOB" required="">
                         </div>
                         <div class="form-group">
-                          <label for="newResidentIC">IC No.</label>
+                          <label for="newResidentIC"><span class="asterisk">*</span>IC No.</label>
                           <input type="text" class="form-control" id="newResidentIC" required="">
                         </div>
                         <div class="form-group">
-                          <label for="newResidentNationality">Nationality</label>
+                          <label for="newResidentNationality"><span class="asterisk">*</span>Nationality</label>
                           <input type="text" class="form-control" id="newResidentNationality" required="">
                         </div>
                       </div>
@@ -262,15 +262,15 @@
                     <div class="tab-pane fade" id="custom-tabs-one-newHealth" role="tabpanel" aria-labelledby="custom-tabs-one-newHealth-tab">
                       <div class="modal-body">
                         <div class="form-group">
-                          <label for="newResidentWeight">Weight (kg)</label>
+                          <label for="newResidentWeight"><span class="asterisk">*</span>Weight (kg)</label>
                           <input type="text" class="form-control" id="newResidentWeight" required="">
                         </div>
                         <div class="form-group">
-                          <label for="newResidentHeight">Height (cm)</label>
+                          <label for="newResidentHeight"><span class="asterisk">*</span>Height (cm)</label>
                           <input type="text" class="form-control" id="newResidentHeight" required="">
                         </div>
                         <div class="form-group">
-                          <label for="newResidentBloodType">Blood Type</label>
+                          <label for="newResidentBloodType"><span class="asterisk">*</span>Blood Type</label>
                           <select class="form-control" id="newResidentBloodType" required="">
                             <option>A</option>
                             <option>B</option>
@@ -382,31 +382,8 @@
             </div>
           </div>
         </div>
-
-        <!--
-        <form id='new_resident_form'>
-        <div class="modal-body">
-        <div class="form-group">
-        <label for="newResidentName">Resident Name</label>
-        <input type="text" class="form-control" id="newResidentName" required="">
-      </div>
-      <div class="form-group">
-      <label for="newResidentCaretaker">Caretaker</label>
-      <input type="text" class="form-control" id="newResidentCaretaker" required="">
     </div>
-    <div class="form-group">
-    <label for="newResidentRoom">Room Number</label>
-    <input type="text" class="form-control" id="newResidentRoom" required="">
   </div>
-</div>
-<div class="modal-footer">
-<button type="reset" class="btn btn-danger" onclick="return confirm('Are you sure? This will clear the form!')">Clear</button>
-<button type="submit" class="btn btn-primary">Submit</button>
-</div>
-</form>
--->
-</div>
-</div>
 </div>
 
 <div class="modal fade" id="residentModal" tabindex="-1" aria-labelledby="ResidentModal" aria-hidden="true">
@@ -444,19 +421,19 @@
                   <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
                     <div class="modal-body">
                       <div class="form-group">
-                        <label for="residentID">Resident ID</label>
+                        <label for="residentID"><span class="asterisk">*</span>Resident ID</label>
                         <input type="text" class="form-control" id="residentID" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentName">Resident Name</label>
+                        <label for="residentName"><span class="asterisk">*</span>Resident Name</label>
                         <input type="text" class="form-control" id="residentName" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentCaretaker">Caretaker</label>
+                        <label for="residentCaretaker"><span class="asterisk">*</span>Caretaker</label>
                         <input type="text" class="form-control" id="residentCaretaker" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentRoom">Room Number</label>
+                        <label for="residentRoom"><span class="asterisk">*</span>Room Number</label>
                         <input type="text" class="form-control" id="residentRoom" required="" disabled="">
                       </div>
                       <div class="form-group">
@@ -470,7 +447,7 @@
                   <div class="tab-pane fade" id="custom-tabs-one-detailed" role="tabpanel" aria-labelledby="custom-tabs-one-detailed-tab">
                     <div class="modal-body">
                       <div class="form-group">
-                        <label for="residentGender">Gender</label>
+                        <label for="residentGender"><span class="asterisk">*</span>Gender</label>
                         <select class="form-control" id="residentGender" required="" disabled="">
                           <option>Male</option>
                           <option>Female</option>
@@ -478,15 +455,15 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="residentDOB">Date of birth</label>
+                        <label for="residentDOB"><span class="asterisk">*</span>Date of birth</label>
                         <input type="date" class="form-control" id="residentDOB" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentIC">IC No.</label>
+                        <label for="residentIC"><span class="asterisk">*</span>IC No.</label>
                         <input type="text" class="form-control" id="residentIC" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentNationality">Nationality</label>
+                        <label for="residentNationality"><span class="asterisk">*</span>Nationality</label>
                         <input type="text" class="form-control" id="residentNationality" required="" disabled="">
                       </div>
                     </div>
@@ -496,15 +473,15 @@
                   <div class="tab-pane fade" id="custom-tabs-one-health" role="tabpanel" aria-labelledby="custom-tabs-one-health-tab">
                     <div class="modal-body">
                       <div class="form-group">
-                        <label for="residentWeight">Weight (kg)</label>
+                        <label for="residentWeight"><span class="asterisk">*</span>Weight (kg)</label>
                         <input type="text" class="form-control" id="residentWeight" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentHeight">Height (cm)</label>
+                        <label for="residentHeight"><span class="asterisk">*</span>Height (cm)</label>
                         <input type="text" class="form-control" id="residentHeight" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentBloodType">Blood Type</label>
+                        <label for="residentBloodType"><span class="asterisk">*</span>Blood Type</label>
                         <select class="form-control" id="residentBloodType" required="" disabled="">
                           <option>A</option>
                           <option>B</option>
@@ -559,36 +536,36 @@
                   <div class="tab-pane fade" id="custom-tabs-one-contact" role="tabpanel" aria-labelledby="custom-tabs-one-contact-tab">
                     <div class="modal-body">
                       <div class="form-group">
-                        <label for="residentPNum">Resident's Phone Number</label>
+                        <label for="residentPNum"><span class="asterisk">*</span>Resident's Phone Number</label>
                         <input type="text" class="form-control" id="residentPNum" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentGuardian">Guardian's Name</label>
+                        <label for="residentGuardian"><span class="asterisk">*</span>Guardian's Name</label>
                         <input type="text" class="form-control" id="residentGuardian" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentEmergencyPNum">Emergency Phone Number</label>
+                        <label for="residentEmergencyPNum"><span class="asterisk">*</span>Emergency Phone Number</label>
                         <input type="text" class="form-control" id="residentEmergencyPNum" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentStreetAddress">Street Address</label>
+                        <label for="residentStreetAddress"><span class="asterisk">*</span>Street Address</label>
                         <input type="text" class="form-control" id="residentStreetAddress" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentStreetAddress2">Street Address 2</label>
+                        <label for="residentStreetAddress2"><span class="asterisk">*</span>Street Address 2</label>
                         <input type="text" class="form-control" id="residentStreetAddress2" required="" disabled="">
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-5">
-                          <label for="residentCity">City</label>
+                          <label for="residentCity"><span class="asterisk">*</span>City</label>
                           <input type="text" class="form-control" id="residentCity" required="" disabled="">
                         </div>
                         <div class="form-group col-md-4">
-                          <label for="residentState">State</label>
+                          <label for="residentState"><span class="asterisk">*</span>State</label>
                           <input type="text" class="form-control" id="residentState" required="" disabled="">
                         </div>
                         <div class="form-group col-md-3">
-                          <label for="residentPostal">Postal</label>
+                          <label for="residentPostal"><span class="asterisk">*</span>Postal</label>
                           <input type="text" class="form-control" id="residentPostal" required="" disabled="">
                         </div>
                       </div>
