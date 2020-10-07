@@ -349,15 +349,15 @@
                     <form id='update_resident_form_2'>
                       <div class="modal-body">
                         <div class="form-group">
-                          <label for="residentWeight">Weight (kg)</label>
+                          <label for="residentWeight"><span class="asterisk">* </span>Weight (kg)</label>
                           <input type="text" class="form-control" id="residentWeight" required="" disabled="">
                         </div>
                         <div class="form-group">
-                          <label for="residentHeight">Height (cm)</label>
+                          <label for="residentHeight"><span class="asterisk">* </span>Height (cm)</label>
                           <input type="text" class="form-control" id="residentHeight" required="" disabled="">
                         </div>
                         <div class="form-group">
-                          <label for="residentBloodType">Blood Type</label>
+                          <label for="residentBloodType"><span class="asterisk">* </span>Blood Type</label>
                               <select class="form-control" id="residentBloodType" required="" disabled="">
                                 <option>A</option>
                                 <option>B</option>
@@ -769,12 +769,15 @@
 
         $("#residentCurrentBPM").text(vitalSigns[0].heartRate);
         $("#residentCurrentSp02").text(vitalSigns[0].spO2);
+
+        $("#line-chart").css("display", "block");
       },
       error: function (xhr){
         resident_history_table.clear();
         resident_history_table.draw();
 
-        $("#graph-card-body").html("The content is currently unavailable.");
+        $("#line-chart").css("display", "none");
+        $("#line-chart").append("<p>The content is currently unavailable.</p>");
         $("#residentCurrentBPM").text("-");
         $("#residentCurrentSp02").text("-");
 
