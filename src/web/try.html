@@ -12,10 +12,15 @@
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
   <!-- Extra stylesheet -->
   <link rel="stylesheet" href="style.css">
   <!-- Extra javascript -->
   <script src="main.js"></script>
+  <script type="validation.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -158,8 +163,14 @@
         </div><!-- /.container-fluid -->
       </div>
       <!-- /.content -->
+
+      <button type="button" class="btn btn-success swalDefaultError">
+          Launch Success Toast
+      </button>
     </div>
     <!-- /.content-wrapper -->
+
+
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -238,7 +249,7 @@
                     <div class="tab-pane fade" id="custom-tabs-one-newDetailed" role="tabpanel" aria-labelledby="custom-tabs-one-newDetailed-tab">
                       <div class="modal-body">
                         <div class="form-group">
-                          <label for="newResidentGender"><span class="asterisk">* </span>Gender</label>
+                          <label for="newResidentGender">Gender</label>
                           <select class="form-control" id="newResidentGender" required="">
                             <option>Male</option>
                             <option>Female</option>
@@ -636,6 +647,12 @@
 <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
+<!-- SweetAlert2 -->
+<script src="plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="plugins/toastr/toastr.min.js"></script>
+
+
 <!-- page script -->
 <script>
 $(function () { //stuff here runs on page load
@@ -673,6 +690,36 @@ $('#new_resident_form').submit(function (e){
   //no validate, we are blindly trusting our users
   //instead we ask them to self validate :)
   e.preventDefault(); //prevent form submit default behaviour
+
+
+  var name = $("#newResidentName").val();
+  var caretaker = $("#newResidentCaretaker").val();
+  var room = $("#newResidentRoom").val();
+  var deviceAddr = $("#newResidentDeviceAddr").val().toLowerCase();
+  var gender = $('#newResidentGender').val();
+  var dob = $("#newResidentDOB").val();
+  var ic = $('#newResidentIC').val();
+  var nationality = $("#newResidentNationality").val();
+  var weight = $("#newResidentWeight").val();
+  var height = $("#newResidentHeight").val();
+  var bloodType = $('#newResidentBloodType').val();
+  var pNum = $("#newResidentPNum").val();
+  var guardian = $("#newResidentGuardian").val();
+  var emergencyPNum = $("#newResidentEmergencyPNum").val();
+  var streetAdd = $('#newResidentStreetAddress').val();
+  var streetAdd2 = $("#newResidentStreetAddress2").val();
+  var city = $("#newResidentCity").val();  
+  var state = $("#newResidentState").val();
+  var postal = $('#newResidentPostal').val();
+
+  var errorMsgs = "";
+
+
+  
+
+
+
+
   var userValidation = confirm("Please make sure all information is correct!");
   if (userValidation){
     //send to server
@@ -730,7 +777,7 @@ $('#new_resident_form').submit(function (e){
   }
 
   //test
-  testSubmittedDataAdminResident();
+  //testSubmittedDataAdminResident();
 });
 
 
@@ -795,6 +842,20 @@ $('#update_resident_form').submit(function (e){
   //no validate, we are blindly trusting our users
   //instead we ask them to self validate :)
   e.preventDefault(); //prevent form submit default behaviour
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   var userValidation = confirm("Please make sure all information is correct!");
   if (userValidation){
     //send to server
@@ -835,6 +896,11 @@ $('#update_resident_form').submit(function (e){
       success: function (resident){
         //on success, clear form, modal and update list
         console.log("resident updated: "+ resident);
+        Toast.fire({
+            icon: 'success',
+            title: 'Yay.'
+        })
+
         $("#residentModal").modal('hide');
         getAllResidents();
       },
@@ -1094,6 +1160,22 @@ function getRandomColor() {
   color += colors[Math.floor(Math.random() * colors.length)];
   return color;
 }
+
+
+// Toast
+var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+
+$('.swalDefaultError').click(function() {
+    Toast.fire({
+      icon: 'error',
+      title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+  })
+});
 
 </script>
 
