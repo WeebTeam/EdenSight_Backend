@@ -42,7 +42,7 @@ function validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, w
 		Toast.fire({
       		icon: 'error',
       		title: 'Oops!',
-      		text: '<pre>' + gErrorMsg + '</pre>'
+      		html: '<pre>' + gErrorMsg + '</pre>'
   		})
 		allOk = false;
 	}

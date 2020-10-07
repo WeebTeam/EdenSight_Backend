@@ -854,7 +854,10 @@ $('#update_resident_form').submit(function (e){
   var name = $("#residentName").val();
   var caretaker = $("#residentCaretaker").val();
   var room = $("#residentRoom").val();
-  var deviceAddr = $("#residentDeviceAddr").val();
+  if($("#residentDeviceAddr").val())
+  	var deviceAddr = $("#residentDeviceAddr").val();
+  else
+  	var deviceAddr = "";
   var gender = $('#residentGender').val();
   var dob = $("#residentDOB").val();
   var ic = $('#residentIC').val();
