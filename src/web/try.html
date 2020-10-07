@@ -720,8 +720,8 @@ $('#new_resident_form').submit(function (e){
 
 
 
-  var userValidation = confirm("Please make sure all information is correct!");
-  if (userValidation && validation){
+  //var userValidation = confirm("Please make sure all information is correct!");
+  if (validation){
     //send to server
     $.ajax({
       type: "POST",
@@ -877,8 +877,8 @@ $('#update_resident_form').submit(function (e){
 
 
 
-  var userValidation = confirm("Please make sure all information is correct!");
-  if (validation && userValidation){
+  //var userValidation = confirm("Please make sure all information is correct!");
+  if (validation){
     //send to server
     $.ajax({
       type: "PUT",
@@ -1188,7 +1188,7 @@ var Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
-      timer: 3000
+      timer: 8000
     });
 
 $('.swalDefaultError').click(function() {
