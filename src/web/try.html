@@ -223,7 +223,7 @@
                   </li>
                 </ul>
               </div>
-              <form id='new_resident_form'>
+              <form id='new_resident_form' novalidate="">
                 <div class="card-body">
                   <div class="tab-content" id="custom-tabs-one-tabContent">
                     <div class="tab-pane fade show active" id="custom-tabs-one-newGeneral" role="tabpanel" aria-labelledby="custom-tabs-one-newGeneral-tab">
@@ -431,7 +431,7 @@
                 </li>
               </ul>
             </div>
-            <form id='update_resident_form'>
+            <form id='update_resident_form' novalidate="">
               <div class="card-body">
                 <div class="tab-content" id="custom-tabs-one-tabContent">
                   <!-- general tab  -->
@@ -702,7 +702,7 @@ $('#new_resident_form').submit(function (e){
   var nationality = $("#newResidentNationality").val();
   var weight = $("#newResidentWeight").val();
   var height = $("#newResidentHeight").val();
-  var bloodType = $('#newResidentBloodType').val();
+  //var bloodType = $('#newResidentBloodType').val();
   var pNum = $("#newResidentPNum").val();
   var guardian = $("#newResidentGuardian").val();
   var emergencyPNum = $("#newResidentEmergencyPNum").val();
@@ -715,13 +715,13 @@ $('#new_resident_form').submit(function (e){
   var errorMsgs = "";
 
 
-  
+  var validation = validationOK(name, caretaker, room, deviceAddr, gender, dob, ic, nationality, weight, height, pNum, guardian, emergencyPNum, streetAdd, streetAdd2, city, state, postal);
 
 
 
 
   var userValidation = confirm("Please make sure all information is correct!");
-  if (userValidation){
+  if (userValidation && validation){
     //send to server
     $.ajax({
       type: "POST",
@@ -846,9 +846,30 @@ $('#update_resident_form').submit(function (e){
 
 
 
+  var name = $("#residentName").val();
+  var caretaker = $("#residentCaretaker").val();
+  var room = $("#residentRoom").val();
+  var deviceAddr = $("#residentDeviceAddr").val().toLowerCase();
+  var gender = $('#residentGender').val();
+  var dob = $("#residentDOB").val();
+  var ic = $('#residentIC').val();
+  var nationality = $("#residentNationality").val();
+  var weight = $("#residentWeight").val();
+  var height = $("#residentHeight").val();
+  //var bloodType = $('#newResidentBloodType').val();
+  var pNum = $("#residentPNum").val();
+  var guardian = $("#residentGuardian").val();
+  var emergencyPNum = $("#residentEmergencyPNum").val();
+  var streetAdd = $('#residentStreetAddress').val();
+  var streetAdd2 = $("#residentStreetAddress2").val();
+  var city = $("#residentCity").val();  
+  var state = $("#residentState").val();
+  var postal = $('#residentPostal').val();
+
+  var errorMsgs = "";
 
 
-
+  var validation = validationOK(name, caretaker, room, deviceAddr, gender, dob, ic, nationality, weight, height, pNum, guardian, emergencyPNum, streetAdd, streetAdd2, city, state, postal);
 
 
 
@@ -857,7 +878,7 @@ $('#update_resident_form').submit(function (e){
 
 
   var userValidation = confirm("Please make sure all information is correct!");
-  if (userValidation){
+  if (validation && userValidation){
     //send to server
     $.ajax({
       type: "PUT",
