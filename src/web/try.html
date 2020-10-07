@@ -163,14 +163,8 @@
         </div><!-- /.container-fluid -->
       </div>
       <!-- /.content -->
-
-      <button type="button" class="btn btn-success swalDefaultError">
-          Launch Success Toast
-      </button>
     </div>
     <!-- /.content-wrapper -->
-
-
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -241,7 +235,9 @@
                           <input type="text" class="form-control" id="newResidentRoom" required="">
                         </div>
                         <div class="form-group">
-                          <label for="newResidentDeviceAddr">Device MAC Address</label>
+                          <label for="newResidentDeviceAddr">Device MAC Address
+                            <br><span class="help">E.g. xx:xx:xx:xx:xx:xx</span>
+                          </label>
                           <input type="text" class="form-control" id="newResidentDeviceAddr">
                         </div>
                       </div>
@@ -262,7 +258,7 @@
                         </div>
                         <div class="form-group">
                           <label for="newResidentIC"><span class="asterisk">* </span>IC No.
-                            <br><span>Example: 012345086789</span>
+                            <br><span class="help">E.g. 950827088754</span>
                           </label>
                           <input type="text" class="form-control" id="newResidentIC" required="">
                         </div>
@@ -276,13 +272,13 @@
                       <div class="modal-body">
                         <div class="form-group">
                           <label for="newResidentWeight"><span class="asterisk">* </span>Weight (kg)
-                            <br><span>Please enter 2 or 3 digits</span>
+                            <br><span class="help">Please enter 2 or 3 digits</span>
                           </label>
                           <input type="text" class="form-control" id="newResidentWeight" pattern="[\d]{2,3}" required="">
                         </div>
                         <div class="form-group">
                           <label for="newResidentHeight"><span class="asterisk">* </span>Height (cm)
-                            <br><span>Please enter 2 or 3 digits</span>
+                            <br><span class="help">Please enter 2 or 3 digits</span>
                           </label>
                           <input type="text" class="form-control" id="newResidentHeight" pattern="[\d]{2,3}" required="">
                         </div>
@@ -352,7 +348,9 @@
                     <div class="tab-pane fade" id="custom-tabs-one-newContact" role="tabpanel" aria-labelledby="custom-tabs-one-newContact-tab">
                       <div class="modal-body">
                         <div class="form-group">
-                          <label for="newResidentPNum"><span class="asterisk">* </span>Resident's Phone Number</label>
+                          <label for="newResidentPNum"><span class="asterisk">* </span>Resident's Phone Number
+                            <br><span class="help">E.g. 0101234567</span>
+                          </label>
                           <input type="text" class="form-control" id="newResidentPNum" required="">
                         </div>
                         <div class="form-group">
@@ -360,7 +358,9 @@
                           <input type="text" class="form-control" id="newResidentGuardian" required="">
                         </div>
                         <div class="form-group">
-                          <label for="newResidentEmergencyPNum"><span class="asterisk">* </span>Emergency Phone Number</label>
+                          <label for="newResidentEmergencyPNum"><span class="asterisk">* </span>Emergency Phone Number
+                            <br><span class="help">E.g. 0101234567</span>
+                          </label>
                           <input type="text" class="form-control" id="newResidentEmergencyPNum" required="">
                         </div>
                         <div class="form-group">
@@ -454,7 +454,9 @@
                         <input type="text" class="form-control" id="residentRoom" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentDeviceAddr">Device MAC Address</label>
+                        <label for="residentDeviceAddr">Device MAC Address
+                          <br><span class="help">E.g. xx:xx:xx:xx:xx:xx</span>
+                        </label>
                         <input type="text" class="form-control" id="residentDeviceAddr" disabled="">
                       </div>
                     </div>
@@ -477,7 +479,7 @@
                       </div>
                       <div class="form-group">
                         <label for="residentIC"><span class="asterisk">* </span>IC No.
-                          <br><span>Example: 012345086789</span>
+                          <br><span class="help">E.g. 950827088754</span>
                         </label>
                         <input type="text" class="form-control" id="residentIC" required="" disabled="">
                       </div>
@@ -493,13 +495,13 @@
                     <div class="modal-body">
                       <div class="form-group">
                         <label for="residentWeight"><span class="asterisk">* </span>Weight (kg)
-                          <br><span>Please enter 2 or 3 digits</span>
+                          <br><span style="help">Please enter 2 or 3 digits</span>
                         </label>
                         <input type="text" class="form-control" id="residentWeight" pattern="[\d]{2,3}" required="" disabled="">
                       </div>
                       <div class="form-group">
                         <label for="residentHeight"><span class="asterisk">* </span>Height (cm)
-                          <br><span>Please enter 2 or 3 digits</span>
+                          <br><span style="help">Please enter 2 or 3 digits</span>
                         </label>
                         <input type="text" class="form-control" id="residentHeight" pattern="[\d]{2,3}" required="" disabled="">
                       </div>
@@ -559,7 +561,9 @@
                   <div class="tab-pane fade" id="custom-tabs-one-contact" role="tabpanel" aria-labelledby="custom-tabs-one-contact-tab">
                     <div class="modal-body">
                       <div class="form-group">
-                        <label for="residentPNum"><span class="asterisk">* </span>Resident's Phone Number</label>
+                        <label for="residentPNum"><span class="asterisk">* </span>Resident's Phone Number
+                          <br><span class="help">E.g. 0101234567</span>
+                        </label>
                         <input type="text" class="form-control" id="residentPNum" required="" disabled="">
                       </div>
                       <div class="form-group">
@@ -567,7 +571,9 @@
                         <input type="text" class="form-control" id="residentGuardian" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentEmergencyPNum"><span class="asterisk">* </span>Emergency Phone Number</label>
+                        <label for="residentEmergencyPNum"><span class="asterisk">* </span>Emergency Phone Number
+                          <br><span class="help">E.g. 0101234567</span>
+                        </label>
                         <input type="text" class="form-control" id="residentEmergencyPNum" required="" disabled="">
                       </div>
                       <div class="form-group">
@@ -761,7 +767,7 @@ $('#new_resident_form').submit(function (e){
         //on success, clear form, modal and update list
         Toast.fire({
             icon: 'success',
-            title: 'Resident Created!'
+            title: '  Resident Created!'
         })
 
         console.log("resident created: "+ resident);
@@ -924,7 +930,7 @@ $('#update_resident_form').submit(function (e){
         console.log("resident updated: "+ resident);
         Toast.fire({
             icon: 'success',
-            title: 'Resident Updated!'
+            title: '  Resident Updated!'
         })
 
         $("#residentModal").modal('hide');
@@ -1190,17 +1196,13 @@ function getRandomColor() {
 
 // Toast
 var Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 8000
-    });
-
-$('.swalDefaultError').click(function() {
-    Toast.fire({
-      icon: 'error',
-      title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-  })
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 8000,
+  width: 40 rem,
+  background: rgba(220,53,69,.85),
+  iconColor: #fff
 });
 
 </script>

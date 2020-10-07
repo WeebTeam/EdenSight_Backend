@@ -42,7 +42,7 @@ function validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, w
 		Toast.fire({
       		icon: 'error',
       		title: 'Oops!',
-      		html: '<pre>' + gErrorMsg + '</pre>'
+      		html: '<pre style="color: #fff;">' + gErrorMsg + '</pre>'
   		})
 		allOk = false;
 	}
@@ -56,12 +56,12 @@ function checkName(name) {
 	var nameOk = true;
 	
 	if ((name.length == 0)){        
-		gErrorMsg = gErrorMsg + "Your name cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your name.\n"
 		 nameOk = false; 
 	}
 	else{
 		if (!pattern.test(name)){
-			gErrorMsg = gErrorMsg + "Your name must only contain alpha characters.\n"
+			gErrorMsg = gErrorMsg + "Please enter a valid name.\n"
 			nameOk = false; 
 		}
 	}
@@ -74,12 +74,12 @@ function checkCaretaker(caretaker){
 	var caretakerOk = true;
 	
 	if ((caretaker.length == 0)){        
-		gErrorMsg = gErrorMsg + "Your caretaker cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your caretaker name.\n"
 		 caretakerOk = false; 
 	}
 	else{
 		if (!pattern.test(caretaker)){
-			gErrorMsg = gErrorMsg + "Your caretaker must only contain alpha characters.\n"
+			gErrorMsg = gErrorMsg + "Please enter a valid caretaker name.\n"
 			caretakerOk = false; 
 		}
 	}
@@ -92,12 +92,12 @@ function checkRoom(room){
 	var roomOk = true;
 	
 	if ((room.length == 0)){
-		gErrorMsg = gErrorMsg + "Your room cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your room.\n"
 		 roomOk = false; 
 	}
 	else{
 		if (!pattern.test(room)){
-			gErrorMsg = gErrorMsg + "Your room must only contain alpha numerical characters.\n"
+			gErrorMsg = gErrorMsg + "Please enter a valid room number.\n"
 			roomOk = false; 
 		}
 	}
@@ -110,18 +110,17 @@ function checkDeviceAddr(deviceAddr){
 	var deviceAddrOk = true;
 	
 	if (!pattern.test(deviceAddr)){
-		gErrorMsg = gErrorMsg + "Your device address must only according to the format.\n"
+		gErrorMsg = gErrorMsg + "Please enter a valid Device MAC Address.\n"
 		deviceAddrOk = false; 
 	}
 	
 	return deviceAddrOk;
 }
 
-function checkDoB(dob){
-	var pattern = /^mm\/dd\/yyyy$/;     
+function checkDoB(dob){    
 	var dobOk = true;
 	
-	if (pattern.test(dob)){
+	if (dob.length == 0){
 		gErrorMsg = gErrorMsg + "Please insert a date.\n"
 		dobOk = false; 
 	}
@@ -134,12 +133,12 @@ function checkIC(ic){
 	var icOk = true;
 	
 	if ((ic.length == 0)){        
-		gErrorMsg = gErrorMsg + "Your IC no. cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your IC number.\n"
 		 icOk = false; 
 	}
 	else{
 		if (!pattern.test(ic)){
-			gErrorMsg = gErrorMsg + "Your IC no. must only contain numbers.\n"
+			gErrorMsg = gErrorMsg + "Please enter a valid IC number.\n"
 			icOk = false; 
 		}
 	}
@@ -152,12 +151,12 @@ function checkNationality(nationality) {
 	var nationalityOk = true;
 	
 	if ((nationality.length == 0)){        
-		gErrorMsg = gErrorMsg + "Your nationality cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your nationality.\n"
 		 nationalityOk = false; 
 	}
 	else{
 		if (!pattern.test(nationality)){
-			gErrorMsg = gErrorMsg + "Your nationality must only contain alpha characters.\n"
+			gErrorMsg = gErrorMsg + "Please enter a valid nationality.\n"
 			nationalityOk = false; 
 		}
 	}
@@ -170,12 +169,12 @@ function checkWeight(weight){
 	var weightOk = true;
 	
 	if ((weight.length == 0)){        
-		gErrorMsg = gErrorMsg + "Your weight cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your weight.\n"
 		 weightOk = false; 
 	}
 	else{
 		if (!pattern.test(weight)){
-			gErrorMsg = gErrorMsg + "Your weight must only be numbers.\n"
+			gErrorMsg = gErrorMsg + "Please enter a valid weight.\n"
 			weightOk = false; 
 		}
 	}
@@ -188,12 +187,12 @@ function checkHeight(height){
 	var heightOk = true;
 	
 	if ((height.length == 0)){
-		gErrorMsg = gErrorMsg + "Your height cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your height.\n"
 		 heightOk = false; 
 	}
 	else{
 		if (!pattern.test(height)){
-			gErrorMsg = gErrorMsg + "Your height must only be numbers.\n"
+			gErrorMsg = gErrorMsg + "Please enter a valid height.\n"
 			heightOk = false; 
 		}
 	}
@@ -206,12 +205,12 @@ function checkPNum(pNum) {
 	var pNumOk = true;
 	
 	if ((pNum.length == 0)){        
-		gErrorMsg = gErrorMsg + "Your phone no. cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your phone number.\n"
 		 pNumOk = false; 
 	}
 	else{
 		if (!pattern.test(pNum)){
-			gErrorMsg = gErrorMsg + "Your phone no. must only contain alpha characters.\n"
+			gErrorMsg = gErrorMsg + "Please enter a valid phone number.\n"
 			pNumOk = false; 
 		}
 	}
@@ -224,12 +223,12 @@ function checkEmergencyPNum(emergencyPNum) {
 	var emergencyPNumOk = true;
 	
 	if ((emergencyPNum.length == 0)){        
-		gErrorMsg = gErrorMsg + "Your emergency phone no. cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your emergency number.\n"
 		 emergencyPNumOk = false; 
 	}
 	else{
 		if (!pattern.test(emergencyPNum)){
-			gErrorMsg = gErrorMsg + "Your emergency phone no. must only contain numbers and must be around 10-13 characters.\n"
+			gErrorMsg = gErrorMsg + "Please enter a valid emergency number.\n"
 			emergencyPNumOk = false; 
 		}
 	}
@@ -242,12 +241,12 @@ function checkGuardian(guardian){
 	var guardianOk = true;
 	
 	if ((guardian.length == 0)){        
-		gErrorMsg = gErrorMsg + "Your guardian name cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your guardian name.\n"
 		 guardianOk = false; 
 	}
 	else{
 		if (!pattern.test(guardian)){
-			gErrorMsg = gErrorMsg + "Your guardian name must only contain alpha characters.\n"
+			gErrorMsg = gErrorMsg + "Please enter a valid guardian name.\n"
 			guardianOk = false; 
 		}
 	}
@@ -259,7 +258,7 @@ function checkStreetAdd(streetAdd){
 	var streetAddOk = true;
 	
 	if ((streetAdd.length == 0)){
-		gErrorMsg = gErrorMsg + "Your street address cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your street address.\n"
 		 streetAddOk = false; 
 	}
 	
@@ -270,7 +269,7 @@ function checkStreetAdd2(streetAdd2){
 	var streetAdd2Ok = true;
 	
 	if ((streetAdd2.length == 0)){
-		gErrorMsg = gErrorMsg + "Your street address 2 cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please eneter your street address 2.\n"
 		 streetAdd2Ok = false; 
 	}
 	
@@ -281,7 +280,7 @@ function checkCity(city){
 	var cityOk = true;
 	
 	if ((city.length == 0)){        
-		gErrorMsg = gErrorMsg + "Your city cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your city.\n"
 		 cityOk = false; 
 	}
 	
@@ -292,7 +291,7 @@ function checkState(state) {
 	var stateOk = true;
 	
 	if ((state.length == 0)){        
-		gErrorMsg = gErrorMsg + "Your state cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your state.\n"
 		 stateOk = false; 
 	}
 	
@@ -304,12 +303,12 @@ function checkPostal(postal){
 	var postalOk = true;
 	
 	if ((postal.length == 0)){        
-		gErrorMsg = gErrorMsg + "Your postal cannot be blank.\n"
+		gErrorMsg = gErrorMsg + "Please enter your postal.\n"
 		 postalOk = false; 
 	}
 	else{
 		if (!pattern.test(postal)){
-			gErrorMsg = gErrorMsg + "Your postal must only contain alpha characters.\n"
+			gErrorMsg = gErrorMsg + "Please enter a valid postal.\n"
 			postalOk = false; 
 		}
 	}
