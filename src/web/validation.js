@@ -44,7 +44,7 @@ function validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, w
       		title: 'Oops!',
       		html: '<pre style="color: #fff;">' + gErrorMsg + '</pre>',
       		width: '40 rem',
-  			background: rgba(220,53,69,.85),
+  			background: 'rgba(220,53,69,.85)',
   			iconColor: '#fff'
   		})
 		allOk = false;
