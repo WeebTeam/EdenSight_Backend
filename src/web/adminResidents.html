@@ -250,7 +250,9 @@
                           <input type="date" class="form-control" id="newResidentDOB" required="">
                         </div>
                         <div class="form-group">
-                          <label for="newResidentIC"><span class="asterisk">* </span>IC No.</label>
+                          <label for="newResidentIC"><span class="asterisk">* </span>IC No.
+                            <br><span>Example: 012345086789</span>
+                          </label>
                           <input type="text" class="form-control" id="newResidentIC" required="">
                         </div>
                         <div class="form-group">
@@ -262,12 +264,16 @@
                     <div class="tab-pane fade" id="custom-tabs-one-newHealth" role="tabpanel" aria-labelledby="custom-tabs-one-newHealth-tab">
                       <div class="modal-body">
                         <div class="form-group">
-                          <label for="newResidentWeight"><span class="asterisk">* </span>Weight (kg)</label>
-                          <input type="text" class="form-control" id="newResidentWeight" required="">
+                          <label for="newResidentWeight"><span class="asterisk">* </span>Weight (kg)
+                            <br><span>Please enter 2 or 3 digits</span>
+                          </label>
+                          <input type="text" class="form-control" id="newResidentWeight" pattern="[\d]{2,3}" required="">
                         </div>
                         <div class="form-group">
-                          <label for="newResidentHeight"><span class="asterisk">* </span>Height (cm)</label>
-                          <input type="text" class="form-control" id="newResidentHeight" required="">
+                          <label for="newResidentHeight"><span class="asterisk">* </span>Height (cm)
+                            <br><span>Please enter 2 or 3 digits</span>
+                          </label>
+                          <input type="text" class="form-control" id="newResidentHeight" pattern="[\d]{2,3}" required="">
                         </div>
                         <div class="form-group">
                           <label for="newResidentBloodType"><span class="asterisk">* </span>Blood Type</label>
@@ -459,7 +465,9 @@
                         <input type="date" class="form-control" id="residentDOB" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentIC"><span class="asterisk">* </span>IC No.</label>
+                        <label for="residentIC"><span class="asterisk">* </span>IC No.
+                          <br><span>Example: 012345086789</span>
+                        </label>
                         <input type="text" class="form-control" id="residentIC" required="" disabled="">
                       </div>
                       <div class="form-group">
@@ -473,12 +481,16 @@
                   <div class="tab-pane fade" id="custom-tabs-one-health" role="tabpanel" aria-labelledby="custom-tabs-one-health-tab">
                     <div class="modal-body">
                       <div class="form-group">
-                        <label for="residentWeight"><span class="asterisk">* </span>Weight (kg)</label>
-                        <input type="text" class="form-control" id="residentWeight" required="" disabled="">
+                        <label for="residentWeight"><span class="asterisk">* </span>Weight (kg)
+                          <br><span>Please enter 2 or 3 digits</span>
+                        </label>
+                        <input type="text" class="form-control" id="residentWeight" pattern="[\d]{2,3}" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentHeight"><span class="asterisk">* </span>Height (cm)</label>
-                        <input type="text" class="form-control" id="residentHeight" required="" disabled="">
+                        <label for="residentHeight"><span class="asterisk">* </span>Height (cm)
+                          <br><span>Please enter 2 or 3 digits</span>
+                        </label>
+                        <input type="text" class="form-control" id="residentHeight" pattern="[\d]{2,3}" required="" disabled="">
                       </div>
                       <div class="form-group">
                         <label for="residentBloodType"><span class="asterisk">* </span>Blood Type</label>
@@ -849,132 +861,6 @@ allowAddingHealth("new-allergies-new", "allergies-new");
 allowAddingHealth("new-medication-new", "medication-new");
 
 
-
-// $('#add-new-condition-new').click(function (e) {
-//   e.preventDefault()
-//   // Get value and make sure it is not null
-//   var val = $('#new-condition-new').val()
-//   if (val.length == 0) {
-//     return
-//   }
-
-//   // Create events
-//   var condition = $('<div />')
-//   condition.css({
-//     'background-color': getRandomColor(),
-//     'border-color'    : getRandomColor(),
-//     'color'           : '#fff',
-//     'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-//     'border-radius'   : '.25rem',
-//     'font-weight'     : '700',
-//     'margin-bottom'	  : '4px',
-//     'margin-right'  : '4px',
-//     'padding'		  : '5px 10px',
-//     'width'		  : 'auto',
-//     'display'		  : 'inline-block'
-//   }).addClass('healthConditions-new')
-//   condition.text(val)
-
-//   condition.addClass('alert')
-
-//   condition.addClass('col')
-
-//   $("#healthConditions-new").prepend(condition)
-
-//   // Remove event from text input
-//   $('#new-condition-new').val('')
-
-//   var x = condition.html();
-//   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
-
-//   // Add button to condition div
-//   condition.html(x+y);
-
-// })
-
-
-// $('#add-new-allergies-new').click(function (e) {
-//   e.preventDefault()
-//   // Get value and make sure it is not null
-//   var val = $('#new-allergies-new').val()
-//   if (val.length == 0) {
-//     return
-//   }
-
-//   // Create events
-//   var allergies = $('<div />')
-//   allergies.css({
-//     'background-color': getRandomColor(),
-//     'border-color'    : getRandomColor(),
-//     'color'           : '#fff',
-//     'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-//     'border-radius'   : '.25rem',
-//     'font-weight'     : '700',
-//     'margin-bottom'	  : '4px',
-//     'margin-right'  : '4px',
-//     'padding'		  : '5px 10px',
-//     'width'		  : 'auto',
-//     'display'		  : 'inline-block'
-//   }).addClass('allergies-new')
-//   allergies.text(val)
-
-//   allergies.addClass('alert')
-
-//   $("#allergies-new").prepend(allergies)
-
-//   // Remove event from text input
-//   $('#new-allergies-new').val('')
-
-//   // Add button to each div
-//   var x = allergies.html();
-//   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
-
-//   // Add button to condition div
-//   allergies.html(x+y);
-
-// })
-
-
-// $('#add-new-medication-new').click(function (e) {
-//   e.preventDefault()
-//   // Get value and make sure it is not null
-//   var val = $('#new-medication-new').val()
-//   if (val.length == 0) {
-//     return
-//   }
-
-//   // Create events
-//   var medication = $('<div />')
-//   medication.css({
-//     'background-color': getRandomColor(),
-//     'border-color'    : getRandomColor(),
-//     'color'           : '#fff',
-//     'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-//     'border-radius'   : '.25rem',
-//     'font-weight'     : '700',
-//     'margin-bottom'	  : '4px',
-//     'margin-right'  : '4px',
-//     'padding'		  : '5px 10px',
-//     'width'		  : 'auto',
-//     'display'		  : 'inline-block'
-//   }).addClass('medication-new')
-//   medication.text(val)
-
-//   medication.addClass('alert')
-
-//   $("#medication-new").prepend(medication)
-
-//   // Remove event from text input
-//   $('#new-medication-new').val('')
-
-//   // Add button to each div
-//   var x = medication.html();
-//   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
-
-//   // Add button to condition div
-//   medication.html(x+y);
-
-// })
 // END
 
 
@@ -985,128 +871,6 @@ allowAddingHealth("new-condition", "healthConditions");
 allowAddingHealth("new-allergies", "allergies");
 allowAddingHealth("new-medication", "medication");
 
-
-// $('#add-new-condition').click(function (e) {
-//   e.preventDefault()
-//   // Get value and make sure it is not null
-//   var val = $('#new-condition').val()
-//   if (val.length == 0) {
-//     return
-//   }
-
-//   // Create events
-//   var condition = $('<div />')
-//   condition.css({
-//     'background-color': getRandomColor(),
-//     'border-color'    : getRandomColor(),
-//     'color'           : '#fff',
-//     'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-//     'border-radius'   : '.25rem',
-//     'font-weight'     : '700',
-//     'margin-bottom'	  : '4px',
-//     'margin-right'  : '4px',
-//     'padding'		  : '5px 10px',
-//     'width'		  : 'auto',
-//     'display'		  : 'inline-block'
-//   }).addClass('healthConditions')
-//   condition.text(val)
-
-//   condition.addClass('alert')
-
-//   $("#healthConditions").prepend(condition)
-
-//   // Remove event from text input
-//   $('#new-condition').val('')
-
-//   var x = condition.html();
-//   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
-
-//   // Add button to condition div
-//   condition.html(x+y);
-
-// })
-
-// $('#add-new-allergies').click(function (e) {
-//   e.preventDefault()
-//   // Get value and make sure it is not null
-//   var val = $('#new-allergies').val()
-//   if (val.length == 0) {
-//     return
-//   }
-
-//   // Create events
-//   var allergies = $('<div />')
-//   allergies.css({
-//     'background-color': getRandomColor(),
-//     'border-color'    : getRandomColor(),
-//     'color'           : '#fff',
-//     'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-//     'border-radius'   : '.25rem',
-//     'font-weight'     : '700',
-//     'margin-bottom'	  : '4px',
-//     'margin-right'  : '4px',
-//     'padding'		  : '5px 10px',
-//     'width'		  : 'auto',
-//     'display'		  : 'inline-block'
-//   }).addClass('allergies')
-//   allergies.text(val)
-
-//   allergies.addClass('alert')
-
-//   $("#allergies").prepend(allergies)
-
-//   // Remove event from text input
-//   $('#new-allergies').val('')
-
-//   // Add button to each div
-//   var x = allergies.html();
-//   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
-
-//   // Add button to condition div
-//   allergies.html(x+y);
-
-// })
-
-// $('#add-new-medication').click(function (e) {
-//   e.preventDefault()
-//   // Get value and make sure it is not null
-//   var val = $('#new-medication').val()
-//   if (val.length == 0) {
-//     return
-//   }
-
-//   // Create events
-//   var medication = $('<div />')
-//   medication.css({
-//     'background-color': getRandomColor(),
-//     'border-color'    : getRandomColor(),
-//     'color'           : '#fff',
-//     'box-shadow'	  : '0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)',
-//     'border-radius'   : '.25rem',
-//     'font-weight'     : '700',
-//     'margin-bottom'	  : '4px',
-//     'margin-right'  : '4px',
-//     'padding'		  : '5px 10px',
-//     'width'		  : 'auto',
-//     'display'		  : 'inline-block'
-//   }).addClass('medication')
-//   medication.text(val)
-
-//   medication.addClass('alert')
-
-//   $("#medication").prepend(medication)
-
-//   // Remove event from text input
-//   $('#new-medication').val('')
-
-//   // Add button to each div
-//   var x = medication.html();
-//   var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
-
-//   // Add button to condition div
-//   medication.html(x+y);
-
-// })
 
 //END
 
