@@ -8,10 +8,10 @@ function validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, w
 	var caretakerOk = checkCaretaker(caretaker);
 	var roomOk = checkRoom(room);
 
-	if(deviceAddr.length != 0){
+	if(deviceAddr){
 		var deviceAddrOk = checkDeviceAddr(deviceAddr);
 	}
-	
+
 	var dobOk = checkDoB(dob);
 	var icOk = checkIC(ic);
 	var nationalityOk = checkNationality(nationality);
@@ -33,7 +33,7 @@ function validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, w
 
 		allOk = true;
 
-		if(deviceAddr.length != 0){
+		if(deviceAddr){
 			if(!deviceAddrOk)
 				allOk = false;
 		}
@@ -42,7 +42,7 @@ function validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, w
 		Toast.fire({
       		icon: 'error',
       		title: 'Oops!',
-      		text: gErrorMsg
+      		text: '<pre>' + gErrorMsg + '</pre>'
   		})
 		allOk = false;
 	}

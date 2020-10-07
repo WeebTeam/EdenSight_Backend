@@ -759,6 +759,11 @@ $('#new_resident_form').submit(function (e){
       }),
       success: function (resident){
         //on success, clear form, modal and update list
+        Toast.fire({
+            icon: 'success',
+            title: 'Resident Created!'
+        })
+
         console.log("resident created: "+ resident);
         $("#new_resident_form").trigger("reset");
         $("#newResidentModal").modal('hide');
@@ -919,7 +924,7 @@ $('#update_resident_form').submit(function (e){
         console.log("resident updated: "+ resident);
         Toast.fire({
             icon: 'success',
-            title: 'Yay.'
+            title: 'Resident Updated!'
         })
 
         $("#residentModal").modal('hide');
