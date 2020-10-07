@@ -27,7 +27,7 @@ function showEachHealth(item, className){
 
   // Add button to each div
   var x = className.html();
-  var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;"><span aria-hidden="true">&times;</span></button>';
+  var y = '<button type="button" class="close closeDiv" data-dismiss="alert" aria-label="Close" style="color: white;" disabled><span aria-hidden="true">&times;</span></button>';
 
   // Add button to condition div
   className.html(x+y);

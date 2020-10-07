@@ -1074,7 +1074,7 @@ function enableUpdateResident(){
   $("#residentState").prop("disabled", false);
   $("#residentPostal").prop("disabled", false);
 
-  $(".closeDiv").prop("disabled", false);
+  $(".closeDiv").prop('disabled', function(i, v) { return !v; });
 
 }
 
@@ -1108,6 +1108,7 @@ function cancelUpdateResident(){
   $("#residentCity").prop("disabled", true);
   $("#residentState").prop("disabled", true);
   $("#residentPostal").prop("disabled", true);
+
   $(".closeDiv").prop("disabled", true);
 
   //reset the data
