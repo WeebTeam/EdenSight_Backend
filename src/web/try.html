@@ -242,7 +242,7 @@
                         </div>
                         <div class="form-group">
                           <label for="newResidentDeviceAddr">Device MAC Address</label>
-                          <input type="text" class="form-control" id="newDeviceAddr">
+                          <input type="text" class="form-control" id="newResidentDeviceAddr">
                         </div>
                       </div>
                     </div>
@@ -849,15 +849,12 @@ $('#update_resident_form').submit(function (e){
   e.preventDefault(); //prevent form submit default behaviour
 
 
-
+  
 
   var name = $("#residentName").val();
   var caretaker = $("#residentCaretaker").val();
   var room = $("#residentRoom").val();
-  if($("#residentDeviceAddr").val())
-  	var deviceAddr = $("#residentDeviceAddr").val();
-  else
-  	var deviceAddr = "";
+  var deviceAddr = $("#residentDeviceAddr").val();
   var gender = $('#residentGender').val();
   var dob = $("#residentDOB").val();
   var ic = $('#residentIC').val();
