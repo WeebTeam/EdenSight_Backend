@@ -40,7 +40,7 @@
         </li>
       </ul>
 
-      <p class="lead welcomeMsg col">Welcome back Traveler!</p>
+      <p class="lead welcomeMsg col">Welcome back, <b id="uname">Traveler</b>!</p>
     </nav>
     <!-- /.navbar -->
 
@@ -134,13 +134,6 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>102</td>
-                        <td>102</td>
-                        <td>102</td>
-                        <td>102</td>
-                        <td>102</td>
-                      </tr>
                     </tbody>
                     <tfoot>
                       <tr>
@@ -663,6 +656,9 @@
 <script>
 $(function () { //stuff here runs on page load
 
+  //populate uname
+  $("#uname").text(localStorage.getItem("uname"));
+
   //init residents table
   residents_table = $('#residents_table').DataTable({
     "paging": true,
@@ -714,7 +710,7 @@ $('#new_resident_form').submit(function (e){
   var emergencyPNum = $("#newResidentEmergencyPNum").val();
   var streetAdd = $('#newResidentStreetAddress').val();
   var streetAdd2 = $("#newResidentStreetAddress2").val();
-  var city = $("#newResidentCity").val();  
+  var city = $("#newResidentCity").val();
   var state = $("#newResidentState").val();
   var postal = $('#newResidentPostal').val();
 
@@ -853,7 +849,7 @@ $('#update_resident_form').submit(function (e){
   e.preventDefault(); //prevent form submit default behaviour
 
 
-  
+
 
   var name = $("#residentName").val();
   var caretaker = $("#residentCaretaker").val();
@@ -871,7 +867,7 @@ $('#update_resident_form').submit(function (e){
   var emergencyPNum = $("#residentEmergencyPNum").val();
   var streetAdd = $('#residentStreetAddress').val();
   var streetAdd2 = $("#residentStreetAddress2").val();
-  var city = $("#residentCity").val();  
+  var city = $("#residentCity").val();
   var state = $("#residentState").val();
   var postal = $('#residentPostal').val();
 

@@ -118,7 +118,11 @@
       success: function (data){
         //on success, check user type and redirect acordingly
         localStorage.setItem("credentials", credentials);
+
+        //storing role and uname for later use
         localStorage.setItem("role", data.role);
+        localStorage.setItem("uname", data.uname);
+        
         if (data.role == "admin"){
           window.location.replace("adminResidents.html");
         }

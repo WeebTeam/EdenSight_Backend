@@ -40,7 +40,7 @@
         </li>
       </ul>
 
-      <p class="lead welcomeMsg col">Welcome back Traveler!</p>
+      <p class="lead welcomeMsg col">Welcome back, <b id="uname">Traveler</b>!</p>
 
     </nav>
     <!-- /.navbar -->
@@ -312,6 +312,9 @@
   <script>
   $(function () { //stuff here runs on page load
 
+    //populate uname
+    $("#uname").text(localStorage.getItem("uname"));
+
     //init staff table
     staff_table = $('#staff_table').DataTable({
       "paging": true,
@@ -420,7 +423,7 @@
     var password = $("#staffPassword").val();
     var pNum = $("#staffPhoneNum").val();
 
-    var validation = staffValidationOK(name, username, password, pNum); 
+    var validation = staffValidationOK(name, username, password, pNum);
 
 
 
