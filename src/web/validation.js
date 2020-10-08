@@ -55,8 +55,8 @@ function staffValidationOK(name, username, password, pNum){
 	gErrorMsg = "";
 
 	var nameOk = checkName(name);
-	var usernameOk = checkUsername(usernameOk);
-	var passwordOk = checkPassword(room);
+	var usernameOk = checkUsername(username);
+	var passwordOk = checkPassword(password);
 	var pNumOk = checkPNum(pNum)
 
 	var allOk = false;
