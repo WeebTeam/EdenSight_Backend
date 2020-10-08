@@ -351,7 +351,7 @@
                    </div>
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-one-health" role="tabpanel" aria-labelledby="custom-tabs-one-health-tab">
-                    <form id='update_resident_form_2'>
+                    <form id='update_resident_form_2' novalidate="">
                       <div class="modal-body">
                         <div class="form-group">
                           <label for="residentWeight"><span class="asterisk">* </span>Weight (kg)
@@ -642,6 +642,11 @@
         }),
         success: function (resident){
           //on success, clear form, modal and update list
+          Toast.fire({
+            icon: 'success',
+            title: '  Resident Updated!'
+          })
+
           console.log("resident updated: "+ resident);
           $("#residentModal").modal('hide');
           getAllResidents();
@@ -805,6 +810,7 @@
         resident_history_table.draw();
 
         $("#line-chart").css("display", "none");
+        $("#graph-card-body").clear();
         $("#graph-card-body").append("<p>The content is currently unavailable.</p>");
         $("#residentCurrentBPM").text("-");
         $("#residentCurrentSp02").text("-");
