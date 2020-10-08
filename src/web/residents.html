@@ -12,10 +12,15 @@
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
   <!-- Extra stylesheet -->
   <link rel="stylesheet" href="style.css">
   <!-- Extra javascript -->
   <script src="main.js"></script>
+  <script src="validation.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -534,6 +539,11 @@
   <!-- Flot resize plugin - allows the chart to redraw when the window is resized -->
   <script src="plugins/flot/plugins/jquery.flot.resize.js"></script>
 
+  <!-- SweetAlert2 -->
+  <script src="plugins/sweetalert2/sweetalert2.min.js"></script>
+  <!-- Toastr -->
+  <script src="plugins/toastr/toastr.min.js"></script>
+
   <!-- page script -->
   <script>
   $(function () { //stuff here runs on page load
@@ -602,8 +612,15 @@
     //no validate, we are blindly trusting our users
     //instead we ask them to self validate :)
     e.preventDefault(); //prevent form submit default behaviour
-    var userValidation = confirm("Please make sure all information is correct!");
-    if (userValidation){
+
+    var weight = $("#residentWeight").val();
+    var height = $("#residentHeight").val();
+
+    var validation = residentValidationOK(weight, height);
+
+
+    //var userValidation = confirm("Please make sure all information is correct!");
+    if (validation){
       //send to server
       $.ajax({
         type: "PUT",
@@ -1042,6 +1059,15 @@
     console.log(getEachHealth($('.allergies')));
     console.log(getEachHealth($('.medication')));
   }
+
+
+  // Toast
+  var Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 8000,
+  });
 
 
   // //test forms and details

@@ -77,6 +77,30 @@ function staffValidationOK(name, username, password, pNum){
 }
 
 
+function residentValidationOK(weight, height){
+	gErrorMsg = "";
+
+	var weightOk = checkWeight(weight);
+	var heightOk = checkHeight(height);
+
+	var allOk = false;
+
+	if(weightOk && heightOk){
+		allOk = true;
+	}
+	else{
+		Toast.fire({
+      		icon: 'error',
+      		html: '<pre>' + gErrorMsg + '</pre>',
+      		width: '45 rem'
+  		})
+		allOk = false;
+	}
+
+	return allOk;
+}
+
+
 /* Check Name */
 function checkName(name) {
 	var pattern = /^[a-zA-Z ]+$/;     
