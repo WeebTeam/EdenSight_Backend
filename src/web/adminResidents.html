@@ -12,10 +12,15 @@
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
   <!-- Extra stylesheet -->
   <link rel="stylesheet" href="style.css">
   <!-- Extra javascript -->
   <script src="main.js"></script>
+  <script src="validation.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -212,7 +217,7 @@
                   </li>
                 </ul>
               </div>
-              <form id='new_resident_form'>
+              <form id='new_resident_form' novalidate="">
                 <div class="card-body">
                   <div class="tab-content" id="custom-tabs-one-tabContent">
                     <div class="tab-pane fade show active" id="custom-tabs-one-newGeneral" role="tabpanel" aria-labelledby="custom-tabs-one-newGeneral-tab">
@@ -230,15 +235,17 @@
                           <input type="text" class="form-control" id="newResidentRoom" required="">
                         </div>
                         <div class="form-group">
-                          <label for="newResidentDeviceAddr">Device MAC Address</label>
-                          <input type="text" class="form-control" id="newDeviceAddr">
+                          <label for="newResidentDeviceAddr">Device MAC Address
+                            <br><span class="help">E.g. xx:xx:xx:xx:xx:xx</span>
+                          </label>
+                          <input type="text" class="form-control" id="newResidentDeviceAddr">
                         </div>
                       </div>
                     </div>
                     <div class="tab-pane fade" id="custom-tabs-one-newDetailed" role="tabpanel" aria-labelledby="custom-tabs-one-newDetailed-tab">
                       <div class="modal-body">
                         <div class="form-group">
-                          <label for="newResidentGender"><span class="asterisk">* </span>Gender</label>
+                          <label for="newResidentGender">Gender</label>
                           <select class="form-control" id="newResidentGender" required="">
                             <option>Male</option>
                             <option>Female</option>
@@ -251,7 +258,7 @@
                         </div>
                         <div class="form-group">
                           <label for="newResidentIC"><span class="asterisk">* </span>IC No.
-                            <br><span>Example: 012345086789</span>
+                            <br><span class="help">E.g. 950827088754</span>
                           </label>
                           <input type="text" class="form-control" id="newResidentIC" required="">
                         </div>
@@ -265,13 +272,13 @@
                       <div class="modal-body">
                         <div class="form-group">
                           <label for="newResidentWeight"><span class="asterisk">* </span>Weight (kg)
-                            <br><span>Please enter 2 or 3 digits</span>
+                            <br><span class="help">Please enter 2 or 3 digits</span>
                           </label>
                           <input type="text" class="form-control" id="newResidentWeight" pattern="[\d]{2,3}" required="">
                         </div>
                         <div class="form-group">
                           <label for="newResidentHeight"><span class="asterisk">* </span>Height (cm)
-                            <br><span>Please enter 2 or 3 digits</span>
+                            <br><span class="help">Please enter 2 or 3 digits</span>
                           </label>
                           <input type="text" class="form-control" id="newResidentHeight" pattern="[\d]{2,3}" required="">
                         </div>
@@ -341,7 +348,9 @@
                     <div class="tab-pane fade" id="custom-tabs-one-newContact" role="tabpanel" aria-labelledby="custom-tabs-one-newContact-tab">
                       <div class="modal-body">
                         <div class="form-group">
-                          <label for="newResidentPNum"><span class="asterisk">* </span>Resident's Phone Number</label>
+                          <label for="newResidentPNum"><span class="asterisk">* </span>Resident's Phone Number
+                            <br><span class="help">E.g. 0101234567</span>
+                          </label>
                           <input type="text" class="form-control" id="newResidentPNum" required="">
                         </div>
                         <div class="form-group">
@@ -349,7 +358,9 @@
                           <input type="text" class="form-control" id="newResidentGuardian" required="">
                         </div>
                         <div class="form-group">
-                          <label for="newResidentEmergencyPNum"><span class="asterisk">* </span>Emergency Phone Number</label>
+                          <label for="newResidentEmergencyPNum"><span class="asterisk">* </span>Emergency Phone Number
+                            <br><span class="help">E.g. 0101234567</span>
+                          </label>
                           <input type="text" class="form-control" id="newResidentEmergencyPNum" required="">
                         </div>
                         <div class="form-group">
@@ -420,7 +431,7 @@
                 </li>
               </ul>
             </div>
-            <form id='update_resident_form'>
+            <form id='update_resident_form' novalidate="">
               <div class="card-body">
                 <div class="tab-content" id="custom-tabs-one-tabContent">
                   <!-- general tab  -->
@@ -443,7 +454,9 @@
                         <input type="text" class="form-control" id="residentRoom" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentDeviceAddr">Device MAC Address</label>
+                        <label for="residentDeviceAddr">Device MAC Address
+                          <br><span class="help">E.g. xx:xx:xx:xx:xx:xx</span>
+                        </label>
                         <input type="text" class="form-control" id="residentDeviceAddr" disabled="">
                       </div>
                     </div>
@@ -466,7 +479,7 @@
                       </div>
                       <div class="form-group">
                         <label for="residentIC"><span class="asterisk">* </span>IC No.
-                          <br><span>Example: 012345086789</span>
+                          <br><span class="help">E.g. 950827088754</span>
                         </label>
                         <input type="text" class="form-control" id="residentIC" required="" disabled="">
                       </div>
@@ -482,13 +495,13 @@
                     <div class="modal-body">
                       <div class="form-group">
                         <label for="residentWeight"><span class="asterisk">* </span>Weight (kg)
-                          <br><span>Please enter 2 or 3 digits</span>
+                          <br><span class="help">Please enter 2 or 3 digits</span>
                         </label>
                         <input type="text" class="form-control" id="residentWeight" pattern="[\d]{2,3}" required="" disabled="">
                       </div>
                       <div class="form-group">
                         <label for="residentHeight"><span class="asterisk">* </span>Height (cm)
-                          <br><span>Please enter 2 or 3 digits</span>
+                          <br><span class="help">Please enter 2 or 3 digits</span>
                         </label>
                         <input type="text" class="form-control" id="residentHeight" pattern="[\d]{2,3}" required="" disabled="">
                       </div>
@@ -548,7 +561,9 @@
                   <div class="tab-pane fade" id="custom-tabs-one-contact" role="tabpanel" aria-labelledby="custom-tabs-one-contact-tab">
                     <div class="modal-body">
                       <div class="form-group">
-                        <label for="residentPNum"><span class="asterisk">* </span>Resident's Phone Number</label>
+                        <label for="residentPNum"><span class="asterisk">* </span>Resident's Phone Number
+                          <br><span class="help">E.g. 0101234567</span>
+                        </label>
                         <input type="text" class="form-control" id="residentPNum" required="" disabled="">
                       </div>
                       <div class="form-group">
@@ -556,7 +571,9 @@
                         <input type="text" class="form-control" id="residentGuardian" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentEmergencyPNum"><span class="asterisk">* </span>Emergency Phone Number</label>
+                        <label for="residentEmergencyPNum"><span class="asterisk">* </span>Emergency Phone Number
+                          <br><span class="help">E.g. 0101234567</span>
+                        </label>
                         <input type="text" class="form-control" id="residentEmergencyPNum" required="" disabled="">
                       </div>
                       <div class="form-group">
@@ -636,6 +653,12 @@
 <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
+<!-- SweetAlert2 -->
+<script src="plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="plugins/toastr/toastr.min.js"></script>
+
+
 <!-- page script -->
 <script>
 $(function () { //stuff here runs on page load
@@ -673,8 +696,36 @@ $('#new_resident_form').submit(function (e){
   //no validate, we are blindly trusting our users
   //instead we ask them to self validate :)
   e.preventDefault(); //prevent form submit default behaviour
-  var userValidation = confirm("Please make sure all information is correct!");
-  if (userValidation){
+
+
+  var name = $("#newResidentName").val();
+  var caretaker = $("#newResidentCaretaker").val();
+  var room = $("#newResidentRoom").val();
+  var deviceAddr = $("#newResidentDeviceAddr").val();
+  var gender = $('#newResidentGender').val();
+  var dob = $("#newResidentDOB").val();
+  var ic = $('#newResidentIC').val();
+  var nationality = $("#newResidentNationality").val();
+  var weight = $("#newResidentWeight").val();
+  var height = $("#newResidentHeight").val();
+  //var bloodType = $('#newResidentBloodType').val();
+  var pNum = $("#newResidentPNum").val();
+  var guardian = $("#newResidentGuardian").val();
+  var emergencyPNum = $("#newResidentEmergencyPNum").val();
+  var streetAdd = $('#newResidentStreetAddress').val();
+  var streetAdd2 = $("#newResidentStreetAddress2").val();
+  var city = $("#newResidentCity").val();  
+  var state = $("#newResidentState").val();
+  var postal = $('#newResidentPostal').val();
+
+
+  var validation = validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, weight, height, pNum, guardian, emergencyPNum, streetAdd, streetAdd2, city, state, postal);
+
+
+
+
+  //var userValidation = confirm("Please make sure all information is correct!");
+  if (validation){
     //send to server
     $.ajax({
       type: "POST",
@@ -712,6 +763,11 @@ $('#new_resident_form').submit(function (e){
       }),
       success: function (resident){
         //on success, clear form, modal and update list
+        Toast.fire({
+            icon: 'success',
+            title: '  Resident Created!'
+        })
+
         console.log("resident created: "+ resident);
         $("#new_resident_form").trigger("reset");
         $("#newResidentModal").modal('hide');
@@ -730,7 +786,7 @@ $('#new_resident_form').submit(function (e){
   }
 
   //test
-  testSubmittedDataAdminResident();
+  //testSubmittedDataAdminResident();
 });
 
 
@@ -795,8 +851,43 @@ $('#update_resident_form').submit(function (e){
   //no validate, we are blindly trusting our users
   //instead we ask them to self validate :)
   e.preventDefault(); //prevent form submit default behaviour
-  var userValidation = confirm("Please make sure all information is correct!");
-  if (userValidation){
+
+
+  
+
+  var name = $("#residentName").val();
+  var caretaker = $("#residentCaretaker").val();
+  var room = $("#residentRoom").val();
+  var deviceAddr = $("#residentDeviceAddr").val();
+  var gender = $('#residentGender').val();
+  var dob = $("#residentDOB").val();
+  var ic = $('#residentIC').val();
+  var nationality = $("#residentNationality").val();
+  var weight = $("#residentWeight").val();
+  var height = $("#residentHeight").val();
+  //var bloodType = $('#newResidentBloodType').val();
+  var pNum = $("#residentPNum").val();
+  var guardian = $("#residentGuardian").val();
+  var emergencyPNum = $("#residentEmergencyPNum").val();
+  var streetAdd = $('#residentStreetAddress').val();
+  var streetAdd2 = $("#residentStreetAddress2").val();
+  var city = $("#residentCity").val();  
+  var state = $("#residentState").val();
+  var postal = $('#residentPostal').val();
+
+  var errorMsgs = "";
+
+
+  var validation = validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, weight, height, pNum, guardian, emergencyPNum, streetAdd, streetAdd2, city, state, postal);
+
+
+
+
+
+
+
+  //var userValidation = confirm("Please make sure all information is correct!");
+  if (validation){
     //send to server
     $.ajax({
       type: "PUT",
@@ -835,6 +926,11 @@ $('#update_resident_form').submit(function (e){
       success: function (resident){
         //on success, clear form, modal and update list
         console.log("resident updated: "+ resident);
+        Toast.fire({
+            icon: 'success',
+            title: '  Resident Updated!'
+        })
+
         $("#residentModal").modal('hide');
         getAllResidents();
       },
@@ -976,7 +1072,7 @@ function enableUpdateResident(){
   $("#residentState").prop("disabled", false);
   $("#residentPostal").prop("disabled", false);
 
-  $(".closeDiv").prop("disabled", false);
+  $(".closeDiv").prop('disabled', function(i, v) { return !v; });
 
 }
 
@@ -1010,6 +1106,7 @@ function cancelUpdateResident(){
   $("#residentCity").prop("disabled", true);
   $("#residentState").prop("disabled", true);
   $("#residentPostal").prop("disabled", true);
+
   $(".closeDiv").prop("disabled", true);
 
   //reset the data
@@ -1071,6 +1168,11 @@ function deleteResident(){
       type: 'DELETE',
       success: function(result) {
         //on success, clear form, modal and update list
+        Toast.fire({
+          icon: 'info',
+          title: 'Resident Deleted!'
+        })
+
         console.log("resident deleted. ");
         getAllResidents();
       },
@@ -1094,6 +1196,15 @@ function getRandomColor() {
   color += colors[Math.floor(Math.random() * colors.length)];
   return color;
 }
+
+
+// Toast
+var Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 8000,
+});
 
 </script>
 
