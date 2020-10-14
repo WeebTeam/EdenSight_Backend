@@ -560,22 +560,7 @@
       ]
     });
 
-    //init resident (blank for now)
-    resident = "";
-
-    var realTimeUpdate;
-    vitalSignsArray = [];
-
-    //fetch any data that we need on page load
-    getAllResidents();
-
-    //test
-    //testDetailsForms();
-  });
-
-  $(function () { //stuff here runs on page load
-
-    //init residents table
+    //init residents vital signs history table
     resident_history_table = $('#resident_history_table').DataTable({
       "paging": true,
       "ordering": true,
@@ -591,7 +576,14 @@
     });
 
     //init resident (blank for now)
-    resident = ""
+    resident = "";
+
+    var realTimeUpdate;
+    vitalSignsArray = [];
+
+    //fetch any data that we need on page load
+    getAllResidents();
+
   });
 
   /********** event listeners **********/
@@ -665,6 +657,9 @@
     //we update every 5 secs
     realTimeUpdate = setInterval(function() { getVitalSigns(resident.deviceAddr, 1); } , 5000);
 
+    //clear the vital signs data
+    vitalSignsArray = [];
+
     //populate the details
     $("#residentID").text(resident._id);
     $("#residentName").text(resident.name);
@@ -719,9 +714,6 @@
   allowAddingHealth("new-medication", "medication");
 
   //END
-
-
-
 
   /********** functions **********/
 
