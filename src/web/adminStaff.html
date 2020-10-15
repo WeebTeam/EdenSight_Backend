@@ -240,8 +240,9 @@
               <input type="text" class="form-control" id="staffName" required="" disabled="">
             </div>
             <div class="form-group">
-              <label for="staffUsername"><span class="asterisk">* </span>Staff Username</label>
-              <input type="text" class="form-control" id="staffUsername" required="" disabled="">
+              <label for="staffEditUsername"><span class="asterisk">* </span>Staff Username</label>
+              <input type="text" class="form-control" id="staffUsername" required="" disabled="" hidden="">
+              <input type="text" class="form-control" id="staffEditUsername" required="" disabled="">
             </div>
             <div class="form-group">
               <label for="staffPassword"><span class="asterisk">* </span>Password</label>
@@ -403,6 +404,7 @@
     //populate the form
     $("#staffName").val(staff.name);
     $("#staffUsername").val(staff.uname);
+    $("#staffEditUsername").val(staff.uname);
     $("#staffPhoneNum").val(staff.pNum);
     $("#isStaffAdmin").prop('checked', staff.role == "admin");
 
@@ -424,10 +426,11 @@
     //instead we ask them to self validate :)
     var name = $("#staffName").val();
     var username =  $("#staffUsername").val();
+    var editUsername =  $("#staffEditUsername").val();
     var password = $("#staffPassword").val();
     var pNum = $("#staffPhoneNum").val();
 
-    var validation = staffEditedValidationOK(name, username, password, pNum);
+    var validation = staffEditedValidationOK(name, editUsername, password, pNum);
 
 
 
@@ -445,7 +448,7 @@
         },
         data: JSON.stringify({
           name: $("#staffName").val(),
-          uname:  $("#staffUsername").val(),
+          uname:  $("#staffEditUsername").val(),
           passwd: $("#staffPassword").val(),
           pNum: $("#staffPhoneNum").val(),
           role: $("#isStaffAdmin").prop('checked') ? 'admin' : 'staff'
@@ -510,7 +513,7 @@
 
     //allow editing
     $("#staffName").prop("disabled", false);
-    $("#staffUsername").prop("disabled", false);
+    $("#staffEditUsername").prop("disabled", false);
     $("#staffPassword").prop("disabled", false);
     $("#staffPhoneNum").prop("disabled", false);
     $("#isStaffAdmin").prop("disabled", false);
@@ -525,14 +528,14 @@
 
     //disallow editing
     $("#staffName").prop("disabled", true);
-    $("#staffUsername").prop("disabled", true);
+    $("#staffEditUsername").prop("disabled", true);
     $("#staffPassword").prop("disabled", true);
     $("#staffPhoneNum").prop("disabled", true);
     $("#isStaffAdmin").prop("disabled", true);
 
     //reset the data
     $("#staffName").val(staff.name);
-    $("#staffUsername").val(staff.uname);
+    $("#staffEditUsername").val(staff.uname);
     $("#staffPassword").val("");
     $("#staffPhoneNum").val(staff.pNum);
     $("#isStaffAdmin").val(staff.isStaffAdmin);
