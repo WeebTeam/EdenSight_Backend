@@ -435,9 +435,14 @@ function checkEditedPassword(password){
 	var pattern = /^.+$/;     
 	var passwordOk = true;
 	
-	if (!pattern.test(password)){
-		gErrorMsg = gErrorMsg + "Please enter a valid password.\n"
-		passwordOk = false; 
+	if ((password.length == 0)){        
+		passwordOk = true; 
+	}
+	else{
+		if (!pattern.test(password)){
+			gErrorMsg = gErrorMsg + "Please enter a valid password.\n"
+			passwordOk = false; 
+		}
 	}
 	
 	return passwordOk;
