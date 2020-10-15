@@ -1157,8 +1157,12 @@ function deleteResident(){
 
   if(confirmDeletion == true){
     $.ajax({
-      url: "api/residents/delete/" + $("#residentID").text(),
+      url: "api/residents/delete/" + $("#residentID").val(),
       type: 'DELETE',
+      beforeSend: function (xhr) {
+        //include credentials
+        xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
+      },
       success: function(result) {
         //on success, clear form, modal and update list
         Toast.fire({
