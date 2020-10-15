@@ -253,13 +253,17 @@
                               </h3>
 
                               <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <button type="button" type="button" class="btn btn-tool" data-card-widget="collapse">
                                   <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" onclick="clearHistory()">
+                                  Clear
                                 </button>
                               </div>
                             </div>
                             <div class="card-body" id="graph-card-body">
                               <div id="line-chart" style="height: 300px;"></div>
+                              <p id="no-line-chart" style="display:none;">The content is currently unavailable.</p>
                             </div>
                             <!-- /.card-body-->
                           </div>
@@ -454,12 +458,6 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <!-- Test
-                                  <tr>
-                                    <td>101</td>
-                                    <td>101</td>
-                                    <td>101</td>
-                                  </tr>-->
                                 </tbody>
                                 <tfoot>
                                   <tr>
@@ -578,7 +576,7 @@
     //init resident (blank for now)
     resident = "";
 
-    var realTimeUpdate;
+    realTimeUpdate = null;
     vitalSignsArray = [];
 
     //fetch any data that we need on page load
@@ -651,14 +649,10 @@
   $('#residents_table tbody').on("click", "tr", function() {
     resident = residents_table.row( this ).data();
 
+    vitalSignsArray = [];
+
     //get last 5 min worth of reads (assuming 1read/5s)
     getVitalSigns(resident.deviceAddr, 60);
-
-    //we update every 5 secs
-    realTimeUpdate = setInterval(function() { getVitalSigns(resident.deviceAddr, 1); } , 5000);
-
-    //clear the vital signs data
-    vitalSignsArray = [];
 
     //populate the details
     $("#residentID").text(resident._id);
@@ -718,6 +712,7 @@
   /********** functions **********/
 
   function handleUnauthorized(){
+
   }
 
   function getAllResidents() {
@@ -746,6 +741,12 @@
     });
   }
 
+  function clearHistory(){
+    vitalSignsArray = [];
+
+    getVitalSigns(resident.deviceAddr, 1);
+  }
+
   function getVitalSigns(deviceAddr, count) {
     $.ajax({
       type: "GET",
@@ -756,6 +757,7 @@
         xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
       },
       success: function (vitalSigns){
+
         //change the dateTime data into a Date object
         vitalSigns = vitalSigns.map(item => {
           item.dateTime = new Date(item.dateTime);
@@ -770,7 +772,8 @@
         //we only update when the actual time is the className
         //pop old data so we keep the same time range (5 mins/60 counts of data)
         else if (vitalSigns[0].dateTime.getTime() != vitalSignsArray[0].dateTime.getTime()) {
-          vitalSignsArray.pop();
+          //if array has less than 60 samples, dont clear last value
+          if (vitalSignsArray.length >= 60) vitalSignsArray.pop();
           vitalSignsArray.unshift(vitalSigns[0]);
         }
         //update the graph
@@ -784,17 +787,21 @@
         $("#residentCurrentBPM").text(vitalSigns[0].heartRate);
         $("#residentCurrentSp02").text(vitalSigns[0].spO2);
 
-        $("#line-chart").css("display", "block");
+        $("#line-chart").show();
+        $("#no-line-chart").hide();
+
+        //start the interval if not started yet
+        if (!realTimeUpdate){
+          //we update every 5 secs
+          realTimeUpdate = setInterval(function() { getVitalSigns(resident.deviceAddr, 1); } , 5000);
+        }
       },
       error: function (xhr){
         resident_history_table.clear();
         resident_history_table.draw();
 
-        $("#line-chart").css("display", "none");
-        $("#graph-card-body").clear();
-        $("#graph-card-body").append("<p>The content is currently unavailable.</p>");
-        $("#residentCurrentBPM").text("-");
-        $("#residentCurrentSp02").text("-");
+        $("#line-chart").hide();
+        $("#no-line-chart").show();
 
         var code = xhr.status;
 
