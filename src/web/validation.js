@@ -76,6 +76,31 @@ function staffValidationOK(name, username, password, pNum){
 	return allOk;
 }
 
+function staffEditedValidationOK(name, username, password, pNum){
+	gErrorMsg = "";
+
+	var nameOk = checkName(name);
+	var usernameOk = checkUsername(username);
+	var passwordOk = checkEditedPassword(password);
+	var pNumOk = checkPNum(pNum)
+
+	var allOk = false;
+
+	if(nameOk && usernameOk && passwordOk && pNumOk){
+		allOk = true;
+	}
+	else{
+		Toast.fire({
+      		icon: 'error',
+      		html: '<pre>' + gErrorMsg + '</pre>',
+      		width: '45 rem'
+  		})
+		allOk = false;
+	}
+
+	return allOk;
+}
+
 
 function residentValidationOK(weight, height){
 	gErrorMsg = "";
@@ -406,4 +431,15 @@ function checkPassword(password) {
 	return passwordOk;
 }
 
+function checkEditedPassword(password){
+	var pattern = /^.+$/;     
+	var passwordOk = true;
+	
+	if (!pattern.test(password)){
+		gErrorMsg = gErrorMsg + "Please enter a valid password.\n"
+		passwordOk = false; 
+	}
+	
+	return passwordOk;
+}
 

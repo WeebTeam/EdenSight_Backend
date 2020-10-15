@@ -427,7 +427,7 @@
     var password = $("#staffPassword").val();
     var pNum = $("#staffPhoneNum").val();
 
-    var validation = staffValidationOK(name, username, password, pNum);
+    var validation = staffEditedValidationOK(name, username, password, pNum);
 
 
 
@@ -446,7 +446,6 @@
         data: JSON.stringify({
           name: $("#staffName").val(),
           uname:  $("#staffUsername").val(),
-          passwd: $("#staffPassword").val(),
           pNum: $("#staffPhoneNum").val(),
           role: $("#isStaffAdmin").prop('checked') ? 'admin' : 'staff'
         }),
@@ -551,6 +550,7 @@
             title: 'Staff Deleted!'
           })
 
+          $("#staffModal").modal('toggle');
           console.log("staff deleted. ");
           getAllStaff();
         },

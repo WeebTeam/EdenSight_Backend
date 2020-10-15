@@ -1166,6 +1166,7 @@ function deleteResident(){
           title: 'Resident Deleted!'
         })
 
+        $("#residentModal").modal('hide');
         console.log("resident deleted. ");
         getAllResidents();
       },
