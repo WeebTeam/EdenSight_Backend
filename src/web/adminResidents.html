@@ -1212,7 +1212,7 @@ function getAllStaff() {
         var selection = $("#newResidentCaretaker");
         var editSelection = $("#residentCaretaker");
 
-        $.each(staff, function(key){
+        $.each(staff, function(key, text){
           selection.append($("<option />").val(staff[key].name).text(staff[key].name));
           editSelection.append($("<option />").val(staff[key].name).text(staff[key].name));
         })
