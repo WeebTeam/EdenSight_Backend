@@ -127,6 +127,7 @@
                   <table id="staff_table" class="table table-bordered table-hover">
                     <thead>
                       <tr>
+                        <th>Staff ID</th>
                         <th>Staff Name</th>
                         <th>Staff Username</th>
                         <th>Phone Number</th>
@@ -137,6 +138,7 @@
                     </tbody>
                     <tfoot>
                       <tr>
+                        <th>Staff ID</th>
                         <th>Staff Name</th>
                         <th>Staff Username</th>
                         <th>Phone Number</th>
@@ -235,14 +237,14 @@
         </div>
         <form id='update_staff_form' novalidate="">
           <div class="modal-body">
+            <input type="number" id="staffID" required="" disabled="" hidden="">
             <div class="form-group">
               <label for="staffName"><span class="asterisk">* </span>Staff Name</label>
               <input type="text" class="form-control" id="staffName" required="" disabled="">
             </div>
             <div class="form-group">
               <label for="staffEditUsername"><span class="asterisk">* </span>Staff Username</label>
-              <input type="text" class="form-control" id="staffUsername" required="" disabled="" hidden="">
-              <input type="text" class="form-control" id="staffEditUsername" required="" disabled="">
+              <input type="text" class="form-control" id="staffUsername" required="" disabled="">
             </div>
             <div class="form-group">
               <label for="staffPassword"><span class="asterisk">* </span>Password</label>
@@ -328,6 +330,7 @@
       "autoWidth": false,
       "responsive": true,
       "columns": [
+        { "data": "_id" },
         { "data": "name" },
         { "data": "uname" },
         { "data": "pNum" },
@@ -402,9 +405,9 @@
     staff = staff_table.row( this ).data();
 
     //populate the form
+    $("#staffID").val(staff._id);
     $("#staffName").val(staff.name);
     $("#staffUsername").val(staff.uname);
-    $("#staffEditUsername").val(staff.uname);
     $("#staffPhoneNum").val(staff.pNum);
     $("#isStaffAdmin").prop('checked', staff.role == "admin");
 
@@ -417,29 +420,22 @@
     cancelUpdateStaff();
   })
 
-
-
   //update staff
   $('#update_staff_form').submit(function (e) {
     e.preventDefault();
-    //no validate, we are blindly trusting our staff
-    //instead we ask them to self validate :)
+
     var name = $("#staffName").val();
     var username =  $("#staffUsername").val();
-    var editUsername =  $("#staffEditUsername").val();
     var password = $("#staffPassword").val();
     var pNum = $("#staffPhoneNum").val();
 
-    var validation = staffEditedValidationOK(name, editUsername, password, pNum);
+    var validation = staffEditedValidationOK(name, username, password, pNum);
 
-
-
-    //var staffValidation = confirm("Please make sure all information is correct!");
     if (validation){
       //send to server
       $.ajax({
         type: "PUT",
-        url: "api/users/update/" + $("#staffUsername").val(),
+        url: "api/users/update/" + $("#staffID").val(),
         contentType : 'application/json',
         dataType: 'json',
         beforeSend: function (xhr) {
@@ -448,7 +444,7 @@
         },
         data: JSON.stringify({
           name: $("#staffName").val(),
-          uname:  $("#staffEditUsername").val(),
+          uname:  $("#staffUsername").val(),
           passwd: $("#staffPassword").val(),
           pNum: $("#staffPhoneNum").val(),
           role: $("#isStaffAdmin").prop('checked') ? 'admin' : 'staff'
@@ -460,7 +456,7 @@
             title: 'Staff Updated!'
           })
 
-          console.log("staff updated: "+ staff);
+          console.log("staff updated!");
           $("#staffModal").modal('toggle');
           getAllStaff();
         }
@@ -513,7 +509,7 @@
 
     //allow editing
     $("#staffName").prop("disabled", false);
-    $("#staffEditUsername").prop("disabled", false);
+    $("#staffUsername").prop("disabled", false);
     $("#staffPassword").prop("disabled", false);
     $("#staffPhoneNum").prop("disabled", false);
     $("#isStaffAdmin").prop("disabled", false);
@@ -528,14 +524,14 @@
 
     //disallow editing
     $("#staffName").prop("disabled", true);
-    $("#staffEditUsername").prop("disabled", true);
+    $("#staffUsername").prop("disabled", true);
     $("#staffPassword").prop("disabled", true);
     $("#staffPhoneNum").prop("disabled", true);
     $("#isStaffAdmin").prop("disabled", true);
 
     //reset the data
     $("#staffName").val(staff.name);
-    $("#staffEditUsername").val(staff.uname);
+    $("#staffUsername").val(staff.uname);
     $("#staffPassword").val("");
     $("#staffPhoneNum").val(staff.pNum);
     $("#isStaffAdmin").val(staff.isStaffAdmin);
@@ -545,7 +541,7 @@
     var confirmDeletion = confirm('Are you sure? This will remove this staff!');
     if(confirmDeletion == true){
       $.ajax({
-        url: "api/users/delete/" + $("#staffUsername").val(),
+        url: "api/users/delete/" + $("#staffID").val(),
         type: 'DELETE',
         beforeSend: function (xhr) {
           //include credentials

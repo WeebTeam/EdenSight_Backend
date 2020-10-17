@@ -1,7 +1,9 @@
-import { prop, getModelForClass } from '@typegoose/typegoose';
+import { plugin, prop, getModelForClass } from '@typegoose/typegoose';
+import { AutoIncrementID } from '@typegoose/auto-increment';
 import * as mongoose from 'mongoose';
 
 export interface IUser {
+  _id: number;
   uname: string;
   name: string;
   pwdHash: string;
@@ -9,7 +11,11 @@ export interface IUser {
   pNum: string;
 }
 
+@plugin(AutoIncrementID, {} )
 class User implements IUser {
+  @prop()
+  public _id: number;
+
   @prop({ required: true, unique:true })
   public uname: string;
 
@@ -25,7 +31,8 @@ class User implements IUser {
   @prop()
   public pNum: string;
 
-  constructor(uname: string, name?: string, pwdHash?: string, role?: string, pNum?:string) {
+  constructor(id: number, uname: string, name?: string, pwdHash?: string, role?: string, pNum?:string) {
+    this._id = id;
     this.uname = uname;
     this.name = name || '';
     this.pwdHash = pwdHash || '';

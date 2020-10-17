@@ -22,9 +22,9 @@ router.get('/all', async (req: Request, res: Response) => {
 
 // get one
 // users/:uname
-router.get('/:uname', async (req: Request, res: Response) => {
-  const { uname } = req.params as ParamsDictionary;
-  const user = await userDao.getOne(uname);
+router.get('/:id', async (req: Request, res: Response) => {
+  const { id } = req.params as ParamsDictionary;
+  const user = await userDao.getOneById(Number(id));
 
   return res.status(OK).json(user);
 });
@@ -44,22 +44,22 @@ router.post('/add', async (req: Request, res: Response) => {
 
 //update user
 // users/update/:uname
-router.put('/update/:uname', async (req: Request, res: Response) => {
-  const { uname } = req.params as ParamsDictionary;
+router.put('/update/:id', async (req: Request, res: Response) => {
+  const { id } = req.params as ParamsDictionary;
   const user = req.body;
-  if (!user || !uname) {
+  if (!user || !id) {
     return res.status(BAD_REQUEST).json({
       error: paramMissingError,
     });
   }
-  const updatedUser = await userDao.update(uname, user);
+  const updatedUser = await userDao.update(Number(id), user);
   return res.status(OK).json(updatedUser);
 });
 
 // users/delete/:uname
-router.delete('/delete/:uname', async (req: Request, res: Response) => {
-  const { uname } = req.params as ParamsDictionary;
-  await userDao.delete(uname);
+router.delete('/delete/:id', async (req: Request, res: Response) => {
+  const { id } = req.params as ParamsDictionary;
+  await userDao.delete(Number(id));
   return res.status(OK).end();
 });
 

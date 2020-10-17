@@ -43,7 +43,7 @@ router.use(async (req: Request, res: Response, next: NextFunction) => {
     const [ username, password ] = credentials;
 
     // Fetch user
-    const user = await userDao.getOne(username);
+    const user = await userDao.getOneByUname(username);
     if (!user) {
       return res.status(UNAUTHORIZED).json({
         error: loginFailedError + "user not found",

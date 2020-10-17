@@ -4,7 +4,15 @@ import { pwdSaltRounds } from '@shared/constants';
 
 class UserDao {
 
-  public async getOne(uname: string): Promise<User | null> {
+  public async getOneById(id: number): Promise<User | null> {
+    try {
+        return await UserModel.findOne({ _id: id });
+      } catch (err) {
+        throw err;
+    }
+  }
+
+  public async getOneByUname(uname: string): Promise<User | null> {
     try {
         return await UserModel.findOne({ uname: uname });
       } catch (err) {
@@ -29,26 +37,26 @@ class UserDao {
       }
   }
 
-  public async update(uname: string, updateParams: any): Promise<User | null> {
+  public async update(id: number, updateParams: any): Promise<User | null> {
     try {
       if (updateParams.passwd != ""){
         updateParams.pwdHash = bcrypt.hashSync(updateParams.passwd, pwdSaltRounds);
       }
 
       await UserModel.updateOne(
-          { uname: uname },
+          { _id: id },
           updateParams
         );
 
-      return await UserModel.findOne({ uname: uname });
+      return await UserModel.findOne({ id: id });
     } catch (err) {
         throw err;
     }
   }
 
-  public async delete(uname: string): Promise<void> {
+  public async delete(id: number): Promise<void> {
     try {
-        await UserModel.deleteOne({ uname: uname });
+        await UserModel.deleteOne({ _id: id });
     } catch (err) {
         throw err;
     }
