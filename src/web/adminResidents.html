@@ -219,7 +219,8 @@
                         </div>
                         <div class="form-group">
                           <label for="newResidentCaretaker"><span class="asterisk">* </span>Caretaker</label>
-                          <input type="text" class="form-control" id="newResidentCaretaker" required="">
+                          <select class="custom-select" id="newResidentCaretaker">
+                          </select>
                         </div>
                         <div class="form-group">
                           <label for="newResidentRoom"><span class="asterisk">* </span>Room Number</label>
@@ -437,9 +438,10 @@
                         <input type="text" class="form-control" id="residentName" required="" disabled="">
                       </div>
                       <div class="form-group">
-                        <label for="residentCaretaker"><span class="asterisk">* </span>Caretaker</label>
-                        <input type="text" class="form-control" id="residentCaretaker" required="" disabled="">
-                      </div>
+                          <label for="residentCaretaker"><span class="asterisk">* </span>Caretaker</label>
+                          <select class="custom-select" id="residentCaretaker">
+                          </select>
+                        </div>
                       <div class="form-group">
                         <label for="residentRoom"><span class="asterisk">* </span>Room Number</label>
                         <input type="text" class="form-control" id="residentRoom" required="" disabled="">
@@ -677,6 +679,7 @@ $(function () { //stuff here runs on page load
 
   //fetch any data that we need on page load
   getAllResidents();
+  getAllStaff();
 
   //test
   //testDetailsForms();
@@ -1194,6 +1197,37 @@ function getRandomColor() {
   color += colors[Math.floor(Math.random() * colors.length)];
   return color;
 }
+
+function getAllStaff() {
+    $.ajax({
+      type: "GET",
+      url: "api/users/all/",
+      dataType: 'json',
+      beforeSend: function (xhr) {
+        //include credentials
+        xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
+      },
+      success: function (staff){
+        //on success, update table
+        var selection = $("#newResidentCaretaker");
+        var editSelection = $("#residentCaretaker");
+
+        $.each(staff, function(){
+          $selection.append($("<option />").val(staff.name).text(staff.name));
+          $editSelection.append($("<option />").val(staff.name).text(staff.name));
+        })
+      },
+      error: function (xhr){
+        var code = xhr.status;
+
+        //handle 401
+        if (code == 401){
+          handleUnauthorized();
+        }
+      }
+    });
+  }
+
 
 
 // Toast
