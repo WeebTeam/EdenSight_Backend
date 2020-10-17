@@ -1212,9 +1212,9 @@ function getAllStaff() {
         var selection = $("#newResidentCaretaker");
         var editSelection = $("#residentCaretaker");
 
-        $.each(staff, function(staff){
-          selection.append($("<option />").val(staff.name).text(staff.name));
-          editSelection.append($("<option />").val(staff.name).text(staff.name));
+        $.each(staff, function(key){
+          selection.append($("<option />").val(staff[key].name).text(staff[key].name));
+          editSelection.append($("<option />").val(staff[key].name).text(staff[key].name));
         })
       },
       error: function (xhr){
