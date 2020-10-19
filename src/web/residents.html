@@ -438,13 +438,15 @@
                     <div class="row">
                       <div class="col-12">
                         <div class="card">
-                          <div class="card-header" data-toggle="collapse">
+                          <div class="card-header">
                             <h3 class="card-title">
-                              <i class="fas fa-history"></i>
-                              Logbook
+                              <button data-toggle="collapse" data-target="#log-body" aria-expanded="false" aria-controls="log-body">
+                                <i class="fas fa-history"></i>
+                                Logbook
+                              </button>
                             </h3>
                           </div>
-                          <div class="card-body collapse">
+                          <div class="card-body collapse" id="log-body">
                             <h2>Add Event</h2>
                             <form>
                               <div class="modal-body">
