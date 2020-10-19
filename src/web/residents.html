@@ -440,9 +440,9 @@
                         <div class="card">
                           <div class="card-header">
                             <h3 class="card-title">
-                              <button data-toggle="collapse" data-target="#log-body" aria-expanded="false" aria-controls="log-body">
+                              <button data-toggle="collapse" data-target="#log-body" aria-expanded="false" aria-controls="log-body" class="btn btn-link btn-block text-left collapsed">
                                 <i class="fas fa-history"></i>
-                                Logbook
+                                Add Event
                               </button>
                             </h3>
                           </div>
@@ -462,7 +462,7 @@
                                   <label for="logEventType"><span class="asterisk">* </span>Event Type</label>
                                   <select id="logEventType" class="form-control" required="">
                                     <option></option>
-                                  </select>
+                                  </select><br>
                                   <input type="text" class="form-control" id="newLogEventType">
                                 </div>
                                 <div class="form-group">
@@ -656,6 +656,24 @@
         { "data": "dateTime" },
         { "data": "heartRate" },
         { "data": "spO2" }
+      ]
+    });
+
+    //init residents logbook table
+    resident_logbook_table = $('#resident_logbook_table').DataTable({
+      "paging": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "order": [[ 0, "desc" ]],
+      "columns": [
+        { "data": "date" },
+        { "data": "time" },
+        { "data": "eventType" },
+        { "data": "event" },
+        { "data": "description" },
+        { "data": "vitalSigns" }
       ]
     });
 
