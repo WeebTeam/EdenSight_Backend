@@ -40,6 +40,11 @@
   color: grey;
 }
 
+#add-event-btn{
+  padding-left: 0px;
+}
+
+
 /* for md */
 
 .custom-switch.custom-switch-md .custom-control-label{

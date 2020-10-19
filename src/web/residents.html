@@ -440,8 +440,8 @@
                         <div class="card">
                           <div class="card-header">
                             <h3 class="card-title">
-                              <button data-toggle="collapse" data-target="#log-body" aria-expanded="false" aria-controls="log-body" class="btn btn-link btn-block text-left collapsed">
-                                <i class="fas fa-history"></i>
+                              <button data-toggle="collapse" data-target="#log-body" aria-expanded="false" aria-controls="log-body" class="btn btn-link btn-block text-left collapsed" id="add-event-btn">
+                                <i class="fas fa-plus"></i>
                                 Add Event
                               </button>
                             </h3>
@@ -475,11 +475,10 @@
                                 </div>
                                 <div class="form-group">
                                   <label for="logVitalSigns"><span class="asterisk">* </span>Vital Signs</label>
-                                  <input type="text" class="form-control" id="logVitalSigns" required="">
+                                  <input type="text" class="form-control" id="logVitalSigns" required="" disabled="">
                                 </div>
                               </div>
                               <div class="modal-footer" id="newLog">
-                                <button type="button" class="btn btn-secondary" onclick="">Cancel</button>
                                 <button type="submit" class="btn btn-info">Add</button>
                               </div>
                             </form>
@@ -489,7 +488,7 @@
                         <!-- /.card -->
                       </div>
                       <!-- /.col -->
-                      <div class="col-12">
+                      <div class="col-12" style="margin-top:30px;">
                         <table id="resident_logbook_table" class="table table-bordered table-hover">
                             <thead>
                               <tr>
@@ -676,6 +675,24 @@
         { "data": "vitalSigns" }
       ]
     });
+
+    //set default date and time
+    Date.prototype.toDateInputValue = (function() {
+      var local = new Date(this);
+      local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+      return local.toJSON().slice(0,10);
+    });
+
+    const options = {
+       timeZone:"Asia/Kolkata",
+       hour12 : false,
+       hour:  "2-digit",
+       minute: "2-digit",
+      second: "2-digit"
+    }
+
+    $('#logDate').val(new Date().toDateInputValue());
+    $('#logTime').val(new Date().toLocaleTimeString("en-US", options));
 
     //init resident (blank for now)
     resident = "";
