@@ -5,7 +5,7 @@ import * as mongoose from 'mongoose';
 export interface IResident {
   _id: number;
   status: string;
-  caretaker: string;
+  caretaker: number;
   name: string;
   room: string;
   enrollDate: Date;
@@ -22,8 +22,8 @@ class Resident implements IResident {
   @prop({ default: 'Unknown' })
   public status: string;
 
-  @prop({ default: '-' })
-  public caretaker: string;
+  @prop({ default: -1 })
+  public caretaker: number;
 
   @prop({ default: '-' })
   public room: string;
@@ -88,13 +88,13 @@ class Resident implements IResident {
   @prop({ default: '' })
   public deviceAddr: string;
 
-  constructor(id: number, name: string, status?: string, caretaker?: string, room?: string, enrollDate?: Date, gender?: string, dob?:string, ic?:string, nationality?:string,
+  constructor(id: number, name: string, status?: string, caretaker?: number, room?: string, enrollDate?: Date, gender?: string, dob?:string, ic?:string, nationality?:string,
   weight?:number, height?:number, bloodType?:string, pNum?:string, emergencyPNum?:string, guardian?:string, streetAdd?:string, streetAdd2?:string, city?:string, state?:string,
   postal?:string, healthConditions?:string[], allergies?:string[], medication?:string[], deviceAddr?:string) {
     this._id = id;
     this.name = name;
     this.status = status || '';
-    this.caretaker = caretaker || '';
+    this.caretaker = caretaker || -1;
     this.room = room || '';
     this.enrollDate = enrollDate || new Date();
     this.gender = gender || '';

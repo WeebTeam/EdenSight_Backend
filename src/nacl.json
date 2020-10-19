@@ -18,6 +18,11 @@
         "action": "allow"
       },
       {
+        "resource": "users/*",
+        "methods": ["GET"],
+        "action": "allow"
+      },
+      {
         "resource": "vitalsigns/*",
         "methods": ["GET"],
         "action": "allow"

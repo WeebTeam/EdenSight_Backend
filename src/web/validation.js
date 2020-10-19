@@ -1,11 +1,10 @@
 var gErrorMsg = "";
 
-function validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, weight, height, pNum, 
+function validationOK(name, room, deviceAddr, dob, ic, nationality, weight, height, pNum,
 	guardian, emergencyPNum, streetAdd, streetAdd2, city, state, postal){
 	gErrorMsg = "";
 
 	var nameOk = checkName(name);
-	var caretakerOk = checkCaretaker(caretaker);
 	var roomOk = checkRoom(room);
 
 	if(deviceAddr){
@@ -28,7 +27,7 @@ function validationOK(name, caretaker, room, deviceAddr, dob, ic, nationality, w
 
 	var allOk = false;
 
-	if(nameOk && caretakerOk && roomOk && dobOk && icOk && nationalityOk && weightOk && heightOk && pNumOk
+	if(nameOk && roomOk && dobOk && icOk && nationalityOk && weightOk && heightOk && pNumOk
 		&& guardianOk && emergencyPNumOk && streetAddOk && streetAdd2Ok && cityOk && stateOk && postalOk){
 
 		allOk = true;
@@ -128,323 +127,304 @@ function residentValidationOK(weight, height){
 
 /* Check Name */
 function checkName(name) {
-	var pattern = /^[a-zA-Z ]+$/;     
+	var pattern = /^[a-zA-Z ]+$/;
 	var nameOk = true;
-	
-	if ((name.length == 0)){        
+
+	if ((name.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your name.\n"
-		 nameOk = false; 
+		 nameOk = false;
 	}
 	else{
 		if (!pattern.test(name)){
 			gErrorMsg = gErrorMsg + "Please enter a valid name.\n"
-			nameOk = false; 
+			nameOk = false;
 		}
 	}
-	
+
 	return nameOk;
 }
 
-function checkCaretaker(caretaker){
-	var pattern = /^[a-zA-Z ]+$/;     
-	var caretakerOk = true;
-	
-	if ((caretaker.length == 0)){        
-		gErrorMsg = gErrorMsg + "Please enter your caretaker name.\n"
-		 caretakerOk = false; 
-	}
-	else{
-		if (!pattern.test(caretaker)){
-			gErrorMsg = gErrorMsg + "Please enter a valid caretaker name.\n"
-			caretakerOk = false; 
-		}
-	}
-	
-	return caretakerOk;
-}
-
 function checkRoom(room){
-	var pattern = /^[\w\d]+$/;     
+	var pattern = /^[\w\d]+$/;
 	var roomOk = true;
-	
+
 	if ((room.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your room.\n"
-		 roomOk = false; 
+		 roomOk = false;
 	}
 	else{
 		if (!pattern.test(room)){
 			gErrorMsg = gErrorMsg + "Please enter a valid room number.\n"
-			roomOk = false; 
+			roomOk = false;
 		}
 	}
-	
+
 	return roomOk;
 }
 
 function checkDeviceAddr(deviceAddr){
-	var pattern = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;   
+	var pattern = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
 	var deviceAddrOk = true;
-	
+
 	if (!pattern.test(deviceAddr)){
 		gErrorMsg = gErrorMsg + "Please enter a valid Device MAC Address.\n"
-		deviceAddrOk = false; 
+		deviceAddrOk = false;
 	}
-	
+
 	return deviceAddrOk;
 }
 
-function checkDoB(dob){    
+function checkDoB(dob){
 	var dobOk = true;
-	
+
 	if (dob.length == 0){
 		gErrorMsg = gErrorMsg + "Please insert a date.\n"
-		dobOk = false; 
+		dobOk = false;
 	}
-	
+
 	return dobOk;
 }
 
 function checkIC(ic){
-	var pattern = /^[0-9]{12}$/;     
+	var pattern = /^[0-9]{12}$/;
 	var icOk = true;
-	
-	if ((ic.length == 0)){        
+
+	if ((ic.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your IC number.\n"
-		 icOk = false; 
+		 icOk = false;
 	}
 	else{
 		if (!pattern.test(ic)){
 			gErrorMsg = gErrorMsg + "Please enter a valid IC number.\n"
-			icOk = false; 
+			icOk = false;
 		}
 	}
-	
+
 	return icOk;
 }
 
 function checkNationality(nationality) {
-	var pattern = /^[a-zA-Z ]+$/;     
+	var pattern = /^[a-zA-Z ]+$/;
 	var nationalityOk = true;
-	
-	if ((nationality.length == 0)){        
+
+	if ((nationality.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your nationality.\n"
-		 nationalityOk = false; 
+		 nationalityOk = false;
 	}
 	else{
 		if (!pattern.test(nationality)){
 			gErrorMsg = gErrorMsg + "Please enter a valid nationality.\n"
-			nationalityOk = false; 
+			nationalityOk = false;
 		}
 	}
-	
+
 	return nationalityOk;
 }
 
 function checkWeight(weight){
-	var pattern = /^[\d]{2,3}$/;     
+	var pattern = /^[\d]{2,3}$/;
 	var weightOk = true;
-	
-	if ((weight.length == 0)){        
+
+	if ((weight.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your weight.\n"
-		 weightOk = false; 
+		 weightOk = false;
 	}
 	else{
 		if (!pattern.test(weight)){
 			gErrorMsg = gErrorMsg + "Please enter a valid weight.\n"
-			weightOk = false; 
+			weightOk = false;
 		}
 	}
-	
+
 	return weightOk;
 }
 
 function checkHeight(height){
-	var pattern = /^[\d]{2,3}$/;     
+	var pattern = /^[\d]{2,3}$/;
 	var heightOk = true;
-	
+
 	if ((height.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your height.\n"
-		 heightOk = false; 
+		 heightOk = false;
 	}
 	else{
 		if (!pattern.test(height)){
 			gErrorMsg = gErrorMsg + "Please enter a valid height.\n"
-			heightOk = false; 
+			heightOk = false;
 		}
 	}
-	
+
 	return heightOk;
 }
 
 function checkPNum(pNum) {
-	var pattern = /^[0-9]{10,13}$/;     
+	var pattern = /^[0-9]{10,13}$/;
 	var pNumOk = true;
-	
-	if ((pNum.length == 0)){        
+
+	if ((pNum.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your phone number.\n"
-		 pNumOk = false; 
+		 pNumOk = false;
 	}
 	else{
 		if (!pattern.test(pNum)){
 			gErrorMsg = gErrorMsg + "Please enter a valid phone number.\n"
-			pNumOk = false; 
+			pNumOk = false;
 		}
 	}
-	
+
 	return pNumOk;
 }
 
 function checkEmergencyPNum(emergencyPNum) {
-	var pattern = /^[0-9]{10,13}$/;     
+	var pattern = /^[0-9]{10,13}$/;
 	var emergencyPNumOk = true;
-	
-	if ((emergencyPNum.length == 0)){        
+
+	if ((emergencyPNum.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your emergency number.\n"
-		 emergencyPNumOk = false; 
+		 emergencyPNumOk = false;
 	}
 	else{
 		if (!pattern.test(emergencyPNum)){
 			gErrorMsg = gErrorMsg + "Please enter a valid emergency number.\n"
-			emergencyPNumOk = false; 
+			emergencyPNumOk = false;
 		}
 	}
-	
+
 	return emergencyPNumOk;
 }
 
 function checkGuardian(guardian){
-	var pattern = /^[a-zA-Z ]+$/;     
+	var pattern = /^[a-zA-Z ]+$/;
 	var guardianOk = true;
-	
-	if ((guardian.length == 0)){        
+
+	if ((guardian.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your guardian name.\n"
-		 guardianOk = false; 
+		 guardianOk = false;
 	}
 	else{
 		if (!pattern.test(guardian)){
 			gErrorMsg = gErrorMsg + "Please enter a valid guardian name.\n"
-			guardianOk = false; 
+			guardianOk = false;
 		}
 	}
-	
+
 	return guardianOk;
 }
 
-function checkStreetAdd(streetAdd){     
+function checkStreetAdd(streetAdd){
 	var streetAddOk = true;
-	
+
 	if ((streetAdd.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your street address.\n"
-		 streetAddOk = false; 
+		 streetAddOk = false;
 	}
-	
+
 	return streetAddOk;
 }
 
-function checkStreetAdd2(streetAdd2){    
+function checkStreetAdd2(streetAdd2){
 	var streetAdd2Ok = true;
-	
+
 	if ((streetAdd2.length == 0)){
 		gErrorMsg = gErrorMsg + "Please eneter your street address 2.\n"
-		 streetAdd2Ok = false; 
+		 streetAdd2Ok = false;
 	}
-	
+
 	return streetAdd2Ok;
 }
 
-function checkCity(city){    
+function checkCity(city){
 	var cityOk = true;
-	
-	if ((city.length == 0)){        
+
+	if ((city.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your city.\n"
-		 cityOk = false; 
+		 cityOk = false;
 	}
-	
+
 	return cityOk;
 }
 
-function checkState(state) {     
+function checkState(state) {
 	var stateOk = true;
-	
-	if ((state.length == 0)){        
+
+	if ((state.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your state.\n"
-		 stateOk = false; 
+		 stateOk = false;
 	}
-	
+
 	return stateOk;
 }
 
 function checkPostal(postal){
-	var pattern = /^[0-9]{5}$/;     
+	var pattern = /^[0-9]{5}$/;
 	var postalOk = true;
-	
-	if ((postal.length == 0)){        
+
+	if ((postal.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your postal.\n"
-		 postalOk = false; 
+		 postalOk = false;
 	}
 	else{
 		if (!pattern.test(postal)){
 			gErrorMsg = gErrorMsg + "Please enter a valid postal.\n"
-			postalOk = false; 
+			postalOk = false;
 		}
 	}
-	
+
 	return postalOk;
 }
 
 
 /* Check Username */
 function checkUsername(username) {
-	var pattern = /^.+$/;     
+	var pattern = /^.+$/;
 	var nameOk = true;
-	
-	if ((username.length == 0)){        
+
+	if ((username.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your username.\n"
-		 nameOk = false; 
+		 nameOk = false;
 	}
 	else{
 		if (!pattern.test(username)){
 			gErrorMsg = gErrorMsg + "Please enter a valid username.\n"
-			nameOk = false; 
+			nameOk = false;
 		}
 	}
-	
+
 	return nameOk;
 }
 
 /* Check Username */
 function checkPassword(password) {
-	var pattern = /^.+$/;     
+	var pattern = /^.+$/;
 	var passwordOk = true;
-	
-	if ((password.length == 0)){        
+
+	if ((password.length == 0)){
 		gErrorMsg = gErrorMsg + "Please enter your password.\n"
-		 passwordOk = false; 
+		 passwordOk = false;
 	}
 	else{
 		if (!pattern.test(password)){
 			gErrorMsg = gErrorMsg + "Please enter a valid password.\n"
-			passwordOk = false; 
+			passwordOk = false;
 		}
 	}
-	
+
 	return passwordOk;
 }
 
 function checkEditedPassword(password){
-	var pattern = /^.+$/;     
+	var pattern = /^.+$/;
 	var passwordOk = true;
-	
-	if ((password.length == 0)){        
-		passwordOk = true; 
+
+	if ((password.length == 0)){
+		passwordOk = true;
 	}
 	else{
 		if (!pattern.test(password)){
 			gErrorMsg = gErrorMsg + "Please enter a valid password.\n"
-			passwordOk = false; 
+			passwordOk = false;
 		}
 	}
-	
+
 	return passwordOk;
 }
-
