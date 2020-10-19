@@ -203,6 +203,9 @@
                     <a class="nav-link" id="custom-tabs-one-health-tab" data-toggle="pill" href="#custom-tabs-one-health" role="tab" aria-controls="custom-tabs-one-health" aria-selected="false">Health</a>
                   </li>
                   <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-one-log-tab" data-toggle="pill" href="#custom-tabs-one-log" role="tab" aria-controls="custom-tabs-one-log" aria-selected="false">Logbook</a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-one-history-tab" data-toggle="pill" href="#custom-tabs-one-history" role="tab" aria-controls="custom-tabs-one-history" aria-selected="false">History</a>
                   </li>
                 </ul>
@@ -430,6 +433,88 @@
                     </form>
                     <!-- /.END OF FORM -->
 
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-one-log" role="tabpanel" aria-labelledby="custom-tabs-one-log-tab">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card">
+                          <div class="card-header" data-toggle="collapse">
+                            <h3 class="card-title">
+                              <i class="fas fa-history"></i>
+                              Logbook
+                            </h3>
+                          </div>
+                          <div class="card-body collapse">
+                            <h2>Add Event</h2>
+                            <form>
+                              <div class="modal-body">
+                                <div class="form-group">
+                                  <label for="logDate"><span class="asterisk">* </span>Date</label>
+                                  <input type="date" class="form-control" id="logDate" required="">
+                                </div>
+                                <div class="form-group">
+                                  <label for="logTime"><span class="asterisk">* </span>Time</label>
+                                  <input type="time" class="form-control" id="logTime" required="">
+                                </div>
+                                <div class="form-group">
+                                  <label for="logEventType"><span class="asterisk">* </span>Event Type</label>
+                                  <select id="logEventType" class="form-control" required="">
+                                    <option></option>
+                                  </select>
+                                  <input type="text" class="form-control" id="newLogEventType">
+                                </div>
+                                <div class="form-group">
+                                  <label for="logEvent"><span class="asterisk">* </span>Event</label>
+                                  <input type="text" class="form-control" id="logEvent" required="">
+                                </div>
+                                <div class="form-group">
+                                  <label for="logDescription"><span class="asterisk">* </span>Description</label>
+                                  <input type="text" class="form-control" id="logDescription" required="">
+                                </div>
+                                <div class="form-group">
+                                  <label for="logVitalSigns"><span class="asterisk">* </span>Vital Signs</label>
+                                  <input type="text" class="form-control" id="logVitalSigns" required="">
+                                </div>
+                              </div>
+                              <div class="modal-footer" id="newLog">
+                                <button type="button" class="btn btn-secondary" onclick="">Cancel</button>
+                                <button type="submit" class="btn btn-info">Add</button>
+                              </div>
+                            </form>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-12">
+                        <table id="resident_logbook_table" class="table table-bordered table-hover">
+                            <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Event Type</th>
+                                <th>Event</th>
+                                <th>Description</th>
+                                <th>Vital Signs</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                              <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Event Type</th>
+                                <th>Event</th>
+                                <th>Description</th>
+                                <th>Vital Signs</th>
+                              </tr>
+                            </tfoot>
+                          </table>
+                        </div>
+                      </div>
+                    <!-- /.row -->
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-one-history" role="tabpanel" aria-labelledby="custom-tabs-one-history-tab">
                     <div class="row">
