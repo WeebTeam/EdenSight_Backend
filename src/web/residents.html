@@ -695,7 +695,7 @@
     $('#logDate').val(new Date().toDateInputValue());
     $('#logTime').val(new Date().toLocaleTimeString("en-US", options));
 
-    $("#logVitalSigns").val("Bpm:" + $("#residentCurrentBPM").val() + ",SpO2:" + $("#residentCurrentSp02").val());
+    $("#logVitalSigns").val("Bpm:" + $("#residentCurrentBPM").text() + ",SpO2:" + $("#residentCurrentSp02").text());
 
     //init resident (blank for now)
     resident = "";
