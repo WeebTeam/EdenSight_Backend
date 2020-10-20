@@ -460,13 +460,15 @@
                                 </div>
                                 <div class="form-group">
                                   <label for="logEventType"><span class="asterisk">* </span>Event Type</label>
+                                  <br><span class="help">Existing event type</span>
                                   <select id="logEventType" class="form-control" required="">
                                     <option></option>
                                   </select><br>
+                                  <br><span class="help">New event type</span>
                                   <input type="text" class="form-control" id="newLogEventType">
                                 </div>
                                 <div class="form-group">
-                                  <label for="logEvent"><span class="asterisk">* </span>Event</label>
+                                  <label for="logEvent"><span class="asterisk">* </span>Event Name</label>
                                   <input type="text" class="form-control" id="logEvent" required="">
                                 </div>
                                 <div class="form-group">
@@ -687,8 +689,7 @@
        timeZone:"Asia/Singapore",
        hour12 : false,
        hour:  "2-digit",
-       minute: "2-digit",
-      second: "2-digit"
+       minute: "2-digit"
     }
 
     $('#logDate').val(new Date().toDateInputValue());
