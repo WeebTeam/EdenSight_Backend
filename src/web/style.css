@@ -41,9 +41,12 @@
 }
 
 #add-event-btn{
-  padding-left: 0px;
+  padding: 13px;
 }
 
+.event-card-header{
+  padding: 0;
+}
 
 /* for md */
 
