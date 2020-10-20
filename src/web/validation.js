@@ -153,7 +153,7 @@ function checkEventType(eventType){
 	var eventTypeOk = true;
 
 	if ((eventType.length == 0)){
-		gErrorMsg = gErrorMsg + "Please choose an existing event type or enter your event type.\n"
+		gErrorMsg = gErrorMsg + "Please choose a event type.\n"
 		 eventTypeOk = false;
 	}
 
@@ -164,7 +164,7 @@ function checkEventName(eventName){
 	var eventNameOk = true;
 
 	if ((eventName.length == 0)){
-		gErrorMsg = gErrorMsg + "Please enter your event type.\n"
+		gErrorMsg = gErrorMsg + "Please enter your event name.\n"
 		 eventNameOk = false;
 	}
 

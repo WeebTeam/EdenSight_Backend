@@ -734,6 +734,8 @@
 
     var validation = eventValidationOK(logEventType, logEvent);
 
+    $("#logVitalSigns").val("Bpm:" + $("#residentCurrentBPM").val() + ",SpO2:" + $("#residentCurrentSp02").val());
+
     //var staffValidation = confirm("Please make sure all information is correct!");
     if (validation){
       //send to server
@@ -980,8 +982,6 @@
 
         $("#residentCurrentBPM").text(vitalSigns[0].heartRate);
         $("#residentCurrentSp02").text(vitalSigns[0].spO2);
-
-        $("#logVitalSigns").text("Bpm:" + vitalSigns[0].heartRate + ",SpO2:" + vitalSigns[0].spO2);
 
         $("#line-chart").show();
         $("#no-line-chart").hide();
