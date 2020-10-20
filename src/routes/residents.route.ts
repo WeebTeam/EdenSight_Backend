@@ -76,4 +76,20 @@ router.delete('/delete/:id', async (req: Request, res: Response) => {
   return res.status(OK).end();
 });
 
+//add event log
+// residents/addEvent
+router.post('/:id/addEvent', async (req: Request, res: Response) => {
+  const { id } = req.params as ParamsDictionary;
+  const eventLog = req.body;
+
+  if (!eventLog) {
+    return res.status(BAD_REQUEST).json({
+      error: paramMissingError,
+    });
+  }
+  await residentDao.addEventLog(Number(id), eventLog);
+
+  return res.status(CREATED).json(eventLog);
+});
+
 export default router;

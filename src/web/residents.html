@@ -459,9 +459,7 @@
                                 <div class="form-group">
                                   <label for="logEventType"><span class="asterisk">* </span>Event Type</label>
                                   <br><span class="help">Existing event type</span>
-                                  <select id="logEventType" class="form-control">
-                                    <option></option>
-                                  </select>
+                                  <select id="logEventType" class="form-control"></select>
                                   <span class="help">New event type</span>
                                   <input type="text" class="form-control" id="newLogEventType">
                                 </div>
@@ -490,31 +488,29 @@
                       <!-- /.col -->
                       <div class="col-12" style="margin-top:30px;">
                         <table id="resident_logbook_table" class="table table-bordered table-hover">
-                            <thead>
-                              <tr>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Event Type</th>
-                                <th>Event</th>
-                                <th>Description</th>
-                                <th>Vital Signs</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Event Type</th>
-                                <th>Event</th>
-                                <th>Description</th>
-                                <th>Vital Signs</th>
-                              </tr>
-                            </tfoot>
-                          </table>
-                        </div>
+                          <thead>
+                            <tr>
+                              <th>Date/Time</th>
+                              <th>Event Type</th>
+                              <th>Event</th>
+                              <th>Description</th>
+                              <th>Vital Signs</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <th>Date/Time</th>
+                              <th>Event Type</th>
+                              <th>Event</th>
+                              <th>Description</th>
+                              <th>Vital Signs</th>
+                            </tr>
+                          </tfoot>
+                        </table>
                       </div>
+                    </div>
                     <!-- /.row -->
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-one-history" role="tabpanel" aria-labelledby="custom-tabs-one-history-tab">
@@ -667,11 +663,10 @@
       "responsive": true,
       "order": [[ 0, "desc" ]],
       "columns": [
-        { "data": "date" },
-        { "data": "time" },
-        { "data": "eventType" },
-        { "data": "event" },
-        { "data": "description" },
+        { "data": "dateTime" },
+        { "data": "type" },
+        { "data": "name" },
+        { "data": "desc" },
         { "data": "vitalSigns" }
       ]
     });
@@ -683,15 +678,13 @@
       return local.toJSON().slice(0,10);
     });
 
-    const options = {
-       timeZone:"Asia/Singapore",
-       hour12 : false,
-       hour:  "2-digit",
-       minute: "2-digit"
+    //needed for getting correct time for the log inputs
+    datetimeOptions = {
+      timeZone:"Asia/Kuching",
+      hour12 : false,
+      hour:  "2-digit",
+      minute: "2-digit"
     }
-
-    $('#logDate').val(new Date().toDateInputValue());
-    $('#logTime').val(new Date().toLocaleTimeString("en-US", options));
 
     //init resident (blank for now)
     resident = "";
@@ -709,21 +702,29 @@
 
   /********** event listeners **********/
 
-  //submit new staff form
+  //handle when user choses a event type from the select listeners
+  $('#logEventType').change(function(){
+    $('#newLogEventType').val($('#logEventType').val());
+  });
+
+  //submit new resident event log
   $('#new_log_form').submit(function (e) {
     e.preventDefault();
-    //no validate, we are blindly trusting our staff
-    //instead we ask them to self validate :)
 
     var logDate = $("#logDate").val();
     var logTime = $("#logTime").val();
 
+    //parse input into date object
+    var eventTime = new Date(logDate + " " + logTime);
+
+    //bryan todo: change this to only take from the manual input
+    // the option/select input should fill the manual input box if user selects
     if($("#logEventType").val())
-      var logEventType = $("#logEventType").val();
+    var logEventType = $("#logEventType").val();
     else if($("#newLogEventType").val())
-      var logEventType = $("#newLogEventType").val();
+    var logEventType = $("#newLogEventType").val();
     else
-      var logEventType = "";
+    var logEventType = "";
 
     var logEvent = $("#logEvent").val();
     var logDescription = $("#logDescription").val();
@@ -731,42 +732,40 @@
 
     var validation = eventValidationOK(logEventType, logEvent);
 
-    //var staffValidation = confirm("Please make sure all information is correct!");
     if (validation){
       //send to server
-      console.log(logDate + logTime + logEventType + logEvent + logDescription + logVitalSigns);
+      $.ajax({
+        type: "POST",
+        url: "api/residents/" + resident._id + "/addEvent/",
+        contentType : 'application/json',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+          //include credentials
+          xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
+        },
+        data: JSON.stringify({
+          dateTime: eventTime,
+          resident: resident._id,
+          type:  logEventType,
+          name: logEvent,
+          desc: logDescription,
+          vitalSigns: logVitalSigns
+        }),
+        success: function (event){
+          //on success, reset form, update table
+          console.log("event log created!");
+          Toast.fire({
+            icon: 'success',
+            title: 'Event Created!'
+          })
 
-      // $.ajax({
-      //   type: "POST",
-      //   url: "api/users/add/",
-      //   contentType : 'application/json',
-      //   dataType: 'json',
-      //   beforeSend: function (xhr) {
-      //     //include credentials
-      //     xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
-      //   },
-      //   data: JSON.stringify({
-      //     name: $("#newStaffName").val(),
-      //     uname:  $("#newStaffUsername").val(),
-      //     passwd: $("#newStaffPassword").val(),
-      //     pNum: $("#newStaffPhoneNum").val(),
-      //     role: $("#newIsStaffAdmin").prop('checked') ? 'admin' : 'staff'
-      //   }),
-      //   success: function (event){
-      //     //on success, clear form, modal and update list
-      //     Toast.fire({
-      //       icon: 'success',
-      //       title: 'Event Created!'
-      //     })
-
-      //     $("#new_log_form").trigger("reset");
-      //     getAllStaff();
-      //   }
-      //   //todo: handle error, 401
-      //   //display alert
-      // });
+          //update the table, clear form
+          getResident(resident._id); //yep all done here
+        }
+        //todo: handle error, 401
+        //display alert
+      });
     }
-
   });
 
   //updateTime resident
@@ -830,6 +829,8 @@
   //table: handle when clicking rows
   $('#residents_table tbody').on("click", "tr", function() {
     getResident(residents_table.row( this ).data()._id);
+    //show modal
+    $("#residentModal").modal('show');
   });
 
   //residentModal: handle modal hide
@@ -917,6 +918,13 @@
         $("#residentHeight").val(resident.height);
         $("#residentBloodType").val(resident.bloodType);
 
+        //clear the add log form
+        $("#new_log_form").trigger("reset");
+
+        //update the log time
+        $('#logDate').val(new Date().toDateInputValue());
+        $('#logTime').val(new Date().toLocaleTimeString("en-US", datetimeOptions));
+
         //clear divs
         $('.healthConditions').remove();
         $('.allergies').remove();
@@ -936,7 +944,35 @@
           showEachHealth(resident.medication[i], 'medication')
         }
 
-        $("#residentModal").modal('toggle');
+        //populate logbook
+        //parse the time
+        resident.eventLogs = resident.eventLogs.map(item => {
+          item.dateTime = new Date(item.dateTime);
+          return item;
+        });
+
+        resident_logbook_table.clear();
+        resident_logbook_table.rows.add(resident.eventLogs);
+        resident_logbook_table.draw();
+
+        //get the unique event types, and populate the options
+        let eventTypeOptions = resident.eventLogs.map(item => {
+          //get the event types out of the eventlog array first
+          return item.type;
+        }).filter((item, i, ar) => ar.indexOf(item) === i);
+
+
+        var $eventTypeSelect = $("#logEventType");
+        //clear the select first
+        $eventTypeSelect.empty();
+
+        //add first blank option
+        $eventTypeSelect.append($("<option />"));
+
+        //populate the selections
+        $.each(eventTypeOptions, function() {
+          $eventTypeSelect.append($("<option />").val(this).text(this));
+        });
       },
       error: function (xhr){
         var code = xhr.status;
@@ -995,6 +1031,7 @@
         $("#residentCurrentBPM").text(vitalSigns[0].heartRate);
         $("#residentCurrentSp02").text(vitalSigns[0].spO2);
 
+        //populate the log area (meaning we get latest one only)
         $("#logVitalSigns").val("Bpm:" + $("#residentCurrentBPM").text() + ",SpO2:" + $("#residentCurrentSp02").text());
 
         $("#line-chart").show();

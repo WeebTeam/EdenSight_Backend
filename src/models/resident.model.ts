@@ -1,6 +1,7 @@
 import { plugin, prop, getModelForClass, Ref } from '@typegoose/typegoose';
 import { AutoIncrementID } from '@typegoose/auto-increment';
 import User from '@models/user.model';
+import EventLog from '@models/eventlog.model';
 import * as mongoose from 'mongoose';
 
 export interface IResident {
@@ -88,6 +89,9 @@ class Resident implements IResident {
   @prop({ default: '' })
   public deviceAddr: string;
 
+  @prop({ ref: 'EventLog', default: [] })
+  public eventLogs: Ref<EventLog>[];
+
   constructor(id: number, name: string, status?: string, caretaker?: number, room?: string, enrollDate?: Date, gender?: string, dob?:string, ic?:string, nationality?:string,
   weight?:number, height?:number, bloodType?:string, pNum?:string, emergencyPNum?:string, guardian?:string, streetAdd?:string, streetAdd2?:string, city?:string, state?:string,
   postal?:string, healthConditions?:string[], allergies?:string[], medication?:string[], deviceAddr?:string) {
@@ -116,6 +120,7 @@ class Resident implements IResident {
     this.allergies = allergies || [];
     this.medication = medication || [];
     this.deviceAddr = deviceAddr || '';
+    this.eventLogs = [];
   }
 }
 
