@@ -695,6 +695,8 @@
     $('#logDate').val(new Date().toDateInputValue());
     $('#logTime').val(new Date().toLocaleTimeString("en-US", options));
 
+    $("#logVitalSigns").val("Bpm:" + $("#residentCurrentBPM").val() + ",SpO2:" + $("#residentCurrentSp02").val());
+
     //init resident (blank for now)
     resident = "";
 
@@ -733,8 +735,6 @@
     var logVitalSigns = $("#logVitalSigns").val();
 
     var validation = eventValidationOK(logEventType, logEvent);
-
-    $("#logVitalSigns").val("Bpm:" + $("#residentCurrentBPM").val() + ",SpO2:" + $("#residentCurrentSp02").val());
 
     //var staffValidation = confirm("Please make sure all information is correct!");
     if (validation){
