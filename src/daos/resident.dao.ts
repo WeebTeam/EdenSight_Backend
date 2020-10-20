@@ -4,7 +4,7 @@ class ResidentDao {
 
   public async getOne(id: number): Promise<Resident | null> {
     try {
-        return await ResidentModel.findOne({ id: id });
+        return await ResidentModel.findOne({ _id: id });
       } catch (err) {
         throw err;
     }
@@ -13,6 +13,14 @@ class ResidentDao {
   public async getAll(): Promise<Resident[]> {
     try {
         return await ResidentModel.find();
+    } catch (err) {
+        throw err;
+    }
+  }
+
+  public async getList(): Promise<Resident[]> {
+    try {
+        return await ResidentModel.find().select('name caretaker room');
     } catch (err) {
         throw err;
     }

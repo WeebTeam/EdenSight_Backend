@@ -20,8 +20,16 @@ router.get('/all', async (req: Request, res: Response) => {
   return res.status(OK).json(users);
 });
 
+// get list of all users (brief)
+// users/list
+router.get('/list', async (req: Request, res: Response) => {
+  const users = await userDao.getList();
+
+  return res.status(OK).json(users);
+});
+
 // get one
-// users/:uname
+// users/:id
 router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params as ParamsDictionary;
   const user = await userDao.getOneById(Number(id));
