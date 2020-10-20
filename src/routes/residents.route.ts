@@ -33,7 +33,6 @@ router.get('/list', async (req: Request, res: Response) => {
 // residents/:id
 router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params as ParamsDictionary;
-  console.log("id: "+id)
   const resident = await residentDao.getOne(Number(id));
 
   return res.status(OK).json(resident);

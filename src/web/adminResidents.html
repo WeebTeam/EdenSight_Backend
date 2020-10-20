@@ -33,7 +33,7 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" onclick="getAllResidents()" class="nav-link">Refresh List</a>
+          <a href="#" onclick="getResidentList()" class="nav-link">Refresh List</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link" data-toggle="modal" data-target="#newResidentModal">New Resident</a>
@@ -669,7 +669,7 @@
       "columns": [
         { "data": "_id" },
         { "data": "name" },
-        { "data": "caretakerName" },
+        { "data": "caretaker.name" },
         { "data": "room" }
       ]
     });
@@ -681,8 +681,8 @@
     caretakerList = [];
 
     //fetch any data that we need on page load
-    getCaretakers(); //load this first as we need data from it to populate residents table
-    getAllResidents();
+    getCaretakers(); //needed to populate the options
+    getResidentList();
 
     //test
     //testDetailsForms();
@@ -762,7 +762,7 @@
           console.log("resident created: "+ resident);
           $("#new_resident_form").trigger("reset");
           $("#newResidentModal").modal('hide');
-          getAllResidents();
+          getResidentList();
         },
         error: function (xhr){
           var code = xhr.status;
@@ -782,50 +782,7 @@
 
   //table: handle when clicking rows
   $('#residents_table tbody').on("click", "tr", function() {
-    resident = residents_table.row( this ).data();
-
-    //populate the form
-    $("#residentID").val(resident._id);
-    $("#residentName").val(resident.name);
-    $("#residentCaretaker").val(resident.caretaker);
-    $("#residentRoom").val(resident.room);
-    $("#residentDeviceAddr").val(resident.deviceAddr);
-    $("#residentGender").val(resident.gender);
-    $("#residentDOB").val(resident.dob);
-    $("#residentIC").val(resident.ic);
-    $("#residentNationality").val(resident.nationality);
-    $("#residentPNum").val(resident.pNum);
-    $("#residentGuardian").val(resident.guardian);
-    $("#residentEmergencyPNum").val(resident.emergencyPNum);
-    $("#residentStreetAddress").val(resident.streetAdd);
-    $("#residentStreetAddress2").val(resident.streetAdd2);
-    $("#residentCity").val(resident.city);
-    $("#residentState").val(resident.state);
-    $("#residentPostal").val(resident.postal);
-
-    $("#residentWeight").val(resident.weight);
-    $("#residentHeight").val(resident.height);
-    $("#residentBloodType").val(resident.bloodType);
-
-    //clear divs
-    $('.healthConditions').remove();
-    $('.allergies').remove();
-    $('.medication').remove();
-
-    //ADDING BACK DIVSstaff
-    for(i=0; i<resident.healthConditions.length; i++){
-      showEachHealth(resident.healthConditions[i], 'healthConditions')
-    }
-
-    for(i=0; i<resident.allergies.length; i++){
-      showEachHealth(resident.allergies[i], 'allergies')
-    }
-
-    for(i=0; i<resident.medication.length; i++){
-      showEachHealth(resident.medication[i], 'medication')
-    }
-
-    $("#residentModal").modal('toggle');
+    getResident(residents_table.row( this ).data()._id);
   });
 
   //residentModal: handle modal hide
@@ -909,7 +866,7 @@
           })
 
           $("#residentModal").modal('hide');
-          getAllResidents();
+          getResidentList();
         },
         error: function (xhr){
           var code = xhr.status;
@@ -944,10 +901,10 @@
     $("#unauthorized_modal").modal("show");
   }
 
-  function getAllResidents() {
+  function getResidentList() {
     $.ajax({
       type: "GET",
-      url: "api/residents/all/",
+      url: "api/residents/list/",
       dataType: 'json',
       beforeSend: function (xhr) {
         //include credentials
@@ -955,12 +912,6 @@
       },
       success: function (residents){
         //on success, update table
-
-        //remap residents caretaker with caretaker name
-        residents = residents.map(item => {
-          item.caretakerName = caretakerList.find(staff => staff._id == item.caretaker).name;
-          return item;
-        });
 
         //clear and repopulate table
         residents_table.clear();
@@ -978,18 +929,61 @@
     });
   }
 
-  function getResidentById() {
+  function getResident(residentID) {
     $.ajax({
       type: "GET",
-      url: "api/residents/",
+      url: "api/residents/" + residentID,
       dataType: 'json',
       beforeSend: function (xhr) {
         //include credentials
         xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
       },
-      success: function (resident){
+      success: function (data){
         //on success, display resident details
+        resident = data;
 
+        //populate the form
+        $("#residentID").val(resident._id);
+        $("#residentName").val(resident.name);
+        $("#residentCaretaker").val(resident.caretaker._id);
+        $("#residentRoom").val(resident.room);
+        $("#residentDeviceAddr").val(resident.deviceAddr);
+        $("#residentGender").val(resident.gender);
+        $("#residentDOB").val(resident.dob);
+        $("#residentIC").val(resident.ic);
+        $("#residentNationality").val(resident.nationality);
+        $("#residentPNum").val(resident.pNum);
+        $("#residentGuardian").val(resident.guardian);
+        $("#residentEmergencyPNum").val(resident.emergencyPNum);
+        $("#residentStreetAddress").val(resident.streetAdd);
+        $("#residentStreetAddress2").val(resident.streetAdd2);
+        $("#residentCity").val(resident.city);
+        $("#residentState").val(resident.state);
+        $("#residentPostal").val(resident.postal);
+
+        $("#residentWeight").val(resident.weight);
+        $("#residentHeight").val(resident.height);
+        $("#residentBloodType").val(resident.bloodType);
+
+        //clear divs
+        $('.healthConditions').remove();
+        $('.allergies').remove();
+        $('.medication').remove();
+
+        //ADDING BACK DIVSstaff
+        for(i=0; i<resident.healthConditions.length; i++){
+          showEachHealth(resident.healthConditions[i], 'healthConditions')
+        }
+
+        for(i=0; i<resident.allergies.length; i++){
+          showEachHealth(resident.allergies[i], 'allergies')
+        }
+
+        for(i=0; i<resident.medication.length; i++){
+          showEachHealth(resident.medication[i], 'medication')
+        }
+
+        $("#residentModal").modal('toggle');
       },
       error: function (xhr){
         var code = xhr.status;
@@ -1154,7 +1148,7 @@
 
           $("#residentModal").modal('hide');
           console.log("resident deleted. ");
-          getAllResidents();
+          getResidentList();
         },
         error: function (xhr){
           var code = xhr.status;
@@ -1182,7 +1176,6 @@
       type: "GET",
       url: "api/users/all/",
       dataType: 'json',
-      async: false, //force synchronous, as we need caretaker names before loading residents
       beforeSend: function (xhr) {
         //include credentials
         xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));

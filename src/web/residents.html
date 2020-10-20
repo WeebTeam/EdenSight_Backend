@@ -640,7 +640,7 @@
       "columns": [
         { "data": "_id" },
         { "data": "name" },
-        { "data": "caretakerName" },
+        { "data": "caretaker.name" },
         { "data": "room" }
       ]
     });
@@ -705,7 +705,6 @@
     vitalSignsArray = [];
 
     //fetch any data that we need on page load
-    getCaretakers(); //load this first as we need data from it to populate residents table
     getResidentList();
 
   });
@@ -814,7 +813,7 @@
 
           console.log("resident updated: "+ resident);
           $("#residentModal").modal('hide');
-          getAllResidents();
+          getResidentList();
         },
         error: function (xhr){
           var code = xhr.status;
@@ -866,12 +865,6 @@
       success: function (residents){
         //on success, update table
 
-        //remap residents caretaker with caretaker name
-        residents = residents.map(item => {
-          item.caretakerName = caretakerList.find(staff => staff._id == item.caretaker).name;
-          return item;
-        });
-
         //clear and repopulate table
         residents_table.clear();
         residents_table.rows.add(residents);
@@ -909,7 +902,7 @@
         //populate the details
         $("#residentID").text(resident._id);
         $("#residentName").text(resident.name);
-        $("#residentCaretaker").text(resident.caretakerName);
+        $("#residentCaretaker").text(resident.caretaker.name);
         $("#residentRoom").text(resident.room);
         $("#residentGender").text(resident.gender);
         $("#residentDOB").text(resident.dob);
@@ -1129,9 +1122,10 @@
     $("#add-new-medication").prop("disabled", true);
     $(".closeDiv").prop("disabled", true);
 
+
     //reset the data
     $("#residentName").val(resident.name);
-    $("#residentCaretaker").val(resident.caretakerName);
+    $("#residentCaretaker").val(resident.caretaker._id);
     $("#residentRoom").val(resident.room);
     $("#residentWeight").val(resident.weight);
     $("#residentHeight").val(resident.height);
@@ -1267,32 +1261,6 @@
     console.log(getEachHealth($('.healthConditions')));
     console.log(getEachHealth($('.allergies')));
     console.log(getEachHealth($('.medication')));
-  }
-
-  function getCaretakers() {
-    $.ajax({
-      type: "GET",
-      url: "api/users/list/",
-      dataType: 'json',
-      async: false, //force synchronous, as we need caretaker names before loading residents
-      beforeSend: function (xhr) {
-        //include credentials
-        xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
-      },
-      success: function (staff){
-
-        //make staff list accessible globally
-        caretakerList = staff;
-      },
-      error: function (xhr){
-        var code = xhr.status;
-
-        //handle 401
-        if (code == 401){
-          handleUnauthorized();
-        }
-      }
-    });
   }
 
   // Toast
