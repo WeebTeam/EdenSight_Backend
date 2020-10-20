@@ -448,7 +448,7 @@
                           </div>
                           <div class="card-body collapse" id="log-body">
                             <h2>Add Event</h2>
-                            <form>
+                            <form id="new_log_form">
                               <div class="modal-body">
                                 <div class="form-group">
                                   <label for="logDate"><span class="asterisk">* </span>Date</label>
@@ -461,7 +461,7 @@
                                 <div class="form-group">
                                   <label for="logEventType"><span class="asterisk">* </span>Event Type</label>
                                   <br><span class="help">Existing event type</span>
-                                  <select id="logEventType" class="form-control" required="">
+                                  <select id="logEventType" class="form-control">
                                     <option></option>
                                   </select>
                                   <span class="help">New event type</span>
@@ -472,8 +472,8 @@
                                   <input type="text" class="form-control" id="logEvent" required="">
                                 </div>
                                 <div class="form-group">
-                                  <label for="logDescription"><span class="asterisk">* </span>Description</label>
-                                  <textarea class="form-control" id="logDescription" required=""></textarea>
+                                  <label for="logDescription">Description</label>
+                                  <textarea class="form-control" id="logDescription"></textarea>
                                 </div>
                                 <div class="form-group">
                                   <label for="logVitalSigns"><span class="asterisk">* </span>Vital Signs</label>
@@ -712,6 +712,66 @@
 
   /********** event listeners **********/
 
+  //submit new staff form
+  $('#new_log_form').submit(function (e) {
+    e.preventDefault();
+    //no validate, we are blindly trusting our staff
+    //instead we ask them to self validate :)
+
+    var logDate = $("#logDate").val();
+    var logTime = $("#logTime").val();
+
+    if($("#logEventType").val())
+      var logEventType = $("#logEventType").val();
+    else if($("#newLogEventType").val())
+      var logEventType = $("#newLogEventType").val();
+    else
+      var logEventType = "";
+
+    var logEvent = $("#logEvent").val();
+    var logDescription = $("#logDescription").val();
+    var logVitalSigns = $("#logVitalSigns").val();
+
+    var validation = eventValidationOK(logEventType, logEvent);
+
+    //var staffValidation = confirm("Please make sure all information is correct!");
+    if (validation){
+      //send to server
+      console.log(logDate + logTime + logEventType + logEvent + logDescription + logVitalSigns);
+
+      // $.ajax({
+      //   type: "POST",
+      //   url: "api/users/add/",
+      //   contentType : 'application/json',
+      //   dataType: 'json',
+      //   beforeSend: function (xhr) {
+      //     //include credentials
+      //     xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
+      //   },
+      //   data: JSON.stringify({
+      //     name: $("#newStaffName").val(),
+      //     uname:  $("#newStaffUsername").val(),
+      //     passwd: $("#newStaffPassword").val(),
+      //     pNum: $("#newStaffPhoneNum").val(),
+      //     role: $("#newIsStaffAdmin").prop('checked') ? 'admin' : 'staff'
+      //   }),
+      //   success: function (event){
+      //     //on success, clear form, modal and update list
+      //     Toast.fire({
+      //       icon: 'success',
+      //       title: 'Event Created!'
+      //     })
+
+      //     $("#new_log_form").trigger("reset");
+      //     getAllStaff();
+      //   }
+      //   //todo: handle error, 401
+      //   //display alert
+      // });
+    }
+
+  });
+
   //updateTime resident
   $('#update_resident_form_2').submit(function (e){
     //no validate, we are blindly trusting our users
@@ -920,6 +980,8 @@
 
         $("#residentCurrentBPM").text(vitalSigns[0].heartRate);
         $("#residentCurrentSp02").text(vitalSigns[0].spO2);
+
+        $("#logVitalSigns").text("Bpm:" + vitalSigns[0].heartRate + ",SpO2:" + vitalSigns[0].spO2);
 
         $("#line-chart").show();
         $("#no-line-chart").hide();

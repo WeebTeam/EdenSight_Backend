@@ -125,6 +125,52 @@ function residentValidationOK(weight, height){
 }
 
 
+function eventValidationOK(eventType, eventName){
+	gErrorMsg = "";
+
+	var eventTypeOk = checkEventType(eventType);
+	var eventNameOk = checkEventName(eventName);
+
+	var allOk = false;
+
+	if(eventTypeOk && eventNameOk){
+		allOk = true;
+	}
+	else{
+		Toast.fire({
+      		icon: 'error',
+      		html: '<pre>' + gErrorMsg + '</pre>',
+      		width: '45 rem'
+  		})
+		allOk = false;
+	}
+
+	return allOk;
+}
+
+
+function checkEventType(eventType){
+	var eventTypeOk = true;
+
+	if ((eventType.length == 0)){
+		gErrorMsg = gErrorMsg + "Please choose an existing event type or enter your event type.\n"
+		 eventTypeOk = false;
+	}
+
+	return eventTypeOk;
+}
+
+function checkEventName(eventName){
+	var eventNameOk = true;
+
+	if ((eventName.length == 0)){
+		gErrorMsg = gErrorMsg + "Please enter your event type.\n"
+		 eventNameOk = false;
+	}
+
+	return eventNameOk;
+}
+
 /* Check Name */
 function checkName(name) {
 	var pattern = /^[a-zA-Z ]+$/;
