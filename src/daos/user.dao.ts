@@ -28,6 +28,14 @@ class UserDao {
     }
   }
 
+  public async getList(): Promise<User[]> {
+    try {
+        return await UserModel.find().select('uname name role');
+    } catch (err) {
+        throw err;
+    }
+  }
+
   public async add(user: any): Promise<User | null> {
       try {
         user.pwdHash = bcrypt.hashSync(user.passwd, pwdSaltRounds);;

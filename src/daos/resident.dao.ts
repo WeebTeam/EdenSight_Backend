@@ -4,7 +4,8 @@ class ResidentDao {
 
   public async getOne(id: number): Promise<Resident | null> {
     try {
-        return await ResidentModel.findOne({ id: id });
+        const resident = await ResidentModel.findOne({ _id: id }).populate("caretaker", "name");
+        return resident;
       } catch (err) {
         throw err;
     }
@@ -12,7 +13,15 @@ class ResidentDao {
 
   public async getAll(): Promise<Resident[]> {
     try {
-        return await ResidentModel.find();
+        return await ResidentModel.find().populate("caretaker", "name");
+    } catch (err) {
+        throw err;
+    }
+  }
+
+  public async getList(): Promise<Resident[]> {
+    try {
+        return await ResidentModel.find().select('name caretaker room').populate("caretaker", "name");
     } catch (err) {
         throw err;
     }
@@ -34,7 +43,7 @@ class ResidentDao {
         updateParams
       );
 
-      return await ResidentModel.findOne({ _id :id });
+      return await ResidentModel.findOne({ _id :id }).populate("caretaker", "name");
     } catch (err) {
         throw err;
     }

@@ -1,11 +1,11 @@
-import { plugin, prop, getModelForClass } from '@typegoose/typegoose';
+import { plugin, prop, getModelForClass, Ref } from '@typegoose/typegoose';
 import { AutoIncrementID } from '@typegoose/auto-increment';
+import User from '@models/user.model';
 import * as mongoose from 'mongoose';
 
 export interface IResident {
   _id: number;
   status: string;
-  caretaker: number;
   name: string;
   room: string;
   enrollDate: Date;
@@ -22,8 +22,8 @@ class Resident implements IResident {
   @prop({ default: 'Unknown' })
   public status: string;
 
-  @prop({ default: -1 })
-  public caretaker: number;
+  @prop({ ref: 'User', type: mongoose.Schema.Types.Number, default: null })
+  public caretaker: Ref<User>;
 
   @prop({ default: '-' })
   public room: string;

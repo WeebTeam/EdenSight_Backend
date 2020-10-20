@@ -12,10 +12,19 @@ import { Bearer, Basic } from 'permit';
 const router = Router();
 const residentDao = new ResidentDao();
 
-// get all (brief)
+// get all (full)
+// try not to use unless needed
 // residents/all
 router.get('/all', async (req: Request, res: Response) => {
   const residents = await residentDao.getAll();
+
+  return res.status(OK).json(residents);
+});
+
+// get list of all resident (brief)
+// residents/list
+router.get('/list', async (req: Request, res: Response) => {
+  const residents = await residentDao.getList();
 
   return res.status(OK).json(residents);
 });
