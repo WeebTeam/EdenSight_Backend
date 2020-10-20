@@ -695,8 +695,6 @@
     $('#logDate').val(new Date().toDateInputValue());
     $('#logTime').val(new Date().toLocaleTimeString("en-US", options));
 
-    $("#logVitalSigns").val("Bpm:" + $("#residentCurrentBPM").text() + ",SpO2:" + $("#residentCurrentSp02").text());
-
     //init resident (blank for now)
     resident = "";
 
@@ -982,6 +980,8 @@
 
         $("#residentCurrentBPM").text(vitalSigns[0].heartRate);
         $("#residentCurrentSp02").text(vitalSigns[0].spO2);
+
+        $("#logVitalSigns").val("Bpm:" + $("#residentCurrentBPM").text() + ",SpO2:" + $("#residentCurrentSp02").text());
 
         $("#line-chart").show();
         $("#no-line-chart").hide();
