@@ -98,7 +98,7 @@ function getEachHealth(variable){
 
 // populate selection
 function selection(i, id, resident_logbook_table) {
-    var select = $('<select><option value=""></option></select>')
+    var select = $('<select class="form-control"><option value=""></option></select>')
         .appendTo( $(id).empty() )
         .on( 'change', function () {
             resident_logbook_table.column(i)
@@ -107,12 +107,7 @@ function selection(i, id, resident_logbook_table) {
         } );
 
     resident_logbook_table.column(i).data().unique().sort().each( function ( d, j ) {
-        if(id == 0){
-          var ed = d.substring(4,15);
-          select.append( '<option value="'+d+'">'+d+'</option>' )
-        }
-        else
-          select.append( '<option value="'+d+'">'+d+'</option>' )
+        select.append( '<option value="'+d+'">'+d+'</option>' )
     } );
 };
 

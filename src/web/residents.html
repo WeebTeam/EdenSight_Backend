@@ -487,9 +487,9 @@
                       </div>
                       <!-- /.col -->
                       <div class="col-12" style="margin-top:30px;">
-                        <div id="selections" class="col-12" style="padding:0;"> 
-                          <label>Date/Time: <span id="selectDateTime"></span></label><br>
-                          <label>Event Type: <span id="selectEventType"></span></label>
+                        <div id="selections" class="row" style="padding:0;"> 
+                          <div class="col-sm-12 col-md-6"><label>Date/Time:<br><span id="selectDateTime"></span></label></div>
+                          <div class="col-sm-12 col-md-6"><label>Event Type:<br><span id="selectEventType"></span></label></div>
                         </div>
                         <table id="resident_logbook_table" class="table table-bordered table-hover">
                           <thead>
@@ -664,6 +664,7 @@
       "ordering": true,
       "info": true,
       "autoWidth": false,
+      "scrollX": true,
       "responsive": true,
       "order": [[ 0, "desc" ]],
       "columns": [
