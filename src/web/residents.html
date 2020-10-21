@@ -487,14 +487,15 @@
                       </div>
                       <!-- /.col -->
                       <div class="col-12" style="margin-top:30px; overflow:auto;">
-                        <div id="selections" class="row" style="padding:0;"> 
+                        <div id="selections" class="row" style="padding:0;">
                           <div class="col-sm-12 col-md-6"><label>Date/Time:<br><span id="selectDateTime"></span></label></div>
                           <div class="col-sm-12 col-md-6"><label>Event Type:<br><span id="selectEventType"></span></label></div>
                         </div>
                         <table id="resident_logbook_table" class="table table-bordered table-hover" style="width: 100%;">
                           <thead>
                             <tr>
-                              <th>Date/Time</th>
+                              <th>Date</th>
+                              <th>Time</th>
                               <th>Event Type</th>
                               <th>Event</th>
                               <th>Description</th>
@@ -505,7 +506,8 @@
                           </tbody>
                           <tfoot>
                             <tr>
-                              <th>Date/Time</th>
+                              <th>Date</th>
+                              <th>Time</th>
                               <th>Event Type</th>
                               <th>Event</th>
                               <th>Description</th>
@@ -667,7 +669,8 @@
       "responsive": true,
       "order": [[ 0, "desc" ]],
       "columns": [
-        { "data": "dateTime" },
+        { "data": "date" },
+        { "data": "time" },
         { "data": "type" },
         { "data": "name" },
         { "data": "desc" },
@@ -925,7 +928,7 @@
         //clear the add log form
         $("#new_log_form").trigger("reset");
 
-        //update the log time
+        //fill current date and time into the log form
         $('#logDate').val(new Date().toDateInputValue());
         $('#logTime').val(new Date().toLocaleTimeString("en-US", datetimeOptions));
 
@@ -951,7 +954,12 @@
         //populate logbook
         //parse the time
         resident.eventLogs = resident.eventLogs.map(item => {
+          //parse the time data into a date object
           item.dateTime = new Date(item.dateTime);
+
+          //split the date and time
+          item.date = item.dateTime.toDateInputValue();
+          item.time = item.dateTime.toLocaleTimeString("en-US", datetimeOptions);
           return item;
         });
 
