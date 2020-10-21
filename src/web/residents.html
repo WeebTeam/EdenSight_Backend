@@ -487,9 +487,9 @@
                       </div>
                       <!-- /.col -->
                       <div class="col-12" style="margin-top:30px;">
-                        <div id="selections" class="col-12"> 
-                          <div id="selectDateTime"></div>
-                          <div id="selectEventType"></div>
+                        <div id="selections" class="col-12" style="padding:0;"> 
+                          <label>Date/Time: <span id="selectDateTime"></span></label><br>
+                          <label>Event Type: <span id="selectEventType"></span></label>
                         </div>
                         <table id="resident_logbook_table" class="table table-bordered table-hover">
                           <thead>
@@ -663,7 +663,7 @@
       "paging": true,
       "ordering": true,
       "info": true,
-      "autoWidth": true,
+      "autoWidth": false,
       "responsive": true,
       "order": [[ 0, "desc" ]],
       "columns": [
@@ -960,8 +960,8 @@
         resident_logbook_table.draw();
 
         //set custom filtering to logbook table
-        selection(1, "#selectDateTime", resident_logbook_table);
-        selection(2, "#selectEventType", resident_logbook_table);
+        selection(0, "#selectDateTime", resident_logbook_table);
+        selection(1, "#selectEventType", resident_logbook_table);
 
         //get the unique event types, and populate the options
         let eventTypeOptions = resident.eventLogs.map(item => {

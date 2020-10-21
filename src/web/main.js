@@ -107,7 +107,12 @@ function selection(i, id, resident_logbook_table) {
         } );
 
     resident_logbook_table.column(i).data().unique().sort().each( function ( d, j ) {
-        select.append( '<option value="'+d+'">'+d+'</option>' )
+        if(id == 0){
+          var ed = d.substring(4,15);
+          select.append( '<option value="'+d+'">'+d+'</option>' )
+        }
+        else
+          select.append( '<option value="'+d+'">'+d+'</option>' )
     } );
 };
 
