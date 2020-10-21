@@ -96,6 +96,22 @@ function getEachHealth(variable){
   return array;
 }
 
+// populate selection
+function selection(i, id, resident_logbook_table) {
+    var select = $('<select><option value=""></option></select>')
+        .appendTo( $(id).empty() )
+        .on( 'change', function () {
+            resident_logbook_table.column(i)
+                .search( $(this).val() )
+                .draw();
+        } );
+
+    resident_logbook_table.column(i).data().unique().sort().each( function ( d, j ) {
+        select.append( '<option value="'+d+'">'+d+'</option>' )
+    } );
+};
+
+
   //test forms and details for Residents and Staff
 function testDetailsForms(){
   var resident = {_id: '101', name: 'lls', caretaker: 'pop', status: 'healthy', room: 'r2013', gender: 'Male', dob: '1999-05-14', ic: '1021345612', nationality: 'malaysian', pNum: '0178293647', guardian: 'hahayou', emergencyPNum: '0174837291', streetAdd: 'Lebuh blablabla', streetAdd2: 'Taman Rapat Indah', city: 'Ipoh', state: 'Perak', postal: '31350', weight: '45', height: '144', bloodType: 'A', healthConditions: ['123'], allergies: ['333','555'], medication: ['222', '777', 'smtg'], bpm: ['50'], sp02: ['90'], history: [{date: '14/6/1986', bpm: '55', sp02: '60'}]};

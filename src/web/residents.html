@@ -487,6 +487,10 @@
                       </div>
                       <!-- /.col -->
                       <div class="col-12" style="margin-top:30px;">
+                        <div id="selections" class="col-12"> 
+                          <div id="selectDateTime"></div>
+                          <div id="selectEventType"></div>
+                        </div>
                         <table id="resident_logbook_table" class="table table-bordered table-hover">
                           <thead>
                             <tr>
@@ -659,7 +663,7 @@
       "paging": true,
       "ordering": true,
       "info": true,
-      "autoWidth": false,
+      "autoWidth": true,
       "responsive": true,
       "order": [[ 0, "desc" ]],
       "columns": [
@@ -956,19 +960,8 @@
         resident_logbook_table.draw();
 
         //set custom filtering to logbook table
-        $("#resident_logbook_table tfoot th").each( function ( i ) {
-            var select = $('<select><option value=""></option></select>')
-                .appendTo( $(this).empty() )
-                .on( 'change', function () {
-                    resident_logbook_table.column( i )
-                        .search( $(this).val() )
-                        .draw();
-                } );
-     
-            resident_logbook_table.column( i ).data().unique().sort().each( function ( d, j ) {
-                select.append( '<option value="'+d+'">'+d+'</option>' )
-            } );
-        } );
+        selection(1, "#selectDateTime", resident_logbook_table);
+        selection(2, "#selectEventType", resident_logbook_table);
 
         //get the unique event types, and populate the options
         let eventTypeOptions = resident.eventLogs.map(item => {
