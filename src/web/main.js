@@ -98,7 +98,7 @@ function getEachHealth(variable){
 
 // populate selection
 function selection(i, id, resident_logbook_table) {
-    var select = $('<select class="form-control"><option value=""></option></select>')
+    var select = $('<select class="custom-select custom-select-sm form-control form-control-sm"><option value=""></option></select>')
         .appendTo( $(id).empty() )
         .on( 'change', function () {
             resident_logbook_table.column(i)

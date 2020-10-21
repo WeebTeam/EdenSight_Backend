@@ -676,6 +676,8 @@
       ]
     });
 
+    resident_logbook_table.columns.adjust();
+
     //set default date and time
     Date.prototype.toDateInputValue = (function() {
       var local = new Date(this);
@@ -959,6 +961,7 @@
         resident_logbook_table.clear();
         resident_logbook_table.rows.add(resident.eventLogs);
         resident_logbook_table.draw();
+        resident_logbook_table.columns.adjust();
 
         //set custom filtering to logbook table
         selection(0, "#selectDateTime", resident_logbook_table);
