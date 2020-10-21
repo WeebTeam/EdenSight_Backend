@@ -122,7 +122,8 @@
         //storing role and uname for later use
         localStorage.setItem("role", data.role);
         localStorage.setItem("uname", data.uname);
-        
+        localStorage.setItem("staffId", data.staffId);
+
         if (data.role == "admin"){
           window.location.replace("adminResidents.html");
         }

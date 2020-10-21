@@ -29,6 +29,17 @@ router.get('/list', async (req: Request, res: Response) => {
   return res.status(OK).json(residents);
 });
 
+// get list of all resident (brief)
+// residents/list
+router.get('/staffList/:staffId', async (req: Request, res: Response) => {
+  const { staffId } = req.params as ParamsDictionary;
+
+  const residents = await residentDao.getList(Number(staffId));
+
+  return res.status(OK).json(residents);
+});
+
+
 // get one (detailed?)
 // residents/:id
 router.get('/:id', async (req: Request, res: Response) => {

@@ -38,7 +38,7 @@ router.get('/login', async (req: Request, res: Response) => {
       });
     }
 
-    return res.status(OK).json({ uname: user.uname, role: user.role });
+    return res.status(OK).json({ uname: user.uname, role: user.role, staffId: user._id });
   }
   else {
     return res.status(BAD_REQUEST).json({
