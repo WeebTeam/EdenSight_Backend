@@ -671,25 +671,6 @@
       ]
     });
 
-    //set custom filtering to logbook table
-    var select = $('<select><option value=""></option></select>');
-
-    $("#resident_logbook_table tfoot th").each( function ( i ) {
-        var select = $('<select><option value=""></option></select>')
-            .appendTo( $(this).empty() )
-            .on( 'change', function () {
-                resident_logbook_table.column( i )
-                    .search( $(this).val() )
-                    .draw();
-            } );
- 
-        resident_logbook_table.column( i ).data().unique().sort().each( function ( d, j ) {
-            select.append( '<option value="'+d+'">'+d+'</option>' )
-        } );
-    } );
-
-
-
     //set default date and time
     Date.prototype.toDateInputValue = (function() {
       var local = new Date(this);
@@ -973,6 +954,21 @@
         resident_logbook_table.clear();
         resident_logbook_table.rows.add(resident.eventLogs);
         resident_logbook_table.draw();
+
+        //set custom filtering to logbook table
+        $("#resident_logbook_table tfoot th").each( function ( i ) {
+            var select = $('<select><option value=""></option></select>')
+                .appendTo( $(this).empty() )
+                .on( 'change', function () {
+                    resident_logbook_table.column( i )
+                        .search( $(this).val() )
+                        .draw();
+                } );
+     
+            resident_logbook_table.column( i ).data().unique().sort().each( function ( d, j ) {
+                select.append( '<option value="'+d+'">'+d+'</option>' )
+            } );
+        } );
 
         //get the unique event types, and populate the options
         let eventTypeOptions = resident.eventLogs.map(item => {
