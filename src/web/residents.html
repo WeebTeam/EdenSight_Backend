@@ -671,6 +671,25 @@
       ]
     });
 
+    //set custom filtering to logbook table
+    var select = $('<select><option value=""></option></select>');
+
+    $("#resident_logbook_table tfoot th").each( function ( i ) {
+        var select = $('<select><option value=""></option></select>')
+            .appendTo( $(this).empty() )
+            .on( 'change', function () {
+                table.column( i )
+                    .search( $(this).val() )
+                    .draw();
+            } );
+ 
+        table.column( i ).data().unique().sort().each( function ( d, j ) {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+        } );
+    } );
+
+
+
     //set default date and time
     Date.prototype.toDateInputValue = (function() {
       var local = new Date(this);
