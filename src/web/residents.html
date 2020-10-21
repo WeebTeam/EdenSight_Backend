@@ -678,12 +678,12 @@
         var select = $('<select><option value=""></option></select>')
             .appendTo( $(this).empty() )
             .on( 'change', function () {
-                table.column( i )
+                resident_logbook_table.column( i )
                     .search( $(this).val() )
                     .draw();
             } );
  
-        table.column( i ).data().unique().sort().each( function ( d, j ) {
+        resident_logbook_table.column( i ).data().unique().sort().each( function ( d, j ) {
             select.append( '<option value="'+d+'">'+d+'</option>' )
         } );
     } );
@@ -1051,7 +1051,7 @@
         $("#residentCurrentSp02").text(vitalSigns[0].spO2);
 
         //populate the log area (meaning we get latest one only)
-        $("#logVitalSigns").val("Bpm:" + $("#residentCurrentBPM").text() + ",SpO2:" + $("#residentCurrentSp02").text());
+        $("#logVitalSigns").val("Bpm:" + $("#residentCurrentBPM").text() + "\nSpO2:" + $("#residentCurrentSp02").text());
 
         $("#line-chart").show();
         $("#no-line-chart").hide();
