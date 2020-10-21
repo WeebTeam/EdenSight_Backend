@@ -491,7 +491,7 @@
                           <div class="col-sm-12 col-md-6"><label>Date/Time:<br><span id="selectDateTime"></span></label></div>
                           <div class="col-sm-12 col-md-6"><label>Event Type:<br><span id="selectEventType"></span></label></div>
                         </div>
-                        <table id="resident_logbook_table" class="table table-bordered table-hover">
+                        <table id="resident_logbook_table" class="table table-bordered table-hover" style="width: 100%;">
                           <thead>
                             <tr>
                               <th>Date/Time</th>
@@ -675,8 +675,6 @@
         { "data": "vitalSigns" }
       ]
     });
-
-    resident_logbook_table.columns.adjust();
 
     //set default date and time
     Date.prototype.toDateInputValue = (function() {
@@ -961,7 +959,6 @@
         resident_logbook_table.clear();
         resident_logbook_table.rows.add(resident.eventLogs);
         resident_logbook_table.draw();
-        resident_logbook_table.columns.adjust();
 
         //set custom filtering to logbook table
         selection(0, "#selectDateTime", resident_logbook_table);
