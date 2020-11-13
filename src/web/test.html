@@ -7,34 +7,89 @@
   <title>Test | Edensight</title>
 </head>
 <body class="container">
-  <h3>Test 1 : Login page</h3>
+
+
+  <h3>Test 1 : Login as admin</h3>
   <h4>Test subject: login details is an admin, local storage item called role should be admin</h4>
   <div class="text-center">
     <input type="submit" class="btn btn-primary" id="test1Btn" value="Submit">
   </div>
-  <p id="test1" style="display:none;"></p>
+  <p>Test: <span id="test1"></span></p>
 
-<!-- jQuery -->
+
+
+  <h3>Test 2 : Adding resident</h3>
+  <h4>Test subject: add a resident by the name Ion with relevant information, receive name from database and test the name of the resident</h4>
+  <div class="text-center">
+    <input type="submit" class="btn btn-primary" id="test2Btn" value="Submit">
+  </div>
+  <p>Test: <span id="test2"></span></p>
+
+
+
+  <h3>Test 3 : Editing resident</h3>
+  <h4>Test subject: edit a resident by the name Ion to Park, passed if it changed</h4>
+  <div class="text-center">
+    <input type="submit" class="btn btn-primary" id="test3Btn" value="Submit">
+  </div>
+  <p>Test: <span id="test3"></span></p>
+
+
+
+  <h3>Test 4 : Delete resident</h3>
+  <h4>Test subject: delete a resident by the name Park, passed if database doesn't consist this resident</h4>
+  <div class="text-center">
+    <input type="submit" class="btn btn-primary" id="test4Btn" value="Submit">
+  </div>
+  <p>Test: <span id="test4"></span></p>
+
+
+
+  <h3>Test 5 : Adding staff/admin</h3>
+  <h4>Test subject: add a staff by the name Parker, receive name from database and test the name of the resident</h4>
+  <div class="text-center">
+    <input type="submit" class="btn btn-primary" id="test2Btn" value="Submit">
+  </div>
+  <p>Test: <span id="test2"></span></p>
+
+
+
+  <h3>Test 6 : Editing staff/admin</h3>
+  <h4>Test subject: edit a staff from staff to admin by the name Parker, passed if it changed</h4>
+  <div class="text-center">
+    <input type="submit" class="btn btn-primary" id="test3Btn" value="Submit">
+  </div>
+  <p>Test: <span id="test3"></span></p>
+
+
+
+  <h3>Test 7 : Delete staff/admin</h3>
+  <h4>Test subject: delete an admin by the name Parker, passed if database doesn't consist this admin</h4>
+  <div class="text-center">
+    <input type="submit" class="btn btn-primary" id="test4Btn" value="Submit">
+  </div>
+  <p>Test: <span id="test4"></span></p>
+
+
+
+  <!-- <h3>Test 8 : Check resident database</h3>
+  <h4>Test subject: checks info about resident called John, these information are given (shown below), if it is the same then it passed</h4>
+  <h5></h5>
+  <div class="text-center">
+    <input type="submit" class="btn btn-primary" id="test4Btn" value="Submit">
+  </div>
+  <p>Test: <span id="test4"></span></p> -->
+
+
+
+  <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script>
   $(function () { //stuff here runs on page load
-
-    //check if localstorage credentials is populated and authenticated (user is logged in)
-    if (localStorage.getItem("credentials") != null){
-      //todo: check against server if user is still valid
-
-      //redirect based on user type
-      if (localStorage.getItem("role") == "admin"){
-        $("#test1").text('Test: Passed!');
-      }
-      else{
-        $("#test1").text('Test: Failed!');
-      }
-    }
-    
+    getResidentList();
   });
 
   /********** event listeners **********/
@@ -65,11 +120,11 @@
         
         if (data.role == "admin"){
           //window.location.replace("adminResidents.html");
-          $("#test1").text('Test: Passed!');
+          $("#test1").text('Passed!');
         }
         else{
           //window.location.replace("residents.html");
-          $("#test1").text('Test: Failed!');
+          $("#test1").text('Failed!');
         }
       },
       error: function (){
@@ -78,6 +133,364 @@
       }
     });
   });
+
+  $('#test2Btn').on("click", function(e){
+    $.ajax({
+        type: "POST",
+        url: "api/residents/add/",
+        contentType : 'application/json',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+          //include credentials
+          xhr.setRequestHeader ("Authorization", "Basic " + btoa('lolipoplls' + ':' + 'lolipoplls'));
+        },
+        data: JSON.stringify({
+          _id: '999'
+          name: 'Ion',
+          caretaker:  'caretaker1',
+          room:  'R201',
+          deviceAddr:  '',
+          gender: 'M',
+          dob: '12/12/1992',
+          ic: '101234567898',
+          nationality: 'Malaysian',
+          weight: '55',
+          height: '155',
+          bloodType: 'A',
+          pNum: '0124567896',
+          guardian: 'Pie',
+          emergencyPNum: '0145678911',
+          streetAdd: '9, Lebuh Kedai',
+          streetAdd2: 'Jalan Rapat Poly',
+          city: 'Kuching',
+          state: 'Sarawak',
+          postal: '93310',
+
+          healthConditions: '',
+          allergies: '',
+          medication: ''
+        }),
+        success: function (resident){
+          //on success, clear form, modal and update list
+          Toast.fire({
+            icon: 'success',
+            title: '  Resident Created!'
+          })
+
+          getResidentList();
+        },
+        error: function (xhr){
+          var code = xhr.status;
+
+          //handle 401
+          if (code == 401){
+            $("#newResidentModal").modal('hide');
+            handleUnauthorized();
+          }
+        }
+      });
+  }
+
+  $('#test3Btn').on("click", function(e){
+    $.ajax({
+        type: "PUT",
+        url: "api/residents/update/" + '999',
+        contentType : 'application/json',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+          //include credentials
+          xhr.setRequestHeader ("Authorization", "Basic " + btoa('lolipoplls' + ':' + 'lolipoplls'));
+        },
+        data: JSON.stringify({
+          name: 'Park',
+          caretaker:  'caretaker1',
+          room:  'R301',
+          deviceAddr:  '',
+          gender: 'M',
+          dob: '12/12/1992',
+          ic: '101234567898',
+          nationality: 'Malaysian',
+          weight: '55',
+          height: '155',
+          bloodType: 'A',
+          pNum: '0124567896',
+          guardian: 'Pie',
+          emergencyPNum: '0145678911',
+          streetAdd: '9, Lebuh Kedai',
+          streetAdd2: 'Jalan Rapat Poly',
+          city: 'Kuching',
+          state: 'Sarawak',
+          postal: '93310',
+
+          healthConditions: '',
+          allergies: '',
+          medication: ''
+        }),
+        success: function (resident){
+          //on success, clear form, modal and update list
+          console.log("resident updated: "+ resident);
+          Toast.fire({
+            icon: 'success',
+            title: '  Resident Updated!'
+          })
+
+          getResidentList();
+        },
+        error: function (xhr){
+          var code = xhr.status;
+
+          //handle 401
+          if (code == 401){
+            $("#residentModal").modal('hide');
+            handleUnauthorized();
+          }
+        }
+      });
+  }
+
+  $('#test4Btn').on("click", function(e){
+    var confirmDeletion = confirm('Are you sure? This will remove this resident!');
+
+    if(confirmDeletion == true){
+      $.ajax({
+        url: "api/residents/delete/" + '999',
+        type: 'DELETE',
+        beforeSend: function (xhr) {
+          //include credentials
+          xhr.setRequestHeader ("Authorization", "Basic " + btoa('lolipoplls' + ':' + 'lolipoplls'));
+        },
+        success: function(result) {
+          //on success, clear form, modal and update list
+          Toast.fire({
+            icon: 'info',
+            title: 'Resident Deleted!'
+          })
+
+          getResidentList();
+        },
+        error: function (xhr){
+          var code = xhr.status;
+
+          //handle 401
+          if (code == 401){
+            $("#residentModal").modal('hide');
+            handleUnauthorized();
+          }
+        }
+      });
+    }
+  }
+
+  $('#test5Btn').on("click", function(e){
+    $.ajax({
+        type: "POST",
+        url: "api/users/add/",
+        contentType : 'application/json',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+          //include credentials
+          xhr.setRequestHeader ("Authorization", "Basic " + btoa('lolipoplls' + ':' + 'lolipoplls'));
+        },
+        data: JSON.stringify({
+          _id: '999';
+          name: 'Parker',
+          uname:  'Parker123',
+          passwd: 'Parker123',
+          pNum: '0112712345',
+          role: 'staff'
+        }),
+        success: function (staff){
+          //on success, clear form, modal and update list
+          Toast.fire({
+            icon: 'success',
+            title: 'Staff Created!'
+          })
+
+          getAllStaff();
+        }
+        //todo: handle error, 401
+        //display alert
+      });
+  }
+
+  //update staff
+  $('#test6Btn').on("click", function (e) {
+    //send to server
+    $.ajax({
+      type: "PUT",
+      url: "api/users/update/" + '999',
+      contentType : 'application/json',
+      dataType: 'json',
+      beforeSend: function (xhr) {
+        //include credentials
+        xhr.setRequestHeader ("Authorization", "Basic " + btoa('lolipoplls' + ':' + 'lolipoplls'));
+      },
+      data: JSON.stringify({
+        name: 'Parker',
+        uname:  'Parker123',
+        passwd: 'Parker123',
+        pNum: '0112712345',
+        role: 'admin'
+      }),
+      success: function (staff){
+        //on success, clear form, modal and update list
+        Toast.fire({
+          icon: 'success',
+          title: 'Staff Updated!'
+        })
+
+        getAllStaff();
+      }
+      //todo: handle error, 401
+      //display alert
+    });
+  });
+
+
+  $('#test7Btn').on("click", function (e) {
+    var confirmDeletion = confirm('Are you sure? This will remove this staff!');
+    if(confirmDeletion == true){
+      $.ajax({
+        url: "api/users/delete/" + '999',
+        type: 'DELETE',
+        beforeSend: function (xhr) {
+          //include credentials
+          xhr.setRequestHeader ("Authorization", "Basic " + btoa('lolipoplls' + ':' + 'lolipoplls'));
+        },
+        success: function(result) {
+          //on success, clear form, modal and update list
+          Toast.fire({
+            icon: 'info',
+            title: 'Staff Deleted!'
+          })
+
+          getAllStaff();
+        },
+        error: function (xhr){
+          var code = xhr.status;
+
+          //handle 401
+          if (code == 401){
+            $("#staffModal").modal('hide');
+            handleUnauthorized();
+          }
+        }
+      });
+    }
+  }
+
+
+  function getResidentList() {
+    var t2, t3, t4 = 0;
+
+    $.ajax({
+      type: "GET",
+      url: "api/residents/list/",
+      dataType: 'json',
+      beforeSend: function (xhr) {
+        //include credentials
+        xhr.setRequestHeader ("Authorization", "Basic " + btoa('lolipoplls' + ':' + 'lolipoplls'));
+      },
+      success: function (residents){
+        //on success, update table
+
+        for(i=0; i<residents.length; i++){
+          if(residents[i].name == 'Ion'){
+            t2 = 1;
+            break;
+          }
+
+          if(residents[i].name == 'Park'){
+            t3 = 1;
+          } else{
+            t4 = 1;
+          }
+        }
+
+        if(t2 == 1){
+          $("#test2").text('Passed!');
+        }else{
+          $("#test2").text('Failed!');
+        }
+
+        if(t3 == 1){
+          $("#test3").text('Passed!');
+        }else{
+          $("#test3").text('Failed!');
+        }
+
+        if(t4 == 1){
+          $("#test4").text('Passed!');
+        }else{
+          $("#test4").text('Failed!');
+        }
+
+      },
+      error: function (xhr){
+        var code = xhr.status;
+
+        //handle 401
+        if (code == 401){
+          handleUnauthorized();
+        }
+      }
+    });
+  }
+
+  function getAllStaff() {
+    var t5, t6, t7 = 0;
+
+    $.ajax({
+      type: "GET",
+      url: "api/users/all/",
+      dataType: 'json',
+      beforeSend: function (xhr) {
+        //include credentials
+        xhr.setRequestHeader ("Authorization", "Basic " + btoa('lolipoplls' + ':' + 'lolipoplls'));
+      },
+      success: function (staff){
+        //on success, update table
+
+        for(i=0; i<staff.length; i++){
+          if(staff[i].name == 'Parker'){
+            t5 = 1;
+            if (staff[i].role == 'admin') {
+              t6 = 1;
+            }
+          } else{
+            t7 = 1;
+          }
+        }
+
+        if(t5 == 1){
+          $("#test5").text('Passed!');
+        }else{
+          $("#test5").text('Failed!');
+        }
+
+        if(t6 == 1){
+          $("#test6").text('Passed!');
+        }else{
+          $("#test6").text('Failed!');
+        }
+
+        if(t7 == 1){
+          $("#test7").text('Passed!');
+        }else{
+          $("#test7").text('Failed!');
+        }
+      },
+      error: function (xhr){
+        var code = xhr.status;
+
+        //handle 401
+        if (code == 401){
+          handleUnauthorized();
+        }
+      }
+    });
+  }
+
 </script>
 
 </body>
