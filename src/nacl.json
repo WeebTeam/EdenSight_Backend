@@ -14,8 +14,13 @@
     "permissions": [
       {
         "resource": "residents/*",
-        "methods": ["GET", "PUT"],
-        "action": "allow"
+        "methods": ["GET", "POST", "PUT"],
+        "action": "allow",
+        "subRoutes": [{
+          "resource": "add",
+          "methods": ["POST"],
+          "action": "deny"
+        }]
       },
       {
         "resource": "users/*",

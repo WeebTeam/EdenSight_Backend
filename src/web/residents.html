@@ -33,7 +33,10 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" onclick="getResidentList()" class="nav-link">Refresh List</a>
+          <a href="#" onclick="getMyResidentList()" class="nav-link">Refresh List</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" onclick="getResidentList()" class="nav-link">Show All Residents</a>
         </li>
       </ul>
 
@@ -703,7 +706,7 @@
     vitalSignsArray = [];
 
     //fetch any data that we need on page load
-    getResidentList();
+    getMyResidentList();
 
   });
 
@@ -817,7 +820,7 @@
 
           console.log("resident updated: "+ resident);
           $("#residentModal").modal('hide');
-          getResidentList();
+          getMyResidentList();
         },
         error: function (xhr){
           var code = xhr.status;
@@ -863,6 +866,34 @@
     $.ajax({
       type: "GET",
       url: "api/residents/list/",
+      dataType: 'json',
+      beforeSend: function (xhr) {
+        //include credentials
+        xhr.setRequestHeader ("Authorization", "Basic " + localStorage.getItem("credentials"));
+      },
+      success: function (residents){
+        //on success, update table
+
+        //clear and repopulate table
+        residents_table.clear();
+        residents_table.rows.add(residents);
+        residents_table.draw();
+      },
+      error: function (xhr){
+        var code = xhr.status;
+
+        //handle 401
+        if (code == 401){
+          handleUnauthorized();
+        }
+      }
+    });
+  }
+
+  function getMyResidentList() {
+    $.ajax({
+      type: "GET",
+      url: "api/residents/staffList/"+ localStorage.getItem("staffId"),
       dataType: 'json',
       beforeSend: function (xhr) {
         //include credentials

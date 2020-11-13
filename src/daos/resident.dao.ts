@@ -20,9 +20,10 @@ class ResidentDao {
     }
   }
 
-  public async getList(): Promise<Resident[]> {
+  public async getList(staffId?: number): Promise<Resident[]> {
     try {
-      return await ResidentModel.find().select('name caretaker room').populate("caretaker", "name");
+      if (staffId) return await ResidentModel.find({caretaker: staffId}).select('name caretaker room').populate("caretaker", "name");
+      else return await ResidentModel.find().select('name caretaker room').populate("caretaker", "name");
     } catch (err) {
       throw err;
     }
