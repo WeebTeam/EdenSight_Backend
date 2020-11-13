@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+  <title>Test | Edensight</title>
+</head>
+<body class="container">
+  <h3>Test 1 : Login page</h3>
+  <h4>Test subject: login details is an admin, local storage item called role should be admin</h4>
+  <div class="text-center">
+    <input type="submit" class="btn btn-primary" id="test1Btn" value="Submit">
+  </div>
+  <p id="test1" style="display:none;"></p>
+
+</body>
+
+<!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  $(function () { //stuff here runs on page load
+
+    //check if localstorage credentials is populated and authenticated (user is logged in)
+    if (localStorage.getItem("credentials") != null){
+      //todo: check against server if user is still valid
+
+      //redirect based on user type
+      if (localStorage.getItem("role") == "admin"){
+        $("#test1").text('Test: Passed!');
+      }
+      else{
+        $("#test1").text('Test: Failed!');
+      }
+    }
+    
+  });
+
+  /********** event listeners **********/
+
+  //submit login form
+  $('#test1Btn').on("click", function (e){
+    //no validate, we are blindly trusting our users
+    //instead we ask them to self validate :)
+    e.preventDefault(); //prevent form submit default behaviour
+
+    var credentials = btoa('lolipoplls' + ':' + 'lolipoplls');
+    //send to server
+    $.ajax({
+      type: "GET",
+      url: "api/auth/login/",
+      dataType: 'json',
+      beforeSend: function (xhr) {
+        //include credentials
+        xhr.setRequestHeader ("Authorization", "Basic " + credentials);
+      },
+      success: function (data){
+        //on success, check user type and redirect acordingly
+        localStorage.setItem("credentials", credentials);
+
+        //storing role and uname for later use
+        localStorage.setItem("role", data.role);
+        localStorage.setItem("uname", data.uname);
+        
+        if (data.role == "admin"){
+          window.location.replace("adminResidents.html");
+        }
+        else{
+          window.location.replace("residents.html");
+        }
+      },
+      error: function (){
+        //show error
+        //$("#loginFailed").show();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
