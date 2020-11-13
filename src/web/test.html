@@ -66,10 +66,12 @@
         localStorage.setItem("uname", data.uname);
         
         if (data.role == "admin"){
-          window.location.replace("adminResidents.html");
+          //window.location.replace("adminResidents.html");
+          $("#test1").text('Test: Passed!');
         }
         else{
-          window.location.replace("residents.html");
+          //window.location.replace("residents.html");
+          $("#test1").text('Test: Failed!');
         }
       },
       error: function (){
