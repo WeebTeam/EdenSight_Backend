@@ -50,7 +50,7 @@
   <div class="text-center">
     <input type="submit" class="btn btn-primary" id="test2Btn" value="Submit">
   </div>
-  <p>Test: <span id="test2"></span></p>
+  <p>Test: <span id="test5"></span></p>
 
 
 
@@ -59,7 +59,7 @@
   <div class="text-center">
     <input type="submit" class="btn btn-primary" id="test3Btn" value="Submit">
   </div>
-  <p>Test: <span id="test3"></span></p>
+  <p>Test: <span id="test6"></span></p>
 
 
 
@@ -68,7 +68,7 @@
   <div class="text-center">
     <input type="submit" class="btn btn-primary" id="test4Btn" value="Submit">
   </div>
-  <p>Test: <span id="test4"></span></p>
+  <p>Test: <span id="test7"></span></p>
 
 
 
@@ -145,7 +145,6 @@
           xhr.setRequestHeader ("Authorization", "Basic " + btoa('lolipoplls' + ':' + 'lolipoplls'));
         },
         data: JSON.stringify({
-          _id: '999',
           name: 'Ion',
           caretaker:  'caretaker1',
           room:  'R201',
@@ -194,7 +193,7 @@
   $('#test3Btn').on("click", function(e){
     $.ajax({
         type: "PUT",
-        url: "api/residents/update/" + '999',
+        url: "api/residents/update/" + '14',
         contentType : 'application/json',
         dataType: 'json',
         beforeSend: function (xhr) {
@@ -253,7 +252,7 @@
 
     if(confirmDeletion == true){
       $.ajax({
-        url: "api/residents/delete/" + '999',
+        url: "api/residents/delete/" + '14',
         type: 'DELETE',
         beforeSend: function (xhr) {
           //include credentials
@@ -292,7 +291,6 @@
           xhr.setRequestHeader ("Authorization", "Basic " + btoa('lolipoplls' + ':' + 'lolipoplls'));
         },
         data: JSON.stringify({
-          _id: '999',
           name: 'Parker',
           uname:  'Parker123',
           passwd: 'Parker123',
@@ -318,7 +316,7 @@
     //send to server
     $.ajax({
       type: "PUT",
-      url: "api/users/update/" + '999',
+      url: "api/users/update/" + '9',
       contentType : 'application/json',
       dataType: 'json',
       beforeSend: function (xhr) {
@@ -351,7 +349,7 @@
     var confirmDeletion = confirm('Are you sure? This will remove this staff!');
     if(confirmDeletion == true){
       $.ajax({
-        url: "api/users/delete/" + '999',
+        url: "api/users/delete/" + '9',
         type: 'DELETE',
         beforeSend: function (xhr) {
           //include credentials
