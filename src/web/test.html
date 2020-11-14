@@ -170,11 +170,6 @@
           medication: ''
         }),
         success: function (resident){
-          //on success, clear form, modal and update list
-          Toast.fire({
-            icon: 'success',
-            title: '  Resident Created!'
-          })
 
           getResidentList();
         },
@@ -227,11 +222,6 @@
         }),
         success: function (resident){
           //on success, clear form, modal and update list
-          console.log("resident updated: "+ resident);
-          Toast.fire({
-            icon: 'success',
-            title: '  Resident Updated!'
-          })
 
           getResidentList();
         },
@@ -259,11 +249,6 @@
           xhr.setRequestHeader ("Authorization", "Basic " + btoa('lolipoplls' + ':' + 'lolipoplls'));
         },
         success: function(result) {
-          //on success, clear form, modal and update list
-          Toast.fire({
-            icon: 'info',
-            title: 'Resident Deleted!'
-          })
 
           getResidentList();
         },
@@ -298,11 +283,6 @@
           role: 'staff'
         }),
         success: function (staff){
-          //on success, clear form, modal and update list
-          Toast.fire({
-            icon: 'success',
-            title: 'Staff Created!'
-          })
 
           getAllStaff();
         }
@@ -331,11 +311,6 @@
         role: 'admin'
       }),
       success: function (staff){
-        //on success, clear form, modal and update list
-        Toast.fire({
-          icon: 'success',
-          title: 'Staff Updated!'
-        })
 
         getAllStaff();
       }
@@ -356,11 +331,6 @@
           xhr.setRequestHeader ("Authorization", "Basic " + btoa('lolipoplls' + ':' + 'lolipoplls'));
         },
         success: function(result) {
-          //on success, clear form, modal and update list
-          Toast.fire({
-            icon: 'info',
-            title: 'Staff Deleted!'
-          })
 
           getAllStaff();
         },
