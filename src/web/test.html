@@ -1,3 +1,5 @@
+<!-- TO DO TESTING -- SET THE ID ACCORDING TO WHAT SHOULD BE THE NEXT ID FOR RESIDENT AND STAFF-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +10,7 @@
 </head>
 <body class="container">
 
-
+  <!-- Test 1 -->
   <h3>Test 1 : Login as admin</h3>
   <h4>Test subject: login details is an admin, local storage item called role should be admin</h4>
   <div class="text-center">
@@ -17,7 +19,7 @@
   <p>Test: <span id="test1"></span></p>
 
 
-
+  <!-- Test 2 -->
   <h3>Test 2 : Adding resident</h3>
   <h4>Test subject: add a resident by the name Ion with relevant information, receive name from database and test the name of the resident</h4>
   <div class="text-center">
@@ -26,7 +28,7 @@
   <p>Test: <span id="test2"></span></p>
 
 
-
+  <!-- Test 3 -->
   <h3>Test 3 : Editing resident</h3>
   <h4>Test subject: edit a resident by the name Ion to Park, passed if it changed</h4>
   <div class="text-center">
@@ -35,7 +37,7 @@
   <p>Test: <span id="test3"></span></p>
 
 
-
+  <!-- Test 4 -->
   <h3>Test 4 : Delete resident</h3>
   <h4>Test subject: delete a resident by the name Park, passed if database doesn't consist this resident</h4>
   <div class="text-center">
@@ -44,7 +46,7 @@
   <p>Test: <span id="test4"></span></p>
 
 
-
+  <!-- Test 5 -->
   <h3>Test 5 : Adding staff/admin</h3>
   <h4>Test subject: add a staff by the name Parker, receive name from database and test the name of the resident</h4>
   <div class="text-center">
@@ -53,7 +55,7 @@
   <p>Test: <span id="test5"></span></p>
 
 
-
+  <!-- Test 6 -->
   <h3>Test 6 : Editing staff/admin</h3>
   <h4>Test subject: edit a staff from staff to admin by the name Parker, passed if it changed</h4>
   <div class="text-center">
@@ -62,24 +64,13 @@
   <p>Test: <span id="test6"></span></p>
 
 
-
+  <!-- Test 7 -->
   <h3>Test 7 : Delete staff/admin</h3>
   <h4>Test subject: delete an admin by the name Parker, passed if database doesn't consist this admin</h4>
   <div class="text-center">
     <input type="submit" class="btn btn-primary" id="test7Btn" value="Submit">
   </div>
   <p>Test: <span id="test7"></span></p>
-
-
-
-  <!-- <h3>Test 8 : Check resident database</h3>
-  <h4>Test subject: checks info about resident called John, these information are given (shown below), if it is the same then it passed</h4>
-  <h5></h5>
-  <div class="text-center">
-    <input type="submit" class="btn btn-primary" id="test4Btn" value="Submit">
-  </div>
-  <p>Test: <span id="test4"></span></p> -->
-
 
 
   <!-- jQuery -->
@@ -92,9 +83,7 @@
     getResidentList();
   });
 
-  /********** event listeners **********/
-
-  //submit login form
+  //login
   $('#test1Btn').on("click", function (e){
     //no validate, we are blindly trusting our users
     //instead we ask them to self validate :)
@@ -134,6 +123,7 @@
     });
   });
 
+  //addResident
   $('#test2Btn').on("click", function(e){
     $.ajax({
         type: "POST",
@@ -185,10 +175,11 @@
       });
   })
 
+  //updateResident
   $('#test3Btn').on("click", function(e){
     $.ajax({
         type: "PUT",
-        url: "api/residents/update/" + '14',
+        url: "api/residents/update/" + '15',
         contentType : 'application/json',
         dataType: 'json',
         beforeSend: function (xhr) {
@@ -237,12 +228,13 @@
       });
   });
 
+  //deleteResident
   $('#test4Btn').on("click", function(e){
     var confirmDeletion = confirm('Are you sure? This will remove this resident!');
 
     if(confirmDeletion == true){
       $.ajax({
-        url: "api/residents/delete/" + '14',
+        url: "api/residents/delete/" + '15',
         type: 'DELETE',
         beforeSend: function (xhr) {
           //include credentials
@@ -265,6 +257,7 @@
     }
   });
 
+  //addStaff
   $('#test5Btn').on("click", function(e){
     $.ajax({
         type: "POST",
@@ -291,12 +284,12 @@
       });
   });
 
-  //update staff
+  //updateStaff
   $('#test6Btn').on("click", function (e) {
     //send to server
     $.ajax({
       type: "PUT",
-      url: "api/users/update/" + '9',
+      url: "api/users/update/" + '10',
       contentType : 'application/json',
       dataType: 'json',
       beforeSend: function (xhr) {
@@ -320,11 +313,12 @@
   });
 
 
+  //deleteStaff
   $('#test7Btn').on("click", function (e) {
     var confirmDeletion = confirm('Are you sure? This will remove this staff!');
     if(confirmDeletion == true){
       $.ajax({
-        url: "api/users/delete/" + '9',
+        url: "api/users/delete/" + '10',
         type: 'DELETE',
         beforeSend: function (xhr) {
           //include credentials
@@ -348,6 +342,7 @@
   });
 
 
+  //get all residents
   function getResidentList() {
     var t2, t3, t4 = 0;
 
@@ -407,6 +402,8 @@
     });
   }
 
+
+  //get all staff
   function getAllStaff() {
     var t5, t6, t7 = 0;
 
