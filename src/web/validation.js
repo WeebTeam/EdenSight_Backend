@@ -1,5 +1,6 @@
 var gErrorMsg = "";
 
+//validation for new resident
 function validationOK(name, room, deviceAddr, dob, ic, nationality, weight, height, pNum,
 	guardian, emergencyPNum, streetAdd, streetAdd2, city, state, postal){
 	gErrorMsg = "";
@@ -50,6 +51,7 @@ function validationOK(name, room, deviceAddr, dob, ic, nationality, weight, heig
 }
 
 
+//validation for staff
 function staffValidationOK(name, username, password, pNum){
 	gErrorMsg = "";
 
@@ -75,6 +77,8 @@ function staffValidationOK(name, username, password, pNum){
 	return allOk;
 }
 
+
+//validation for editing staff
 function staffEditedValidationOK(name, username, password, pNum){
 	gErrorMsg = "";
 
@@ -101,6 +105,7 @@ function staffEditedValidationOK(name, username, password, pNum){
 }
 
 
+//validation for editing resident
 function residentValidationOK(weight, height){
 	gErrorMsg = "";
 
@@ -125,6 +130,7 @@ function residentValidationOK(weight, height){
 }
 
 
+//validation for event
 function eventValidationOK(eventType, eventName){
 	gErrorMsg = "";
 
@@ -148,7 +154,7 @@ function eventValidationOK(eventType, eventName){
 	return allOk;
 }
 
-
+/* Check Event Type */
 function checkEventType(eventType){
 	var eventTypeOk = true;
 
@@ -160,6 +166,7 @@ function checkEventType(eventType){
 	return eventTypeOk;
 }
 
+/* Check Event Name */
 function checkEventName(eventName){
 	var eventNameOk = true;
 
@@ -190,6 +197,7 @@ function checkName(name) {
 	return nameOk;
 }
 
+/* Check Room */
 function checkRoom(room){
 	var pattern = /^[\w\d]+$/;
 	var roomOk = true;
@@ -208,6 +216,7 @@ function checkRoom(room){
 	return roomOk;
 }
 
+/* Check Device MAC Addr */
 function checkDeviceAddr(deviceAddr){
 	var pattern = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
 	var deviceAddrOk = true;
@@ -220,6 +229,7 @@ function checkDeviceAddr(deviceAddr){
 	return deviceAddrOk;
 }
 
+/* Check DoB */
 function checkDoB(dob){
 	var dobOk = true;
 
@@ -231,6 +241,7 @@ function checkDoB(dob){
 	return dobOk;
 }
 
+/* Check IC Num */
 function checkIC(ic){
 	var pattern = /^[0-9]{12}$/;
 	var icOk = true;
@@ -249,6 +260,7 @@ function checkIC(ic){
 	return icOk;
 }
 
+/* Check Nationality */
 function checkNationality(nationality) {
 	var pattern = /^[a-zA-Z ]+$/;
 	var nationalityOk = true;
@@ -267,6 +279,7 @@ function checkNationality(nationality) {
 	return nationalityOk;
 }
 
+/* Check Weight */
 function checkWeight(weight){
 	var pattern = /^[\d]{2,3}$/;
 	var weightOk = true;
@@ -285,6 +298,7 @@ function checkWeight(weight){
 	return weightOk;
 }
 
+/* Check Height */
 function checkHeight(height){
 	var pattern = /^[\d]{2,3}$/;
 	var heightOk = true;
@@ -303,6 +317,7 @@ function checkHeight(height){
 	return heightOk;
 }
 
+/* Check Phone Num */
 function checkPNum(pNum) {
 	var pattern = /^[0-9]{10,13}$/;
 	var pNumOk = true;
@@ -321,6 +336,7 @@ function checkPNum(pNum) {
 	return pNumOk;
 }
 
+/* Check Emergency Phone Num */
 function checkEmergencyPNum(emergencyPNum) {
 	var pattern = /^[0-9]{10,13}$/;
 	var emergencyPNumOk = true;
@@ -339,6 +355,7 @@ function checkEmergencyPNum(emergencyPNum) {
 	return emergencyPNumOk;
 }
 
+/* Check Guardian Name */
 function checkGuardian(guardian){
 	var pattern = /^[a-zA-Z ]+$/;
 	var guardianOk = true;
@@ -357,6 +374,7 @@ function checkGuardian(guardian){
 	return guardianOk;
 }
 
+/* Check Street Add1 */
 function checkStreetAdd(streetAdd){
 	var streetAddOk = true;
 
@@ -368,6 +386,7 @@ function checkStreetAdd(streetAdd){
 	return streetAddOk;
 }
 
+/* Check Street Add2 */
 function checkStreetAdd2(streetAdd2){
 	var streetAdd2Ok = true;
 
@@ -379,6 +398,7 @@ function checkStreetAdd2(streetAdd2){
 	return streetAdd2Ok;
 }
 
+/* Check City */
 function checkCity(city){
 	var cityOk = true;
 
@@ -390,6 +410,7 @@ function checkCity(city){
 	return cityOk;
 }
 
+/* Check State */
 function checkState(state) {
 	var stateOk = true;
 
@@ -401,6 +422,7 @@ function checkState(state) {
 	return stateOk;
 }
 
+/* Check Postal */
 function checkPostal(postal){
 	var pattern = /^[0-9]{5}$/;
 	var postalOk = true;
@@ -418,7 +440,6 @@ function checkPostal(postal){
 
 	return postalOk;
 }
-
 
 /* Check Username */
 function checkUsername(username) {
@@ -439,7 +460,7 @@ function checkUsername(username) {
 	return nameOk;
 }
 
-/* Check Username */
+/* Check Password */
 function checkPassword(password) {
 	var pattern = /^.+$/;
 	var passwordOk = true;
@@ -458,6 +479,7 @@ function checkPassword(password) {
 	return passwordOk;
 }
 
+/* Check Edited Password */
 function checkEditedPassword(password){
 	var pattern = /^.+$/;
 	var passwordOk = true;

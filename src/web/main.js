@@ -173,15 +173,3 @@ function testSubmittedDataAdminResident(){
   console.log(getEachHealth($('.allergies-new')));
   console.log(getEachHealth($('.medication-new')));
 }
-
-  // //Enables textboxes when checkbox is clicked and vise versa
-  // $(function () {
-  //       $("#residentOtherDrugAllergiesChkbox").click(function () {
-  //           if ($(this).is(":checked")) {
-  //               $("#residentOtherDrugAllergies").removeAttr("disabled");
-  //               $("#residentOtherDrugAllergies").focus();
-  //           } else {
-  //               $("#residentOtherDrugAllergies").attr("disabled", "disabled");
-  //           }
-  //       });
-  // });
