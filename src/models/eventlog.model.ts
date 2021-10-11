@@ -14,7 +14,7 @@ class EventLog implements IEventLog {
   @prop()
   public dateTime: Date;
 
-  @prop({ ref: 'Resident', type: mongoose.Schema.Types.Number, required: true })
+  @prop({ ref: 'Resident', type: mongoose.Schema.Types.Number })
   public resident: Ref<Resident>;
 
   @prop()

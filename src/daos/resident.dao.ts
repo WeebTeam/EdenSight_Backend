@@ -60,11 +60,11 @@ class ResidentDao {
     }
   }
 
-  public async addEventLog(id: number, eventLog: EventLog): Promise<EventLog | null> {
+  public async addEventLog(id: number, eventLog: EventLog): Promise<void> {
     try {
       let event = await EventLogModel.create(eventLog);
 
-      return await ResidentModel.updateOne(
+      await ResidentModel.updateOne(
         { _id: id },
         {$push: {"eventLogs": event._id}}
       );
