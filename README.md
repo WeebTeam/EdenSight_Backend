@@ -1,11 +1,15 @@
 # EdenSight-backend
 
-Generated with [express-generator-typescript](https://github.com/seanpmaxwell/express-generator-typescript/)
+## Tested with
+* Ubuntu 20.04.3
+* Node 14.18.0
+* MongoDB 3.6.8
 
 ## Running the server
 * Ensure you have NodeJS and npm installed
 * clone this repo
 * run `npm install`
+* connect on `<host_ip>:3000`
 
 ## Available commands for the server.
 
@@ -16,3 +20,5 @@ Generated with [express-generator-typescript](https://github.com/seanpmaxwell/ex
 * Build the project for production: `npm run build`
 * Run the production build: `npm start`
 * Run production build with a different env file `npm start --env="name of env file"` (default is production).
+
+Generated with [express-generator-typescript](https://github.com/seanpmaxwell/express-generator-typescript/)
